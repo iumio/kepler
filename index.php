@@ -17,9 +17,11 @@ Index::main($request);
 
 class Index
 {
-    public function main($request)
+    static public function main($request)
     {
         require_once "Starter.php";
         Starter::switchOnApp();
+        $controller = new Controller();
+        $controller->indexAction();
     }
 }

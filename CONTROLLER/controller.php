@@ -8,5 +8,8 @@
  */
 class Controller
 {
-
+    public function indexAction()
+    {
+        return $_SESSION['twig']->render("index.html.twig");
+    }
 }

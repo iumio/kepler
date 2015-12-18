@@ -1,15 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>my_phpMyAdmin</title>
-    <link rel="stylesheet" href="PUBLIC/bootstrap-3.3.6-dist/css/bootstrap.min.css">
-</head>
-<body>
-{% block body %}
+    <head>
+        <meta charset="UTF-8">
+        <title>my_phpMyAdmin</title>
+        <link rel="stylesheet" href="PUBLIC/bootstrap-3.3.6-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="PUBLIC/CSS/simple-sidebar.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            Start Bootstrap
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#">Shortcuts</a>
+                    </li>
+                    <li>
+                        <a href="#">Overview</a>
+                    </li>
+                    <li>
+                        <a href="#">Events</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+            {% block body %}
 
-{% endblock %}
-<script type="text/javascript" src="PUBLIC/JS/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="PUBLIC/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-</body>
+            {% endblock %}
+        </div>
+        <script type="text/javascript" src="PUBLIC/JS/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="PUBLIC/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    </body>
 </html>
