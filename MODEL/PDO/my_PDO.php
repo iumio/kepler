@@ -20,7 +20,7 @@ class my_PDO {
     private function __construct() {
 
         try {
-            self::$DSN = "mysql:host=localhost;dbname=";
+            self::$DSN = "mysql:host=localhost";
             self::$USERNAME = "root";
             self::$USERPASSWORD = "root";
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
