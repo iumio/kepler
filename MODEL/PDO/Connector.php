@@ -7,7 +7,7 @@
  * Time: 14:16
  */
 
-class my_PDO {
+class Connector {
 
     static private $DSN ;
     static private $USERNAME ;
@@ -16,14 +16,14 @@ class my_PDO {
     static private $errorMessage = null;
     
     /** Create a connection
-     * 
+     * (Ensure to change the password Database)
      * @throws PDOException Error of creation
      */
     private function __construct() {
         try {
             self::$DSN = "mysql:host=localhost";
             self::$USERNAME = "root";
-            self::$USERPASSWORD = "root";
+            self::$USERPASSWORD = "mysql";
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
         } catch (PDOException $event) {
             throw new PDOException($event->getMessage());
@@ -36,11 +36,11 @@ class my_PDO {
      * @param array $array Query options
      * @return PDOStatement Query result
      */
-    static public function prepare($query, $array) {
+    static public function prepare($query, $array = NULL) {
         $prepare = NULL;
         if (self::$errorMessage == NULL) {
             $prepare = self::getInstance()->prepare($query);
-            if (empty($array)) {
+            if ($array == NULL) {
 
                 $prepare->execute();
             } else {
@@ -53,16 +53,15 @@ class my_PDO {
 
     /** Get connection
      *
-     * @return The connection
+     * @return PDO The connection
      * @throws PDOException Error of connection or query execution
      */
-    static public function getInstance() {
+    static private function getInstance() {
         try {
             if (self::$instance == NULL) {
-                new my_PDO();
+                new Connector();
             }
         } catch (PDOException $exc) {
-            //echo $exc;
             throw new PDOException($exc->getMessage());
         }
         return self::$instance;

@@ -22,6 +22,15 @@ class Index
         require_once "Starter.php";
         Starter::switchOnApp();
         $controller = new Controller();
-        $controller->db_listAction();
+        if ($request == NULL)
+            $controller->indexAction();
+        else
+            self::router($request);
+    }
+
+    static private function router($request)
+    {
+        echo "request";
     }
 }
+session_abort();

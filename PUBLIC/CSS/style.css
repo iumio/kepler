@@ -1,0 +1,36 @@
+.navbar-md
+{
+    border-radius: 0;
+}
+
+.panel-full .panel-body textarea
+{
+    width: 100%!important;
+}
+
+.panel-full
+{
+    margin: 10px 10px 10px 10px;
+}
+
+.noShow
+{
+    display: none;
+}
+
+.panel-body-max-h
+{
+    max-height: 200px;
+    overflow: auto;
+}
+
+.panel-body-max-h p
+{
+    padding : 10px 5px 10px 5px;
+    text-align: center;
+}
+
+.full-width
+{
+    width: 100%;
+}

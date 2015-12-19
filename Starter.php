@@ -19,9 +19,9 @@ class Starter {
     public function initAutoloader(){
         try {
             $array = array("CONTROLLER/Controller.php",
-                "MODEL/PDO/my_PDO.php",
+                "MODEL/PDO/Connector.php",
                 "MODEL/Model.php",
-                "PRIVATE/Twig/lib/Twig/Autoloader.php");
+                "PRIVATE/Twig/vendor/autoload.php");
             return  $array;
         } catch (Exception $exc) {
             $error = "Erreur d'execution de l'autoloader ";
@@ -39,9 +39,7 @@ class Starter {
     public function initTwig()
     {
         try {
-            Twig_Autoloader::register();
-            $_SESSION['twigLoader'] = new Twig_Loader_Filesystem('VIEWS');
-            $_SESSION['twig'] = new Twig_Environment($_SESSION['twigLoader'], array('cache' => false, 'debug' => true));
+            $_SESSION['twig'] = new Twig_Environment(new Twig_Loader_Filesystem('VIEWS'), array('cache' => false, 'debug' => true));
         } catch (Exception $e) {
             $error = "Twig n'est pas disponible";
             include 'VIEWS/Error.html.twig';
