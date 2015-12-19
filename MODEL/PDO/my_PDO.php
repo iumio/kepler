@@ -17,10 +17,9 @@ class my_PDO {
     
     /** Create a connection
      * 
-     * @throws PDORNException Error of creation
+     * @throws PDOException Error of creation
      */
     private function __construct() {
-
         try {
             self::$DSN = "mysql:host=localhost";
             self::$USERNAME = "root";
@@ -55,12 +54,12 @@ class my_PDO {
     /** Get connection
      *
      * @return The connection
-     * @throws PDORNException Error of connection or query execution
+     * @throws PDOException Error of connection or query execution
      */
     static public function getInstance() {
         try {
             if (self::$instance == NULL) {
-                new Connector();
+                new my_PDO();
             }
         } catch (PDOException $exc) {
             //echo $exc;
@@ -71,7 +70,7 @@ class my_PDO {
     
     /** To get an error
      * 
-     * @return string The erros
+     * @return string The error
      */
     static public function getErrorMessage() {
         return self::$errorMessage;
@@ -80,7 +79,7 @@ class my_PDO {
     /** Drop connection
      * 
      * @return boolean True if the connection is removinf
-     * @throws PDORNException Error of drop
+     * @throws PDOException Error of drop
      */
     static public function destroyConnection() {
         try {

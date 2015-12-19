@@ -8,5 +8,10 @@
  */
 class Model
 {
-
+    public function getDB()
+    {
+        $pdo = my_PDO::getInstance();
+        $list_db = $pdo->query("show databases");
+        return $list_db;
+    }
 }

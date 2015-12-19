@@ -22,6 +22,6 @@ class Index
         require_once "Starter.php";
         Starter::switchOnApp();
         $controller = new Controller();
-        $controller->indexAction();
+        $controller->db_listAction();
     }
 }

@@ -10,7 +10,14 @@ class Controller
 {
     public function indexAction()
     {
-        echo "test";
-        return $_SESSION['twig']->render("index.html.twig");
+        echo $_SESSION['twig']->render("index.html.twig");
+    }
+
+    public function db_listAction()
+    {
+        $model = new Model();
+        //$model->getDB();
+        print_r($model->getDB());
+        //echo $_SESSION['twig']->render("index.html.twig",$model->getDB());
     }
 }
