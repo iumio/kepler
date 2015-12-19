@@ -1,8 +1,10 @@
 <?php
 
-/** Access to database
- * @access PRIVATE
- * @author RAFINA DANY
+/**
+ * Created by PhpStorm.
+ * User: DanyRafina
+ * Date: 18/12/2015
+ * Time: 14:16
  */
 
 class my_PDO {
