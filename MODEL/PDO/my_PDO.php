@@ -27,8 +27,7 @@ class my_PDO {
             self::$USERPASSWORD = "root";
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
         } catch (PDOException $event) {
-
-            throw new PDORNException($event->getMessage());
+            throw new PDOException($event->getMessage());
         }
     }
     
@@ -65,7 +64,7 @@ class my_PDO {
             }
         } catch (PDOException $exc) {
             //echo $exc;
-            throw new PDORNException($exc->getMessage());
+            throw new PDOException($exc->getMessage());
         }
         return self::$instance;
     }
@@ -89,8 +88,8 @@ class my_PDO {
                 self::$instance = NULL;
             }
             return true;
-        } catch (PDORNException $event) {
-            throw new PDORNException($event->getMessage());
+        } catch (PDOException $event) {
+            throw new PDOException($event->getMessage());
         }
     }
 }

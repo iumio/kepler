@@ -10,6 +10,7 @@ class Controller
 {
     public function indexAction()
     {
+        echo "test";
         return $_SESSION['twig']->render("index.html.twig");
     }
 }

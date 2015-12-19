@@ -40,7 +40,8 @@ class Starter {
     {
         try {
             Twig_Autoloader::register();
-            $_SESSION['twig'] = new Twig_Environment(new Twig_Loader_Filesystem('VIEWS'), array('cache' => false, 'debug' => true));
+            $_SESSION['twigLoader'] = new Twig_Loader_Filesystem('VIEWS');
+            $_SESSION['twig'] = new Twig_Environment($_SESSION['twigLoader'], array('cache' => false, 'debug' => true));
         } catch (Exception $e) {
             $error = "Twig n'est pas disponible";
             include 'VIEWS/Error.html.twig';
