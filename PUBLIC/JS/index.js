@@ -10,6 +10,7 @@ $(document).ready(function () {
             $("#home").hide();
             $("#showDB").hide();
             $("#makeQuery").show();
+            $("#showInfo").hide();
         });
     });
 
@@ -20,5 +21,19 @@ $(document).ready(function () {
             $("#makeQuery").hide();
             $("#home").hide();
         });
+    });
+
+    $("a[href='#showInfo']").each(function () {
+        $(this).click(function (e) {
+            e.preventDefault();
+            $("#showInfo").show();
+            $("#makeQuery").hide();
+            $("#home").hide();
+        });
+    });
+
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
     });
 });

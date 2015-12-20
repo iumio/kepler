@@ -1,0 +1,94 @@
+{% extends "template.html.twig" %}
+{% block body %}
+    <nav class="navbar navbar-default navbar-inverse navbar-collapse navbar-md">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.php">
+                    Dashboard
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#showInfo">Les tables <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#makeQuery">Faire une requête</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row noShow" id="makeQuery">
+            <form id="makeQuery" method="POST" action="" class="form-group">
+                <div class="panel panel-info panel-full">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Faire une requête</h3>
+                    </div>
+                    <div class="panel-body">
+                <textarea name="query" rows="10" class="form-control">
+
+                </textarea>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <input type="submit" class="btn btn-success">
+                        <input type="reset" class="btn btn-danger">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="row" id="showInfo">
+            <form id="makeQuery" method="POST" action="" class="form-group">
+                <div class="panel panel-info panel-full">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Informations</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-bordered table-responsive ">
+                            <thead>
+                            <tr>
+                                <th>Nom de la table</th>
+                                <th>Nombre de lignes</th>
+                                <th>Taille</th>
+                                <th>Afficher</th>
+                                <th>Structure</th>
+                                <th>Insérer</th>
+                                <th>Supprimer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for oneTable in tables %}
+                                <tr>
+                                    <td>
+                                        <a href="index.php?run=showT&name={{ oneTable['table_name'] }}">{{ oneTable['table_name'] }}</a>
+                                    </td>
+                                    <td>
+                                        {{ oneTable['table_rows'] }}
+                                    </td>
+                                    <td>
+                                        {{ oneTable['data_length'] | round(1,'floor') }} Ko
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-info full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-list-alt"></i></span>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-primary full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-list-alt"></i><i class="glyphicon glyphicon-resize-horizontal"></i><i class="glyphicon glyphicon-list-alt"></i></span>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-default full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-list-alt"></i><i class="glyphicon glyphicon-arrow-left"></i></span>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-danger full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-remove-circle"></i></span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

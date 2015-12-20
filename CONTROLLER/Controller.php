@@ -61,9 +61,10 @@ class Controller
 
     public function showDB($dbname)
     {
-        echo "Welcome to show DB : $dbname";
-        // A toi de faire le boulot ;)
-        // enlève le echo bien sur
+        $model = $this->getModel();
+        $tables = $model->get_tables($dbname)->fetchAll();
+        echo $_SESSION['twig']->render("db_info.html.twig",
+            array("tables"=>$tables));
     }
 
 }
