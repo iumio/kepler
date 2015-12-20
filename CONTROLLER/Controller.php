@@ -54,9 +54,16 @@ class Controller
      * Get an instance of model
      * @return Model Instance of Model Class
      */
-    private final function getModel()
+    private function getModel()
     {
         return (self::$modal_instance == NULL)? self::$modal_instance = new Model(): self::$modal_instance;
+    }
+
+    public function showDB($dbname)
+    {
+        echo "Welcome to show DB : $dbname";
+        // A toi de faire le boulot ;)
+        // enlève le echo bien sur
     }
 
 }
