@@ -69,7 +69,7 @@
                         {% for oneTable in tables %}
                             <tr>
                                 <td>
-                                    <a href="index.php?run=showTableStruct&dbname={{ oneDB['db'] }}&tName={{ oneTable['table_name'] }}">{{ oneTable['table_name'] }}</a>
+                                    <a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ oneTable['table_name'] }}">{{ oneTable['table_name'] }}</a>
                                 </td>
                                 <td>
                                     {{ oneTable['table_rows'] }}

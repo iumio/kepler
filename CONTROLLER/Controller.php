@@ -66,7 +66,7 @@ class Controller
         $tables = $model->get_tables($dbname)->fetchAll();
         $log = $this->getLogs();
         echo $_SESSION['twig']->render("db_info.html.twig",
-            array("databases"=>$databases,"tables"=>$tables,"logs"=>$log));
+            array("databases"=>$databases,"tables"=>$tables,"logs"=>$log,"dbname"=>$dbname));
         unset($model);
     }
 
