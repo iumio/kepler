@@ -32,6 +32,12 @@ class Model
         return $list_tables;
     }
 
+    public function get_tables_struct($dbname, $t_name)
+    {
+        $tables_struct = Connector::prepare("SELECT COLUMN_NAME, DATA_TYPE, COLUMN_DEFAULT FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema= ? AND TABLE_NAME = .", array($dbname, $t_name));
+        return $tables_struct;
+    }
+
     public function get_server_version()
     {
         $version = Connector::prepare("select version()");

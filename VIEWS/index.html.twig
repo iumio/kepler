@@ -42,52 +42,50 @@
 
 
     <div class="row noShow" id="showDB">
-        <form id="makeQuery" method="POST" action="" class="form-group">
-            <div class="panel panel-info panel-full">
+        <div class="panel panel-info panel-full">
 
-                <div class="panel-heading">
-                    <h3 class="panel-title">Vos bases de données</h3>
-                </div>
-                <div class="panel-body">
-                    <table class="table table-bordered table-responsive ">
-                        <thead>
-                        <tr>
-                            <th>Nom de la base</th>
-                            <th>Nombre de tables</th>
-                            <th>Date de création</th>
-                            <th>Espace mémoire</th>
-                            <th>Supprimer</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for oneDB in databases %}
-                            <tr>
-                                <td>
-                                    <a href="index.php?run=showDB&name={{ oneDB['db'] }}">{{ oneDB['db'] }}</a>
-                                </td>
-                                <td>
-                                    {{ oneDB['nb'] }}
-                                </td>
-                                <td>
-                                    {% if oneDB['crea'] == NULL %}
-                                        Non disponible
-                                    {% else %}
-                                        {{ oneDB['crea'] | date("d-m-Y à H:m:s") }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {{ oneDB['memory'] | round(1,'floor') }} Ko
-                                </td>
-                                <td>
-                                    <span class="btn btn-danger full-width" data="{{ oneDB["Database"] }}"><i class="glyphicon glyphicon-remove-circle"></i></span>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+            <div class="panel-heading">
+                <h3 class="panel-title">Vos bases de données</h3>
             </div>
-        </form>
+            <div class="panel-body">
+                <table class="table table-bordered table-responsive ">
+                    <thead>
+                    <tr>
+                        <th>Nom de la base</th>
+                        <th>Nombre de tables</th>
+                        <th>Date de création</th>
+                        <th>Espace mémoire</th>
+                        <th>Supprimer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for oneDB in databases %}
+                        <tr>
+                            <td>
+                                <a href="index.php?run=showDB&name={{ oneDB['db'] }}">{{ oneDB['db'] }}</a>
+                            </td>
+                            <td>
+                                {{ oneDB['nb'] }}
+                            </td>
+                            <td>
+                                {% if oneDB['crea'] == NULL %}
+                                    Non disponible
+                                {% else %}
+                                    {{ oneDB['crea'] | date("d-m-Y à H:m:s") }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ oneDB['memory'] | round(1,'floor') }} Ko
+                            </td>
+                            <td>
+                                <span class="btn btn-danger full-width" data="{{ oneDB["Database"] }}"><i class="glyphicon glyphicon-remove-circle"></i></span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div class="row" id="home">

@@ -62,9 +62,22 @@ class Controller
     public function showDB($dbname)
     {
         $model = $this->getModel();
+        $databases = $model->get_all_db()->fetchAll();
         $tables = $model->get_tables($dbname)->fetchAll();
+        $log = $this->getLogs();
         echo $_SESSION['twig']->render("db_info.html.twig",
-            array("tables"=>$tables));
+            array("databases"=>$databases,"tables"=>$tables,"logs"=>$log));
+        unset($model);
     }
 
+    public function showTableStruct($dbname, $t_name)
+    {
+        $model = $this->getModel();
+        $databases = $model->get_all_db()->fetchAll();
+        $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
+        $log = $this->getLogs();
+        echo $_SESSION['twig']->render("table_struct.html.twig",
+            array("databases"=>$databases,"tables_struct"=>$tables_struct,"logs"=>$log));
+        unset($model);
+    }
 }

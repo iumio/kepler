@@ -11,6 +11,7 @@ $(document).ready(function () {
             $("#showDB").hide();
             $("#makeQuery").show();
             $("#showInfo").hide();
+            $("#showStruct").hide();
         });
     });
 
@@ -27,6 +28,14 @@ $(document).ready(function () {
         $(this).click(function (e) {
             e.preventDefault();
             $("#showInfo").show();
+            $("#makeQuery").hide();
+            $("#home").hide();
+        });
+    });
+    $("a[href='#showStruct']").each(function () {
+        $(this).click(function (e) {
+            e.preventDefault();
+            $("#showStruct").show();
             $("#makeQuery").hide();
             $("#home").hide();
         });

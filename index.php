@@ -40,15 +40,18 @@ class Index
             if ($request["run"] == "showDB")
                 // J'envoie value pour cette méthode car la méthode a besoin de value
                 // Mais si tu as des methodes qui ont besoin plus de paramètre alors tu envoies les autres valeurs
-                //Par exemple si tu veux supprimer une table d'une base ben taura besoin le nom de la base et le nom de la table
+                // Par exemple si tu veux supprimer une table d'une base ben taura besoin le nom de la base et le nom de la table
                 // Alors faudra que tu envoies les deux valeurs au contrôleur ( $request["dbname"] & $request["tablename"] )
                 // Tu fais comme tu veux après ;)
-                //N'oublie pas surtout , détruit tes objets !!!
-                //Bien que PHP s'en fou mais c'est encore mieux d'y penser
-                //C'est une meilleure manière de programmer !!!
+                // N'oublie pas surtout , détruit tes objets !!!
+                // Bien que PHP s'en fou mais c'est encore mieux d'y penser
+                // C'est une meilleure manière de programmer !!!
                 $controller->showDB($request["value"]);
+
+            else if ($request["run"] == "showTableStruct")
+                $controller->showTableStruct($request["dbname"], $request['tName']);
             else {
-               echo $_SESSION['twig']->render("error.html.twig", array("error" => "Mauvais paramètres !"));
+                echo $_SESSION['twig']->render("error.html.twig", array("error" => "Mauvais paramètres !"));
             }
             unset($controller);
         } else
