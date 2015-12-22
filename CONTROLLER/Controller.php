@@ -64,9 +64,8 @@ class Controller
         $model = $this->getModel();
         $databases = $model->get_all_db()->fetchAll();
         $tables = $model->get_tables($dbname)->fetchAll();
-        $log = $this->getLogs();
         echo $_SESSION['twig']->render("db_info.html.twig",
-            array("databases"=>$databases,"tables"=>$tables,"logs"=>$log,"dbname"=>$dbname));
+            array("databases"=>$databases,"tables"=>$tables,"dbname"=>$dbname));
         unset($model);
     }
 
@@ -75,9 +74,25 @@ class Controller
         $model = $this->getModel();
         $databases = $model->get_all_db()->fetchAll();
         $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
-        $log = $this->getLogs();
         echo $_SESSION['twig']->render("table_struct.html.twig",
-            array("databases"=>$databases,"tables_struct"=>$tables_struct,"logs"=>$log));
+            array("databases"=>$databases,"tables_struct"=>$tables_struct, "t_name"=>$t_name));
+        unset($model);
+    }
+
+    public function formNewDB()
+    {
+        $model = $this->getModel();
+        $databases = $model->get_all_db()->fetchAll();
+        echo $_SESSION['twig']->render('addDB.html.twig',array("databases"=>$databases));
+        unset($model);
+    }
+
+    public function addDB($newDBname)
+    {
+        $model = $this->getModel();
+        $databases = $model->get_all_db()->fetchAll();
+        $model->addNewDB($newDBname);
+        echo $_SESSION['twig']->render('addDB.html.twig',array("databases"=>$databases));
         unset($model);
     }
 }

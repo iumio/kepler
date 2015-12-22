@@ -38,6 +38,11 @@ class Model
         return $tables_struct;
     }
 
+    public function addNewDB($newDBname)
+    {
+        Connector::prepare("CREATE DATABASE '?'", array($newDBname));
+    }
+
     public function get_server_version()
     {
         $version = Connector::prepare("select version()");

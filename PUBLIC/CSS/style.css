@@ -30,7 +30,15 @@
     text-align: center;
 }
 
+#panel_body{
+    overflow-x: auto!important;
+}
+
 .full-width
 {
     width: 100%;
+}
+
+.marginTop20{
+    margin-top: 20px;
 }

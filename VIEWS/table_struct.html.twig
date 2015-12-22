@@ -3,8 +3,14 @@
     <nav class="navbar navbar-default navbar-inverse navbar-collapse navbar-md">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.php">
-                    Dashboard
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    my_phpMyAdmin
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -43,15 +49,16 @@
         <div class="row" id="showStruct">
             <div class="panel panel-info panel-full">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Informations</h3>
+                    <h3 class="panel-title">INFORMATION SUR LA TABLE {{ t_name }}</h3>
                 </div>
-                <div class="panel-body">
-                    <table class="table table-bordered table-responsive ">
+                <div class="panel-body" id="panel_body">
+                    <button class="btn btn-success btn-sm">Ajouter un champs</button>
+                    <table class="table table-bordered table-responsive marginTop20">
                         <thead>
                         <tr>
                             <th>Nom</th>
                             <th>Type</th>
-                            <th>NULL</th>
+                            <th>DEFAULT</th>
                             <th>Modifier</th>
                             <th>Supprimer</th>
                         </tr>

@@ -50,6 +50,12 @@ class Index
 
             else if ($request["run"] == "showTableStruct")
                 $controller->showTableStruct($request["dbname"], $request['tName']);
+            else if ($request["run"] == "indexAction")
+                $controller->indexAction();
+            else if ($request["run"] == "formNewDB")
+                $controller->formNewDB();
+            else if ($request["run"] == "addDB")
+                $controller->addDB($request["newDBname"]);
             else {
                 echo $_SESSION['twig']->render("error.html.twig", array("error" => "Mauvais paramètres !"));
             }
