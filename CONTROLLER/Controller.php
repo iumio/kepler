@@ -59,6 +59,9 @@ class Controller
         return (self::$modal_instance == NULL)? self::$modal_instance = new Model(): self::$modal_instance;
     }
 
+    /**
+     * show tables of a DB
+     */
     public function showDB($dbname)
     {
         $model = $this->getModel();
@@ -69,6 +72,9 @@ class Controller
         unset($model);
     }
 
+    /**
+     * show struct of a table
+     */
     public function showTableStruct($dbname, $t_name)
     {
         $model = $this->getModel();

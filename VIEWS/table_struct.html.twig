@@ -67,7 +67,7 @@
                         {% for struct in tables_struct %}
                             <tr>
                                 <td>
-                                    <a href="index.php?run=showTableStruct&dbname={{ oneDB['db'] }}&tName={{ oneTable['table_name'] }}">{{ struct['COLUMN_NAME'] }}</a>
+                                    <strong>{{ struct['COLUMN_NAME'] }}</strong>
                                 </td>
                                 <td>
                                     {{ struct['DATA_TYPE'] }}
