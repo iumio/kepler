@@ -26,7 +26,7 @@ class Model
         return $list_db;
     }
 
-    /** Get all database by nale
+    /** Get all database by name
      * @return array
      */
     public function get_all_db_name()
@@ -64,14 +64,13 @@ class Model
     {
         try
         {
-            $result = Connector::prepare("CREATE DATABASE {$newDBname};", NULL);
+            $result = Connector::prepare("CREATE DATABASE " . "$newDBname", NULL);
             return $result;
         }
         catch(PDOException $e)
         {
             return ($e->getMessage());
         }
-
     }
 
     /** get the server

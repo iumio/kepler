@@ -50,13 +50,11 @@ $(document).ready(function () {
         $(this).submit(function(e)
         {
             e.preventDefault();
+            var name_db = $("input[name='dbName']").val();
             var rq = $.ajax({
-                url: 'index.php?run=addDB',
-                method: "POST",
-                data:{nameDB : $(this).find("input[name='dbName']").val()}
-            }
-
-            );
+                url: 'index.php?run=addDB&nameDB='+name_db,
+                method: "POST"
+            });
             rq.success(function(result)
             {
                 console.log(result);
@@ -73,10 +71,9 @@ $(document).ready(function () {
                     $("#modal_add_db").find(".modal-footer").hide();
                     $("#modal_add_db").modal("show");
                     window.setTimeout(function() {
-                        window.location.href = 'index.php?run=showDB&value='+$("input[name='dbName']").val();
+                        window.location.href = 'index.php?run=showDB&value='+name_db;
                     }, 3000);
                 }
-
             })
         })
     });

@@ -41,6 +41,11 @@ class Controller
     }
 
     // KEVIN ça c'est la méthode qui va fusionner les deux listes ( Show DATABASES et la putin de requêtes)
+    /** Merge the two list of databases
+     * @param $dbs1
+     * @param $dbs2
+     * @return mixed
+     */
     private function merge_databases($dbs1, $dbs2)
     {
         for ($k = 0; $k < count($dbs2); $k++)
@@ -121,15 +126,19 @@ class Controller
         $model = $this->getModel();
         $result = $model->add_new_db($newDBname);
         $c = $result->rowCount();
-        $error = $result->errorInfo();
-        $error = $error[0]." ".$error[1]."  ".$error[2];
-        if ($c == 1)
+
+        if ($c)
         {
             $this->writeFile("La base de données $newDBname a été créé");
-            echo $c;
+            echo 1;
         }
         else
+        {
+            $error = $result->errorInfo();
+            $error = $error[0]." ".$error[1]."  ".$error[2];
             echo $error;
+        }
+
         unset($model);
     }
 
