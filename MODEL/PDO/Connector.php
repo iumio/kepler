@@ -22,7 +22,13 @@ class Connector {
      */
     private function __construct() {
         try {
+<<<<<<< HEAD
             self::$DSN = "mysql:host=".self::$HOST;
+=======
+            self::$DSN = "mysql:host=localhost";
+            self::$USERNAME = "root";
+            self::$USERPASSWORD = "root";
+>>>>>>> c6aa355... Add db completly finish
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
         } catch (PDOException $event) {
             throw new PDOException($event->getMessage());

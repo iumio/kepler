@@ -21,6 +21,7 @@ La base de données iojiojojoj a été créé
 La base de données sdqsqs a été créé
 La base de données zodzdz a été créé
 La base de données qsqsqsqs a été créé
+<<<<<<< HEAD
 La base de données zz a été créé
 La base de données ee a été créé
 La base de données eer a été créé
@@ -139,3 +140,5 @@ La base de données AZE a eté rennomée en AZERTY.
 La base de données AZE a eté rennomée en AZERTY.
 La base de données AZERTY a eté rennomée en bb.
 La base de données bb a eté rennomée en e.
+=======
+>>>>>>> c6aa355... Add db completly finish
