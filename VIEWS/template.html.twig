@@ -23,9 +23,9 @@
                     <li>
                         <a href="index.php?run=formNewDB"><i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Nouvelle base de données</a>
                     </li>
-                    {% for oneDB in databases %}
+                    {% for oneDB in alldbname %}
                     <li>
-                        <a href="index.php?run=showDB&value={{ oneDB['db'] }}">{{ oneDB['db'] }}</a>
+                        <a href="index.php?run=showDB&value={{ oneDB['Database'] }}">{{ oneDB['Database'] }}</a>
                     </li>
                     {% endfor %}
                 </ul>

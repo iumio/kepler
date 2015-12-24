@@ -82,6 +82,12 @@
                                     <span class="btn btn-danger full-width" data="{{ struct["table"] }}"><i class="glyphicon glyphicon-remove-circle"></i></span>
                                 </td>
                             </tr>
+                        {% else %}
+                            <tr >
+                                <td colspan="5">
+                                    <span>Cette table ne comporte aucune colonne.</span>
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>

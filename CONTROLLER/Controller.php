@@ -25,21 +25,43 @@ class Controller
         $version = $model->get_server_version()->fetchColumn();
         $us = $model->get_user_co()->fetchColumn();
         $charset = $model->get_charset()->fetchColumn();
+        $alldbname = $model->get_all_db_name()->fetchAll();
         $log = $this->getLogs();
         echo $_SESSION['twig']->render("index.html.twig",
-            array("databases"=>$databases, "ip"=>$_SERVER['SERVER_NAME'],
+            array("databases"=>$this->merge_databases($databases, $alldbname),
+                "ip"=>$_SERVER['SERVER_NAME'],
                 "version"=>$version,"user"=>$us,
                 "charset"=>$charset,
                 "os"=>php_uname(),
                 "server_type"=>$_SERVER["SERVER_SOFTWARE"],
                 "phpv"=>phpversion(),
-                "logs"=>$log));
+                "logs"=>$log,
+                "alldbname"=>$alldbname));
         unset($model);
     }
 
-    /** Get log informations
-     * @return array Log info
-     */
+    // KEVIN ça c'est la méthode qui va fusionner les deux listes ( Show DATABASES et la putin de requêtes)
+    private function merge_databases($dbs1, $dbs2)
+    {
+        for ($k = 0; $k < count($dbs2); $k++)
+        {
+            if ($this->list_db($dbs1, $dbs2[$k]['Database']) == 0)
+                array_push($dbs1, array("db"=>$dbs2[$k]['Database'], "nb"=>0, "crea"=>NULL, "memory"=>0));
+        }
+        return ($dbs1);
+    }
+
+    private function list_db($list, $arg)
+    {
+        for ($i = 0; $i < count($list); $i++) {
+            if ($arg == $list[$i]["db"])
+                 return (1);
+        }
+        return (0);
+    }
+
+
+
     public function getLogs()
     {
         $file = fopen("CONTROLLER/LOG/log.txt","r");
@@ -47,7 +69,7 @@ class Controller
         while ($read = fgets($file, 8192))
             array_push($log, $read);
         fclose($file);
-        return $log;
+        return array_reverse($log);
     }
 
     /** This is a Singleton
@@ -65,10 +87,10 @@ class Controller
     public function showDB($dbname)
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db()->fetchAll();
+        $databases = $model->get_all_db_name()->fetchAll();
         $tables = $model->get_tables($dbname)->fetchAll();
         echo $_SESSION['twig']->render("db_info.html.twig",
-            array("databases"=>$databases,"tables"=>$tables,"dbname"=>$dbname));
+            array("alldbname"=>$databases, "tables"=>$tables, "dbname"=>$dbname));
         unset($model);
     }
 
@@ -78,27 +100,43 @@ class Controller
     public function showTableStruct($dbname, $t_name)
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db()->fetchAll();
+        $databases = $model->get_all_db_name()->fetchAll();
         $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
         echo $_SESSION['twig']->render("table_struct.html.twig",
-            array("databases"=>$databases,"tables_struct"=>$tables_struct, "t_name"=>$t_name));
+            array("alldbname"=>$databases, "tables_struct"=>$tables_struct, "t_name"=>$t_name));
         unset($model);
     }
 
     public function formNewDB()
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db()->fetchAll();
-        echo $_SESSION['twig']->render('addDB.html.twig',array("databases"=>$databases));
+        $databases = $model->get_all_db_name()->fetchAll();
+        echo $_SESSION['twig']->render('addDB.html.twig',array("alldbname"=>$databases));
         unset($model);
     }
 
+    /// KEVIN la méthode
     public function addDB($newDBname)
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db()->fetchAll();
-        $model->addNewDB($newDBname);
-        echo $_SESSION['twig']->render('addDB.html.twig',array("databases"=>$databases));
+        $result = $model->add_new_db($newDBname);
+        $c = $result->rowCount();
+        $error = $result->errorInfo();
+        $error = $error[0]." ".$error[1]."  ".$error[2];
+        if ($c == 1)
+        {
+            $this->writeFile("La base de données $newDBname a été créé");
+            echo $c;
+        }
+        else
+            echo $error;
         unset($model);
+    }
+
+    public function writeFile($message)
+    {
+        $file = fopen("CONTROLLER/LOG/log.txt","a");
+        fwrite($file, $message."\n");
+        fclose($file);
     }
 }

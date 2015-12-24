@@ -26,6 +26,15 @@ class Model
         return $list_db;
     }
 
+    /** Get all database by nale
+     * @return array
+     */
+    public function get_all_db_name()
+    {
+        $list_db = Connector::prepare("SELECT SCHEMA_NAME AS `Database` FROM INFORMATION_SCHEMA.SCHEMATA");
+        return $list_db;
+    }
+
     /** get all tables of a DB
      * @param $dbname
      * @return PDOStatement
@@ -47,9 +56,22 @@ class Model
         return $tables_struct;
     }
 
-    public function addNewDB($newDBname)
+    // KEVIN PAS DE '?' ! les requêtes préparées le font dejà ;)
+    // LA norme ! pas de addNewDB mais add_new_db
+    // Pour créer une base , on ne peux pas utiliser les requêtes préparées du coup met directement tes valeurs comme ça
+    // Connector::prepare("CREATE DATABASE  {$newDBname};", NULL); et faudrait que tu vois pour la création de table aussi je pense que c'est pareul
+    public function add_new_db($newDBname)
     {
-        Connector::prepare("CREATE DATABASE '?'", array($newDBname));
+        try
+        {
+            $result = Connector::prepare("CREATE DATABASE {$newDBname};", NULL);
+            return $result;
+        }
+        catch(PDOException $e)
+        {
+            return ($e->getMessage());
+        }
+
     }
 
     /** get the server

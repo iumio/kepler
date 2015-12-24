@@ -55,7 +55,7 @@ class Index
             else if ($request["run"] == "formNewDB")
                 $controller->formNewDB();
             else if ($request["run"] == "addDB")
-                $controller->addDB($request["newDBname"]);
+                $controller->addDB($request["nameDB"]);
             else {
                 echo $_SESSION['twig']->render("error.html.twig", array("error" => "Mauvais paramètres !"));
             }

@@ -52,13 +52,32 @@
                     <h3 class="panel-title">NOUVELLE BASE</h3>
                 </div>
                 <div class="panel-body" id="panel_body">
-                    <form method="post" action="index.php?run=addDB">
+                    <form method="post" action="index.php?run=addDB" id="form_add_db">
                         <div class="form-group">
+
                             <label for="nomDB">Saisissez le nom de la base</label>
-                            <input type="text" class="form-control" id="nomDB" placeholder="Nom de la nouvelle base">
+                            <input type="text" class="form-control" name="dbName" placeholder="Nom de la nouvelle base">
+                            <div class="row">
+                                <dic
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </form>
+                </div>
+            </div>
+            <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_add_db" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Résultat</h4>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

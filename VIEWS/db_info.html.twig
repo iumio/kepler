@@ -98,6 +98,12 @@
                                     <span class="btn btn-danger full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-remove-circle"></i></span>
                                 </td>
                             </tr>
+                             {% else %}
+                             <tr >
+                               <td colspan="7">
+                                   <span>Cette base ne comporte aucune table.</span>
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
