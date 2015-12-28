@@ -64,18 +64,13 @@ class Model
     {
         try
         {
-<<<<<<< HEAD
             $result = Connector::prepare("CREATE DATABASE $newDBname", NULL);
-=======
-            $result = Connector::prepare("CREATE DATABASE " . "$newDBname", NULL);
->>>>>>> c6aa355... Add db completly finish
             return $result;
         }
         catch(PDOException $e)
         {
             return ($e->getMessage());
         }
-<<<<<<< HEAD
     }
 
     public function use_and_source($dbname, $filepath)
@@ -104,8 +99,6 @@ class Model
         {
             return ($e->getMessage());
         }
-=======
->>>>>>> c6aa355... Add db completly finish
     }
 
     /** get the server

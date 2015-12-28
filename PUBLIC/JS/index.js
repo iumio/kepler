@@ -81,7 +81,6 @@ $(document).ready(function () {
                         window.location.href = 'index.php?run=showDB&value='+name_db;
                     }, 3000);
                 }
-<<<<<<< HEAD
             })
         })
     });
@@ -118,8 +117,6 @@ $(document).ready(function () {
                         window.location.href = 'index.php?run=showDB&value=' + n_name_db;
                     }, 3000);
                 }
-=======
->>>>>>> c6aa355... Add db completly finish
             })
         })
     });
