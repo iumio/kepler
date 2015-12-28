@@ -10,8 +10,9 @@
 class Connector {
 
     static private $DSN ;
-    static private $USERNAME ;
-    static private $USERPASSWORD ;
+    static private $USERNAME = "root";
+    static private $USERPASSWORD = "root" ;
+    static private $HOST = "localhost";
     static private $instance = null;
     static private $errorMessage = null;
     
@@ -21,9 +22,7 @@ class Connector {
      */
     private function __construct() {
         try {
-            self::$DSN = "mysql:host=localhost";
-            self::$USERNAME = "root";
-            self::$USERPASSWORD = "root";
+            self::$DSN = "mysql:host=".self::$HOST;
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
         } catch (PDOException $event) {
             throw new PDOException($event->getMessage());
@@ -48,7 +47,7 @@ class Connector {
                 $prepare->execute($array);
             }
         }
-        return $prepare;
+        return ($prepare);
     }
 
     /** Get connection
@@ -64,7 +63,7 @@ class Connector {
         } catch (PDOException $exc) {
             throw new PDOException($exc->getMessage());
         }
-        return self::$instance;
+        return (self::$instance);
     }
     
     /** To get an error
@@ -72,12 +71,12 @@ class Connector {
      * @return string The error
      */
     static public function getErrorMessage() {
-        return self::$errorMessage;
+        return (self::$errorMessage);
     }
     
     /** Drop connection
      * 
-     * @return boolean True if the connection is removinf
+     * @return boolean True if the connection is removed
      * @throws PDOException Error of drop
      */
     static public function destroyConnection() {
@@ -85,9 +84,25 @@ class Connector {
             if (self::$instance != null) {
                 self::$instance = NULL;
             }
-            return true;
+            return (true);
         } catch (PDOException $event) {
             throw new PDOException($event->getMessage());
         }
+    }
+
+    /** Get connection info
+     * @param $info Info type
+     * @return null|string Null if info type not correspond or the connection information
+     */
+    static public function getInfo($info)
+    {
+        if ($info == "host")
+            return (self::$HOST);
+        else if ($info == "username")
+            return (self::$USERNAME);
+        else if ($info == "password")
+            return (self::$USERPASSWORD);
+        else
+            return (NULL);
     }
 }

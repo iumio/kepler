@@ -120,32 +120,76 @@ class Controller
         unset($model);
     }
 
-    /// KEVIN la méthode
     public function addDB($newDBname)
     {
         $model = $this->getModel();
         $result = $model->add_new_db($newDBname);
         $c = $result->rowCount();
-
         if ($c)
         {
             $this->writeFile("La base de données $newDBname a été créé");
             echo 1;
         }
         else
-        {
-            $error = $result->errorInfo();
-            $error = $error[0]." ".$error[1]."  ".$error[2];
-            echo $error;
-        }
-
+            $this->return_error($result);
         unset($model);
     }
 
-    public function writeFile($message)
+    public function renameDB($name_db, $newdbname)
+    {
+        $model = $this->getModel();
+        $result = self::backup_database($name_db);
+        if ($result ==  NULL)
+            echo "Impossible de créer le fichier de sauvegarde";
+        else {
+            $addDB = $model->add_new_db($newdbname);
+            $c = $addDB->rowCount();
+            if ($c) {
+                try
+                {
+                    $cmd = "mysql -h ". Connector::getInfo("host") . " -u " . Connector::getInfo("username") . " $newdbname --password=". Connector::getInfo("password") ." < $result";
+                    exec($cmd);
+                    $model->drop_db($name_db);
+                    $this->writeFile("La base de données $name_db a eté rennomée en $newdbname.");
+                    echo 1;
+                } catch(Exception $e)
+                {
+                    $model->drop_db($newdbname);
+                    $this->writeFile("La base de données $newdbname a été supprimée");
+                    echo "Impossible de peupler la base";
+
+                }
+            } else
+                $this->return_error($addDB);
+        }
+        unset($model);
+    }
+
+    private function return_error($pdo)
+    {
+        $error = $pdo->errorInfo();
+        $error = $error[0]." ".$error[1]."  ".$error[2];
+        echo $error;
+    }
+
+    private function writeFile($message)
     {
         $file = fopen("CONTROLLER/LOG/log.txt","a");
         fwrite($file, $message."\n");
         fclose($file);
+    }
+
+    private function backup_database($db)
+    {
+        $filepath = "CONTROLLER/BACKUP/backup_$db.sql";
+        try {
+            $cmd = "mysqldump -h ". Connector::getInfo("host") . " -u " . Connector::getInfo("username") . "  $db --password=". Connector::getInfo("password") ." > $filepath";
+            exec($cmd);
+            return ($filepath);
+        }
+        catch(ErrorException $e)
+        {
+            return (NULL);
+        }
     }
 }

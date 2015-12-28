@@ -64,7 +64,35 @@ class Model
     {
         try
         {
-            $result = Connector::prepare("CREATE DATABASE " . "$newDBname", NULL);
+            $result = Connector::prepare("CREATE DATABASE $newDBname", NULL);
+            return $result;
+        }
+        catch(PDOException $e)
+        {
+            return ($e->getMessage());
+        }
+    }
+
+    public function use_and_source($dbname, $filepath)
+    {
+        try
+        {
+            $result = Connector::prepare("use $dbname", NULL);
+            $result = Connector::prepare("SOURCE $filepath", NULL);
+            echo $result->queryString;
+            return $result;
+        }
+        catch(PDOException $e)
+        {
+            return ($e->getMessage());
+        }
+    }
+
+    public function drop_db($db)
+    {
+        try
+        {
+            $result = Connector::prepare("drop database $db", NULL);
             return $result;
         }
         catch(PDOException $e)

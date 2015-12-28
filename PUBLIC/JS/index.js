@@ -41,6 +41,13 @@ $(document).ready(function () {
         });
     });
 
+    $(".btn-rename").each(function () {
+        $(this).click(function (e) {
+            e.preventDefault();
+           $("#modal_rename_db").modal('show');
+        });
+    });
+
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -72,6 +79,42 @@ $(document).ready(function () {
                     $("#modal_add_db").modal("show");
                     window.setTimeout(function() {
                         window.location.href = 'index.php?run=showDB&value='+name_db;
+                    }, 3000);
+                }
+            })
+        })
+    });
+
+    $(".form_rename_db").each(function () {
+        $(this).submit(function (e) {
+            e.preventDefault();
+            $("#modal_rename_db").modal('hide');
+            /*$("#modal_info").find(".modal-body").html("<p>En cours de progression ...</p>");
+            $("#modal_info").css("background-color", "rgba(0,251,146,0.7)");
+            $("#modal_info").find(".modal-footer").hide();
+            $("#modal_info").modal("show");*/
+            var name_db = $("input[name='db_name']").val();
+            var n_name_db = $("input[name='new_db_name']").val();
+            var rq = $.ajax({
+                url: 'index.php?run=renameDB',
+                data: {'nameDB':name_db,'newDBName': n_name_db },
+                method: "POST"
+            });
+            rq.success(function (result) {
+                console.log(result);
+                $("#modal_info").modal("hide");
+               if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                    $("#modal_info").find(".modal-body").html("<p>Le nom de la base a été changé</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    window.setTimeout(function () {
+                        window.location.href = 'index.php?run=showDB&value=' + n_name_db;
                     }, 3000);
                 }
             })

@@ -54,10 +54,12 @@
         <div class="row" id="showInfo">
             <div class="panel panel-info panel-full">
                 <div class="panel-heading">
-                    <h3 class="panel-title">INFORMATION SUR LA BASE {{ dbname }}</h3>
+                    <h3 class="panel-title">INFORMATION SUR LA BASE <span id="database_name">{{ dbname }}</span></h3>
                 </div>
                 <div class="panel-body" id="panel_body">
                     <button class="btn btn-success btn-sm">Ajouter une table</button>
+                    <button class="btn btn-danger btn-sm btn-delete">Supprimer la base</button>
+                    <button class="btn btn-primary btn-sm btn-rename">Renommer la base</button>
                     <table class="table table-bordered table-responsive marginTop20">
                         <thead>
                         <tr>
@@ -80,7 +82,7 @@
                                     {{ oneTable['table_rows'] }}
                                 </td>
                                 <td>
-                                    {{ oneTable['data_length'] | round(1,'floor') }} Ko
+                                    {{ oneTable['data_length'] / 1024   | round(1,'floor') }} Ko
                                 </td>
                                 <td>
                                     <span class="btn btn-info full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-list-alt"></i></span>
@@ -104,6 +106,41 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_rename_db" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Renommer la base <span class="text-info">{{ dbname }}</span></h4>
+                    </div>
+                <form method="POST" action="" class="form_rename_db">
+                    <div class="modal-body">
+                        <label>Nouveau nom pour la base</label>
+                        <input type="text" name="new_db_name" class="form-control">
+                        <input type="hidden" name="db_name" value="{{ dbname }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-success">Valider</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Résultat</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
