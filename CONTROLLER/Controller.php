@@ -60,7 +60,7 @@ class Controller
     {
         for ($i = 0; $i < count($list); $i++) {
             if ($arg == $list[$i]["db"])
-                 return (1);
+                return (1);
         }
         return (0);
     }
@@ -128,6 +128,21 @@ class Controller
         if ($c)
         {
             $this->writeFile("La base de données $newDBname a été créé");
+            echo 1;
+        }
+        else
+            $this->return_error($result);
+        unset($model);
+    }
+
+    public function drop_db($db)
+    {
+        $model = $this->getModel();
+        $result = $model->drop_db($db);
+        $c = $result->rowCount();
+        if ($c == 0)
+        {
+            $this->writeFile("La base de données $db a été supprimée");
             echo 1;
         }
         else
