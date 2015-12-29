@@ -93,9 +93,13 @@ class Controller
     {
         $model = $this->getModel();
         $databases = $model->get_all_db_name()->fetchAll();
-        $tables = $model->get_tables($dbname)->fetchAll();
-        echo $_SESSION['twig']->render("db_info.html.twig",
-            array("alldbname"=>$databases, "tables"=>$tables, "dbname"=>$dbname));
+        if ($model->check_database_exist($dbname)->fetch() != NULL) {
+            $tables = $model->get_tables($dbname)->fetchAll();
+            echo $_SESSION['twig']->render("db_info.html.twig",
+                array("alldbname" => $databases, "tables" => $tables, "dbname" => $dbname));
+        }
+        else
+            throw new DatabaseException("La base de données n'existe pas !", $databases);
         unset($model);
     }
 

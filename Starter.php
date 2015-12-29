@@ -21,6 +21,7 @@ class Starter {
             $array = array("CONTROLLER/Controller.php",
                 "MODEL/PDO/Connector.php",
                 "MODEL/Model.php",
+                "CONTROLLER/GEXCEPTIONS/DatabaseException.php",
                 "PRIVATE/Twig/vendor/autoload.php");
             return  $array;
         } catch (Exception $exc) {

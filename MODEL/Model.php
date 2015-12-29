@@ -119,6 +119,18 @@ class Model
         return $version;
     }
 
+    public function check_database_exist($dbname)
+    {
+        try
+        {
+            $result = Connector::prepare("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$dbname'", NULL);
+            return $result;
+        }
+        catch(PDOException $e)
+        {
+            return ($e->getMessage());
+        }
+    }
     /** get the charset
      * @return PDOStatement
      */
