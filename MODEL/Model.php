@@ -43,61 +43,59 @@ class Model
      */
     public function get_tables_struct($dbname, $t_name)
     {
-        $tables_struct = Connector::prepare("SELECT COLUMN_NAME, DATA_TYPE, COLUMN_DEFAULT FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema= ? AND TABLE_NAME = ?", array($dbname, $t_name));
+        $tables_struct = Connector::prepare("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema= ? AND TABLE_NAME = ?", array($dbname, $t_name));
         return $tables_struct;
     }
 
     public function add_new_db($newDBname)
     {
-        try
-        {
+        try {
             $result = Connector::prepare("CREATE DATABASE $newDBname", NULL);
             return $result;
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             return ($e->getMessage());
         }
     }
 
     public function use_and_source($dbname, $filepath)
     {
-        try
-        {
+        try {
             $result = Connector::prepare("use $dbname", NULL);
             $result = Connector::prepare("SOURCE $filepath", NULL);
             echo $result->queryString;
             return $result;
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             return ($e->getMessage());
         }
     }
 
     public function drop_db($db)
     {
-        try
-        {
+        try {
             $result = Connector::prepare("drop database $db", NULL);
             return $result;
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             return ($e->getMessage());
         }
     }
 
-    public function drop_table($dbname,$table)
+    public function drop_table($dbname, $table)
     {
-        try
-        {
+        try {
             $result = Connector::prepare("use $dbname", NULL);
             $result = Connector::prepare("drop table $table", NULL);
             return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
         }
-        catch(PDOException $e)
-        {
+    }
+
+    public function check_table_exist($dbname, $table)
+    {
+        try {
+            $result = Connector::prepare("SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_NAME = ? AND TABLE_SCHEMA= ?", array($table, $dbname));
+            return $result;
+        } catch (PDOException $e) {
             return ($e->getMessage());
         }
     }
@@ -122,16 +120,14 @@ class Model
 
     public function check_database_exist($dbname)
     {
-        try
-        {
+        try {
             $result = Connector::prepare("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$dbname'", NULL);
             return $result;
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             return ($e->getMessage());
         }
     }
+
     /** get the charset
      * @return PDOStatement
      */

@@ -41,6 +41,13 @@ $(document).ready(function () {
         });
     });
 
+    $(".btn-add-table").each(function () {
+        $(this).click(function (e) {
+            e.preventDefault();
+            $("#modal_add_table").modal('show');
+        });
+    });
+
     $(".btn-rename").each(function () {
         $(this).click(function (e) {
             e.preventDefault();
@@ -68,6 +75,32 @@ $(document).ready(function () {
         $("#modal_delete_table").modal('show');
         $(".text-info").html(table_name);
         $("input[name='table_name_delete']").val(table_name);
+    });
+
+    $(".btn-delete-db-in-list").click(function (e) {
+        var db_name = $(this).attr("name");
+        e.preventDefault();
+        $("#modal_drop_db").modal('show');
+        $(".text-info").html(db_name);
+        $("input[name='db_name_delete']").val(db_name);
+    });
+
+    $("#new_table_name").focus(function (e) {
+        $(".btn-add-field-in-tab").show();
+        $("#tab_add_field").show();
+    });
+
+    $("select[name='select_default']").change(function () {
+        var value = $(this).val();
+        if(value == "def")
+        {
+            $("input[name='default']").show();
+        }
+    });
+
+    $(".btn-add-field-in-tab").click(function (e) {
+        e.preventDefault();
+        $("#tab_add_field").prepend("<tr><td><input type='text' class='form-control' name='field_name'/> </td> <td> <input type='text' class='form-control' name='field_type' placeholder='INT, VARCHAR, FLOAT...'/> </td> <td> <input type='text' class='form-control' name='field_size'/> </td> <td> <select name='select_default'> <option selected>Aucune</option> <option value='def'>Tel que défini : </option> <option value='NULL'>NULL</option> <option value='CURRENT_TIMESTAMP'>CURRENT_TIMESTAMP</option> </select> <input type='text' class='form-control input-sm noShow marginTop20' name='default'/> </td> <td> <div class='checkbox'> <label> <input type='checkbox'> </label> </div> </td> <td> <select name='select_default'> <option selected>---</option> <option value='PRIMARY'>PRIMARY</option> <option value='UNIQUE'>UNIQUE</option> <option value='INDEX'>INDEX</option> <option value='FULLTEXT'>FULLTEXT</option> </select> </td> <td> <div class='checkbox'> <label> <input type='checkbox'> </label> </div> </td> </tr>");
     });
 
     $("#menu-toggle").click(function(e) {

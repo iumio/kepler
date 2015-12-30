@@ -1,6 +1,7 @@
 .navbar-md
 {
     border-radius: 0;
+    background: #000000;
 }
 
 .panel-full .panel-body textarea

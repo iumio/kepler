@@ -3,7 +3,8 @@
     <nav class="navbar navbar-default navbar-inverse navbar-collapse navbar-md">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -17,7 +18,8 @@
                     <li><a href="#makeQuery"><i class="glyphicon glyphicon-edit"></i> Faire une requête</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a></li>
+                    <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -49,14 +51,22 @@
                     <h3 class="panel-title">INFORMATION SUR LA TABLE {{ t_name }}</h3>
                 </div>
                 <div class="panel-body" id="panel_body">
-                    <button class="btn btn-success btn-sm btn-add-field"><i class="glyphicon glyphicon-plus-sign"></i> Ajouter un champs</button>
-                    <button class="btn btn-danger btn-sm btn-delete-the-table"><i class="glyphicon glyphicon-trash"></i> Supprimer la table</button>
-                    <button class="btn btn-primary btn-sm btn-rename-table"><i class="glyphicon glyphicon-edit"></i> Renommer la table</button>
+                    <button class="btn btn-success btn-sm btn-add-field"><i class="glyphicon glyphicon-plus-sign"></i>
+                        Ajouter un champs
+                    </button>
+                    <button class="btn btn-danger btn-sm btn-delete-the-table"><i class="glyphicon glyphicon-trash"></i>
+                        Supprimer la table
+                    </button>
+                    <button class="btn btn-primary btn-sm btn-rename-table"><i class="glyphicon glyphicon-edit"></i>
+                        Renommer la table
+                    </button>
                     <table class="table table-bordered table-responsive marginTop20">
                         <thead>
                         <tr>
                             <th>Nom</th>
                             <th>Type</th>
+                            <th>NULL</th>
+                            <th>EXTRA</th>
                             <th>DEFAULT</th>
                             <th>Modifier</th>
                             <th>Supprimer</th>
@@ -67,22 +77,38 @@
                             <tr>
                                 <td>
                                     <strong>{{ struct['COLUMN_NAME'] }}</strong>
+                                    {% if struct['COLUMN_KEY'] == "PRI" %}
+                                        (<i class="fa fa-key"></i>Clé primaire)
+                                    {% elseif struct['COLUMN_KEY'] == "MUL" %}
+                                        (#Clé étrangère)
+                                    {% endif %}
                                 </td>
                                 <td>
-                                    {{ struct['DATA_TYPE'] }}
+                                    {{ struct['COLUMN_TYPE'] }}
+                                </td>
+                                <td>
+                                    {% if struct['IS_NULLABLE'] == "YES" %}
+                                        Oui
+                                    {% else %}
+                                        Non
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ struct['EXTRA'] }}
                                 </td>
                                 <td>
                                     {{ struct['COLUMN_DEFAULT'] }}
                                 </td>
                                 <td>
-                                    <span class="btn btn-primary full-width" data="{{ struct["table"] }}"><i class="glyphicon glyphicon-edit"></i></span>
+                                    <span class="btn btn-primary full-width" data="{{ struct["table"] }}"><i
+                                                class="glyphicon glyphicon-edit"></i></span>
                                 </td>
                                 <td>
                                     <span class="btn btn-danger full-width "><i class="glyphicon glyphicon-trash"></i> </span>
                                 </td>
                             </tr>
                         {% else %}
-                            <tr >
+                            <tr>
                                 <td colspan="5">
                                     <span>Cette table ne comporte aucune colonne.</span>
                                 </td>
@@ -93,7 +119,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_info" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -108,11 +135,13 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_delete_table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_delete_table" tabindex="-1"
+             role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title myModalLabel">Confirmation <i class="glyphicon glyphicon-question-sign"></i></h4>
+                        <h4 class="modal-title myModalLabel">Confirmation <i
+                                    class="glyphicon glyphicon-question-sign"></i></h4>
                     </div>
                     <form method="POST" action="" class="form_delete_table">
                         <div class="modal-body">
@@ -122,7 +151,7 @@
                             <input type="hidden" name="table_name_delete" value="{{ t_name }}">
                             <input type="hidden" name="name_db" value="{{ dbname }}">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
-                            <button type="submit" class="btn btn-success" >Oui</button>
+                            <button type="submit" class="btn btn-success">Oui</button>
                         </div>
                     </form>
                 </div>

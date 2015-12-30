@@ -28,15 +28,15 @@ class Controller
         $alldbname = $model->get_all_db_name()->fetchAll();
         $log = $this->getLogs();
         echo $_SESSION['twig']->render("index.html.twig",
-            array("databases"=>$this->merge_databases($databases, $alldbname),
-                "ip"=>$_SERVER['SERVER_NAME'],
-                "version"=>$version,"user"=>$us,
-                "charset"=>$charset,
-                "os"=>php_uname(),
-                "server_type"=>$_SERVER["SERVER_SOFTWARE"],
-                "phpv"=>phpversion(),
-                "logs"=>$log,
-                "alldbname"=>$alldbname));
+            array("databases" => $this->merge_databases($databases, $alldbname),
+                "ip" => $_SERVER['SERVER_NAME'],
+                "version" => $version, "user" => $us,
+                "charset" => $charset,
+                "os" => php_uname(),
+                "server_type" => $_SERVER["SERVER_SOFTWARE"],
+                "phpv" => phpversion(),
+                "logs" => $log,
+                "alldbname" => $alldbname));
         unset($model);
     }
 
@@ -48,10 +48,9 @@ class Controller
      */
     private function merge_databases($dbs1, $dbs2)
     {
-        for ($k = 0; $k < count($dbs2); $k++)
-        {
+        for ($k = 0; $k < count($dbs2); $k++) {
             if ($this->list_db($dbs1, $dbs2[$k]['Database']) == 0)
-                array_push($dbs1, array("db"=>$dbs2[$k]['Database'], "nb"=>0, "crea"=>NULL, "memory"=>0));
+                array_push($dbs1, array("db" => $dbs2[$k]['Database'], "nb" => 0, "crea" => NULL, "memory" => 0));
         }
         return ($dbs1);
     }
@@ -66,10 +65,9 @@ class Controller
     }
 
 
-
     public function getLogs()
     {
-        $file = fopen("CONTROLLER/LOG/log.txt","r");
+        $file = fopen("CONTROLLER/LOG/log.txt", "r");
         $log = array();
         while ($read = fgets($file, 8192))
             array_push($log, $read);
@@ -83,7 +81,7 @@ class Controller
      */
     private function getModel()
     {
-        return (self::$modal_instance == NULL)? self::$modal_instance = new Model(): self::$modal_instance;
+        return (self::$modal_instance == NULL) ? self::$modal_instance = new Model() : self::$modal_instance;
     }
 
     /**
@@ -97,8 +95,7 @@ class Controller
             $tables = $model->get_tables($dbname)->fetchAll();
             echo $_SESSION['twig']->render("db_info.html.twig",
                 array("alldbname" => $databases, "tables" => $tables, "dbname" => $dbname));
-        }
-        else
+        } else
             throw new DatabaseException("La base de données n'existe pas !", $databases);
         unset($model);
     }
@@ -110,9 +107,12 @@ class Controller
     {
         $model = $this->getModel();
         $databases = $model->get_all_db_name()->fetchAll();
-        $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
-        echo $_SESSION['twig']->render("table_struct.html.twig",
-            array("alldbname"=>$databases, "tables_struct"=>$tables_struct, "t_name"=>$t_name,"dbname" => $dbname));
+        if ($model->check_table_exist($dbname, $t_name)->fetch() != NULL) {
+            $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
+            echo $_SESSION['twig']->render("table_struct.html.twig",
+                array("alldbname" => $databases, "tables_struct" => $tables_struct, "t_name" => $t_name));
+        } else
+            throw new TableException("La table n'existe pas dans cette base!", $t_name, $databases);
         unset($model);
     }
 
@@ -120,7 +120,7 @@ class Controller
     {
         $model = $this->getModel();
         $databases = $model->get_all_db_name()->fetchAll();
-        echo $_SESSION['twig']->render('addDB.html.twig',array("alldbname"=>$databases));
+        echo $_SESSION['twig']->render('addDB.html.twig', array("alldbname" => $databases));
         unset($model);
     }
 
@@ -129,12 +129,10 @@ class Controller
         $model = $this->getModel();
         $result = $model->add_new_db($newDBname);
         $c = $result->rowCount();
-        if ($c)
-        {
+        if ($c) {
             $this->writeFile("La base de données $newDBname a été créé");
             echo 1;
-        }
-        else
+        } else
             $this->return_error($result);
         unset($model);
     }
@@ -144,27 +142,23 @@ class Controller
         $model = $this->getModel();
         $result = $model->drop_db($db);
         $c = $result->rowCount();
-        if ($c == 0)
-        {
+        if ($c == 00000) {
             $this->writeFile("La base de données $db a été supprimée");
             echo 1;
-        }
-        else
+        } else
             $this->return_error($result);
         unset($model);
     }
 
-    public function delete_table($dbname,$table)
+    public function delete_table($dbname, $table)
     {
         $model = $this->getModel();
-        $result = $model->drop_table($dbname,$table);
+        $result = $model->drop_table($dbname, $table);
         $c = $result->rowCount();
-        if ($c == 0)
-        {
+        if ($c == 0) {
             $this->writeFile("La table $table de la base de données $dbname a été supprimée");
             echo 1;
-        }
-        else
+        } else
             $this->return_error($result);
         unset($model);
     }
@@ -173,26 +167,15 @@ class Controller
     {
         $model = $this->getModel();
         $result = self::backup_database($name_db);
-        if ($result ==  NULL)
+        if ($result == NULL)
             echo "Impossible de créer le fichier de sauvegarde";
         else {
             $addDB = $model->add_new_db($newdbname);
             $c = $addDB->rowCount();
             if ($c) {
-                try
-                {
-                    $cmd = "mysql -h ". Connector::getInfo("host") . " -u " . Connector::getInfo("username") . " $newdbname --password=". Connector::getInfo("password") ." < $result";
-                    exec($cmd);
-                    $model->drop_db($name_db);
-                    $this->writeFile("La base de données $name_db a eté rennomée en $newdbname.");
-                    echo 1;
-                } catch(Exception $e)
-                {
-                    $model->drop_db($newdbname);
-                    $this->writeFile("La base de données $newdbname a été supprimée");
-                    echo "Impossible de peupler la base";
-
-                }
+                $res = $this->restore_database($newdbname, $model, $name_db, $result);
+                $file_r = $this->delete_backup($result);
+                echo ($file_r != 1 && $res == 1) ? $file_r : ($file_r == 1 && $res != 1) ? $res : 1;
             } else
                 $this->return_error($addDB);
         }
@@ -202,28 +185,54 @@ class Controller
     private function return_error($pdo)
     {
         $error = $pdo->errorInfo();
-        $error = $error[0]." ".$error[1]."  ".$error[2];
+        $error = $error[0] . " " . $error[1] . "  " . $error[2];
         echo $error;
     }
 
     private function writeFile($message)
     {
-        $file = fopen("CONTROLLER/LOG/log.txt","a");
-        fwrite($file, $message."\n");
+        $file = fopen("CONTROLLER/LOG/log.txt", "a");
+        fwrite($file, $message . "\n");
         fclose($file);
+    }
+
+    private function delete_backup($filepath)
+    {
+        try {
+            unlink($filepath);
+            return (1);
+        } catch (Exception $e) {
+            return ($e->getMessage());
+        }
     }
 
     private function backup_database($db)
     {
         $filepath = "CONTROLLER/BACKUP/backup_$db.sql";
         try {
-            $cmd = "mysqldump -h ". Connector::getInfo("host") . " -u " . Connector::getInfo("username") . "  $db --password=". Connector::getInfo("password") ." > $filepath";
+            $cmd = "mysqldump -h " . Connector::getInfo("host") . " -u " . Connector::getInfo("username") . "  $db --password=" . Connector::getInfo("password") . " > $filepath";
             exec($cmd);
             return ($filepath);
-        }
-        catch(ErrorException $e)
-        {
+        } catch (ErrorException $e) {
             return (NULL);
+        }
+    }
+
+    private function restore_database($newdbname, $model, $name_db, $filepath)
+    {
+        try {
+            $cmd = "mysql -h " . Connector::getInfo("host") .
+                " -u " . Connector::getInfo("username") .
+                " $newdbname --password=" . Connector::getInfo("password") . " < $filepath";
+            exec($cmd);
+            $model->drop_db($name_db);
+            $this->writeFile("La base de données $name_db a eté rennomée en $newdbname.");
+            return (1);
+        } catch (Exception $e) {
+            $model->drop_db($newdbname);
+            $this->writeFile("La base de données $newdbname a été supprimée");
+            return ("Impossible de peupler la base");
+
         }
     }
 }

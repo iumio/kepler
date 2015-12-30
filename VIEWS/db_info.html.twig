@@ -57,7 +57,7 @@
                     <h3 class="panel-title">INFORMATION SUR LA BASE <span id="database_name">{{ dbname }}</span></h3>
                 </div>
                 <div class="panel-body" id="panel_body">
-                    <button class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus-sign"></i> Ajouter une table</button>
+                    <button class="btn btn-success btn-sm btn-add-table"><i class="glyphicon glyphicon-plus-sign"></i> Ajouter une table</button>
                     <button class="btn btn-danger btn-sm btn-delete-db"><i class="glyphicon glyphicon-trash"></i> Supprimer la base</button>
                     <button class="btn btn-primary btn-sm btn-rename"><i class="glyphicon glyphicon-edit"></i> Renommer la base</button>
                     <table class="table table-bordered table-responsive marginTop20">
@@ -130,7 +130,97 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_add_table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel0">Ajouter une table</h4>
+                </div>
+                <form method="POST" action="" class="form_add_table">
+                    <div class="modal-body">
+                        <label>Nom de la table</label>
+                        <input id="new_table_name" type="text" name="new_table_name" class="form-control" placeholder="Nom de la table">
+                        <a class="btn btn-primary btn-sm btn-add-field-in-tab noShow marginTop20"><i class="glyphicon glyphicon-plus-sign"></i> Ajouter un champs</a>
+                        <table class="table table-bordered table-responsive marginTop20 noShow" id="tab_add_field">
+                            <thead>
+                            <th>
+                                Nom
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Taille
+                            </th>
+                            <th>
+                                Défaut
+                            </th>
+                            <th>
+                                Null
+                            </th>
+                            <th>
+                                Index
+                            </th>
+                            <th>
+                                A_I
+                            </th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" name="field_name"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="field_type" placeholder="INT, VARCHAR, FLOAT..."/>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="field_size"/>
+                                </td>
+                                <td>
+                                    <select name="select_default">
+                                        <option selected>Aucune</option>
+                                        <option value="def">Tel que défini : </option>
+                                        <option value="NULL">NULL</option>
+                                        <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option>
+                                    </select>
+                                    <input type="text" class="form-control input-sm noShow marginTop20" name="default"/>
+                                </td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select name="select_default">
+                                        <option selected>---</option>
+                                        <option value="PRIMARY">PRIMARY</option>
+                                        <option value="UNIQUE">UNIQUE</option>
+                                        <option value="INDEX">INDEX</option>
+                                        <option value="FULLTEXT">FULLTEXT</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox">
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <input type="hidden" name="db_name" value="{{ dbname }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-success">Valider</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_rename_db" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
