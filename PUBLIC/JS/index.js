@@ -55,6 +55,21 @@ $(document).ready(function () {
         });
     });
 
+    $(".btn-delete-the-table").each(function () {
+        $(this).click(function (e) {
+            e.preventDefault();
+            $("#modal_delete_table").modal('show');
+        });
+    });
+
+    $(".btn-delete-table").click(function (e) {
+        var table_name = $(this).attr("name");
+        e.preventDefault();
+        $("#modal_delete_table").modal('show');
+        $(".text-info").html(table_name);
+        $("input[name='table_name_delete']").val(table_name);
+    });
+
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -80,7 +95,7 @@ $(document).ready(function () {
                 }
                 else
                 {
-                    $("#modal_add_db").find(".modal-body").html("<p>Votre nouvelle base a été ajoutée</p>");
+                    $("#modal_add_db").find(".modal-body").html("<p>Votre nouvelle base à été ajoutée</p>");
                     $("#modal_add_db").css("background-color","rgba(148,251,146,0.7)");
                     $("#modal_add_db").find(".modal-footer").hide();
                     $("#modal_add_db").modal("show");
@@ -99,8 +114,8 @@ $(document).ready(function () {
             var name_db = $("input[name='db_name']").val();
             var n_name_db = $("input[name='new_db_name']").val();
             var rq = $.ajax({
-                url: 'index.php?run=renameDB',
-                data: {'nameDB':name_db,'newDBName': n_name_db },
+                url: 'index.php?run=renameDB&nameDB='+name_db+'&newDBName='+n_name_db,
+                //data: {'nameDB':name_db,'newDBName': n_name_db },
                 method: "POST"
             });
             rq.success(function (result) {
@@ -112,7 +127,7 @@ $(document).ready(function () {
                     $("#modal_info").modal("show");
                 }
                 else {
-                    $("#modal_info").find(".modal-body").html("<p>Le nom de la base a été changé</p>");
+                    $("#modal_info").find(".modal-body").html("<p>Le nom de la base à été changé</p>");
                     $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
                     $("#modal_info").find(".modal-footer").hide();
                     $("#modal_info").modal("show");
@@ -130,8 +145,8 @@ $(document).ready(function () {
             $("#modal_drop_db").modal('hide');
             var name_db = $("input[name='db_name_delete']").val();
             var rq = $.ajax({
-                url: 'index.php?run=deleteDB',
-                data: {'nameDB':name_db },
+                url: 'index.php?run=deleteDB&nameDB='+name_db,
+                //data: {'nameDB':name_db },
                 method: "POST"
             });
             rq.success(function (result) {
@@ -143,12 +158,44 @@ $(document).ready(function () {
                     $("#modal_info").modal("show");
                 }
                 else {
-                    $("#modal_info").find(".modal-body").html("<p>La base de donnée a été supprimée</p>");
+                    $("#modal_info").find(".modal-body").html("<p>La base de donnée à été supprimée</p>");
                     $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
                     $("#modal_info").find(".modal-footer").hide();
                     $("#modal_info").modal("show");
                     window.setTimeout(function () {
-                        window.location.href = 'index.php';
+                        window.location.href = 'index.php?run=indexAction';
+                    }, 3000);
+                }
+            })
+        })
+    });
+
+    $(".form_delete_table").each(function () {
+        $(this).submit(function (e) {
+            e.preventDefault();
+            $("#modal_delete_table").modal('hide');
+            var name_db = $("input[name='name_db']").val();
+            var name_table = $(".text-info").html();
+            var rq = $.ajax({
+                url: 'index.php?run=delete_table&name_db='+name_db+'&name_table='+name_table,
+                //data: {'nameDB':name_db },
+                method: "POST"
+            });
+            rq.success(function (result) {
+                console.log(result);
+                $("#modal_info").modal("hide");
+                if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                    $("#modal_info").find(".modal-body").html("<p>La table à été supprimée</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    window.setTimeout(function () {
+                        window.location.href = 'index.php?run=showDB&value=' +name_db;
                     }, 3000);
                 }
             })

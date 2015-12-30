@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Les tables <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-th-list"></i> Les tables <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             {% for oneTable in tables %}
                                 <li><a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ oneTable['table_name'] }}">{{ oneTable['table_name'] }}</a></li>
@@ -21,7 +21,7 @@
                         </ul>
                     </li>
                     <li class="active"><a href="#showInfo">Structure <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#makeQuery">Faire une requête</a></li>
+                    <li><a href="#makeQuery"><i class="glyphicon glyphicon-edit"></i> Faire une requête</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a></li>
@@ -57,9 +57,9 @@
                     <h3 class="panel-title">INFORMATION SUR LA BASE <span id="database_name">{{ dbname }}</span></h3>
                 </div>
                 <div class="panel-body" id="panel_body">
-                    <button class="btn btn-success btn-sm">Ajouter une table</button>
-                    <button class="btn btn-danger btn-sm btn-delete-db">Supprimer la base</button>
-                    <button class="btn btn-primary btn-sm btn-rename">Renommer la base</button>
+                    <button class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus-sign"></i> Ajouter une table</button>
+                    <button class="btn btn-danger btn-sm btn-delete-db"><i class="glyphicon glyphicon-trash"></i> Supprimer la base</button>
+                    <button class="btn btn-primary btn-sm btn-rename"><i class="glyphicon glyphicon-edit"></i> Renommer la base</button>
                     <table class="table table-bordered table-responsive marginTop20">
                         <thead>
                         <tr>
@@ -94,7 +94,27 @@
                                     <a class="btn btn-default full-width" ><i class="glyphicon glyphicon-list-alt"></i><i class="glyphicon glyphicon-arrow-left"></i></a>
                                 </td>
                                 <td>
-                                    <span class="btn btn-danger full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-remove-circle"></i></span>
+                                    <a class="btn btn-danger full-width btn-delete-table" name="{{ oneTable['table_name'] }}"><i class="glyphicon glyphicon-trash"></i></a>
+                                    <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_delete_table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title myModalLabel">Confirmation <i class="glyphicon glyphicon-question-sign"></i></h4>
+                                                </div>
+                                                <form method="POST" action="" class="form_delete_table">
+                                                    <div class="modal-body">
+                                                        Vous voulez vraiment suprimer <span class="text-info"></span> ?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="hidden" name="table_name_delete">
+                                                        <input type="hidden" name="name_db" value="{{ dbname }}">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                                                        <button type="submit" class="btn btn-success" >Oui</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         {% else %}
@@ -110,11 +130,12 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_rename_db" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Renommer la base <span class="text-info">{{ dbname }}</span></h4>
+                    <h4 class="modal-title" id="myModalLabel1">Renommer la base <span class="text-info">{{ dbname }}</span></h4>
                 </div>
                 <form method="POST" action="" class="form_rename_db">
                     <div class="modal-body">
@@ -134,7 +155,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Résultat</h4>
+                    <h4 class="modal-title" id="myModalLabel2">Résultat</h4>
                 </div>
                 <div class="modal-body">
                     ...
@@ -149,7 +170,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Confirmation <i class="glyphicon glyphicon-question-sign"></i></h4>
+                    <h4 class="modal-title" id="myModalLabel3">Confirmation <i class="glyphicon glyphicon-question-sign"></i></h4>
                 </div>
                 <form method="POST" action="" class="form_delete_db">
                     <div class="modal-body">

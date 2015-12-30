@@ -12,8 +12,8 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#showDB">Les bases de données <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#makeQuery">Faire une requête</a></li>
+                    <li><a href="#showDB"><i class="glyphicon glyphicon-th-list"></i> Les bases de données <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#makeQuery"><i class="glyphicon glyphicon-edit"></i> Faire une requête</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a></li>
@@ -65,7 +65,7 @@
                     {% for oneDB in databases %}
                         <tr>
                             <td>
-                                <a href="index.php?run=showDB&name={{ oneDB['db'] }}">{{ oneDB['db'] }}</a>
+                                <a href="index.php?run=showDB&value={{ oneDB['db'] }}">{{ oneDB['db'] }}</a>
                             </td>
                             <td>
                                 {{ oneDB['nb'] }}
@@ -81,7 +81,7 @@
                                 {{ oneDB['memory'] | round(1,'floor') }} Ko
                             </td>
                             <td>
-                                <span class="btn btn-danger full-width" data="{{ oneDB["db"] }}"><i class="glyphicon glyphicon-remove-circle"></i></span>
+                                <a class="btn btn-danger full-width btn-delete-db" ><i class="glyphicon glyphicon-remove-circle"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -90,7 +90,6 @@
             </div>
         </div>
     </div>
-
     <div class="row" id="home">
         <div class="col-md-7">
             <div class="panel panel-success panel-full">
@@ -152,6 +151,25 @@
                     <p>Version de php : {{ phpv }}</p>
 
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_drop_db" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Confirmation <i class="glyphicon glyphicon-question-sign"></i></h4>
+                </div>
+                <form method="POST" action="" class="form_delete_db">
+                    <div class="modal-body">
+                        Vous voulez vraiment suprimer <span class="text-info">{{ dbname }}</span> ?
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="db_name_delete" value="{{ dbname }}">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                        <button type="submit" class="btn btn-success" >Oui</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -112,7 +112,7 @@ class Controller
         $databases = $model->get_all_db_name()->fetchAll();
         $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
         echo $_SESSION['twig']->render("table_struct.html.twig",
-            array("alldbname"=>$databases, "tables_struct"=>$tables_struct, "t_name"=>$t_name));
+            array("alldbname"=>$databases, "tables_struct"=>$tables_struct, "t_name"=>$t_name,"dbname" => $dbname));
         unset($model);
     }
 
@@ -147,6 +147,21 @@ class Controller
         if ($c == 0)
         {
             $this->writeFile("La base de données $db a été supprimée");
+            echo 1;
+        }
+        else
+            $this->return_error($result);
+        unset($model);
+    }
+
+    public function delete_table($dbname,$table)
+    {
+        $model = $this->getModel();
+        $result = $model->drop_table($dbname,$table);
+        $c = $result->rowCount();
+        if ($c == 0)
+        {
+            $this->writeFile("La table $table de la base de données $dbname a été supprimée");
             echo 1;
         }
         else

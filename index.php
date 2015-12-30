@@ -60,6 +60,8 @@ class Index
                 $controller->renameDB($request["nameDB"], $request["newDBName"]);
             else if ($request["run"] == "deleteDB")
                 $controller->drop_db($request["nameDB"]);
+            else if ($request["run"] == "delete_table")
+                $controller->delete_table($request["name_db"],$request["name_table"]);
             else {
                 echo $_SESSION['twig']->render("error.html.twig", array("error" => "Mauvais paramètres !"));
             }

@@ -142,3 +142,24 @@ La base de données AZERTY a eté rennomée en bb.
 La base de données bb a eté rennomée en e.
 =======
 >>>>>>> c6aa355... Add db completly finish
+La base de données aaaa a eté rennomée en dddddddddd.
+La base de données dddddddddd a été supprimée
+La base de données aaaaaaaa a été supprimée
+La base de données aaaavvvvvv a été supprimée
+La base de données aaaavvvvvv a été supprimée
+La base de données  a été supprimée
+La table blablo de la base de données blablo a été supprimée
+La table blablo de la base de données blablo a été supprimée
+La table blablo de la base de données blablo a été supprimée
+La table blablo de la base de données blablo a été supprimée
+La table blablo de la base de données blablo a été supprimée
+La table blablo de la base de données blablo a été supprimée
+La table  de la base de données blablo a été supprimée
+La table rrrrrrr de la base de données blablo a été supprimée
+La table rrrrrrr de la base de données undefined a été supprimée
+La table rrrrrrr de la base de données blablo a été supprimée
+La table rrrrrrr de la base de données blablo a été supprimée
+La table rrrrrrr de la base de données blablo a été supprimée
+La table rrrrrrr de la base de données blablo a été supprimée
+La table rrr de la base de données blablo a été supprimée
+La table eeeee de la base de données blablo a été supprimée
