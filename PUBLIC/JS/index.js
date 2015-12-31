@@ -69,6 +69,13 @@ $(document).ready(function () {
         });
     });
 
+    $(".btn-rename-table").each(function () {
+        $(this).click(function (e) {
+            e.preventDefault();
+            $("#modal_rename_table").modal('show');
+        });
+    });
+
     $(".btn-delete-table").click(function (e) {
         var table_name = $(this).attr("name");
         e.preventDefault();
@@ -230,6 +237,39 @@ $(document).ready(function () {
                     window.setTimeout(function () {
                         window.location.href = 'index.php?run=showDB&value=' +name_db;
                     }, 3000);
+                }
+            })
+        })
+    });
+    $(".form_rename_table").each(function () {
+        $(this).submit(function (e) {
+            e.preventDefault();
+            $("#modal_rename_table").modal('hide');
+            var new_name_table = $("input[name='new_table_name']").val();
+            var name_db = $("input[name='name_db']").val();
+            var table_name = $("input[name='tale_name']").val();
+            console.log(name_db);
+            var rq = $.ajax({
+                url: 'index.php?run=rename_table&name_db='+name_db+'&table_name='+table_name+'&new_name_table='+new_name_table,
+                //data: {'nameDB':name_db },
+                method: "POST"
+            });
+            rq.success(function (result) {
+                console.log(result);
+                $("#modal_info").modal("hide");
+                if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                    $("#modal_info").find(".modal-body").html("<p>Le nom de la table à été changé</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    window.setTimeout(function () {
+                        window.location.href = 'index.php?run=showDB&value='+name_db;
+                    }, 2000);
                 }
             })
         })

@@ -110,7 +110,7 @@ class Controller
         if ($model->check_table_exist($dbname, $t_name)->fetch() != NULL) {
             $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
             echo $_SESSION['twig']->render("table_struct.html.twig",
-                array("alldbname" => $databases, "tables_struct" => $tables_struct, "t_name" => $t_name));
+                array("alldbname" => $databases, "tables_struct" => $tables_struct, "t_name" => $t_name,"dbname" => $dbname));
         } else
             throw new TableException("La table n'existe pas dans cette base!", $t_name, $databases);
         unset($model);
@@ -157,6 +157,19 @@ class Controller
         $c = $result->rowCount();
         if ($c == 0) {
             $this->writeFile("La table $table de la base de données $dbname a été supprimée");
+            echo 1;
+        } else
+            $this->return_error($result);
+        unset($model);
+    }
+
+    public function rename_table($dbname, $table, $new_name_table)
+    {
+        $model = $this->getModel();
+        $result = $model->rename_the_table($dbname, $table, $new_name_table);
+        $c = $result->rowCount();
+        if ($c == 00000) {
+            $this->writeFile("La table $table à été renommée en $new_name_table");
             echo 1;
         } else
             $this->return_error($result);
@@ -232,7 +245,6 @@ class Controller
             $model->drop_db($newdbname);
             $this->writeFile("La base de données $newdbname a été supprimée");
             return ("Impossible de peupler la base");
-
         }
     }
 }

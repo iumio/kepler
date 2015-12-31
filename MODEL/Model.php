@@ -90,6 +90,16 @@ class Model
         }
     }
 
+    public function rename_the_table($dbname, $table, $new_name_table)
+    {
+        try {
+            $result = Connector::prepare("RENAME TABLE $dbname.$table TO $dbname.$new_name_table", NULL);
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+
     public function check_table_exist($dbname, $table)
     {
         try {
