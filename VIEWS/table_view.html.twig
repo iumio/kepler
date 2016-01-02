@@ -48,7 +48,7 @@
         <div class="row" id="showStruct">
             <div class="panel panel-info panel-full">
                 <div class="panel-heading">
-                    <h3 class="panel-title">INFORMATION SUR LA TABLE {{ t_name }}</h3>
+                    <h3 class="panel-title">AFFICHAGE DE LA TABLE {{ t_name }}</h3>
                 </div>
                 <div class="panel-body" id="panel_body">
                     <button class="btn btn-success btn-sm btn-add-field"><i class="glyphicon glyphicon-plus-sign"></i>
@@ -63,44 +63,24 @@
                     <table class="table table-bordered table-responsive marginTop20">
                         <thead>
                         <tr>
-                            <th>Nom</th>
-                            <th>Type</th>
-                            <th>NULL</th>
-                            <th>EXTRA</th>
-                            <th>DEFAULT</th>
+                            {% for struct in tables_struct %}
+                                <th>{{ struct['COLUMN_NAME'] }}</th>
+                            {% endfor %}
                             <th>Modifier</th>
                             <th>Supprimer</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for struct in tables_struct %}
+                        {% for data in tables_data %}
                             <tr>
+                                {% for struct in tables_struct %}
+                                    {% set column_name = struct['COLUMN_NAME'] %}
+                                    <td>
+                                        {{ data[column_name] }}
+                                    </td>
+                                {% endfor %}
                                 <td>
-                                    <strong>{{ struct['COLUMN_NAME'] }}</strong>
-                                    {% if struct['COLUMN_KEY'] == "PRI" %}
-                                        (<i class="fa fa-key"></i>Clé primaire)
-                                    {% elseif struct['COLUMN_KEY'] == "MUL" %}
-                                        (#Clé étrangère)
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {{ struct['COLUMN_TYPE'] }}
-                                </td>
-                                <td>
-                                    {% if struct['IS_NULLABLE'] == "YES" %}
-                                        Oui
-                                    {% else %}
-                                        Non
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {{ struct['EXTRA'] }}
-                                </td>
-                                <td>
-                                    {{ struct['COLUMN_DEFAULT'] }}
-                                </td>
-                                <td>
-                                    <span class="btn btn-primary full-width" data="{{ struct["table"] }}"><i class="glyphicon glyphicon-edit"></i></span>
+                                    <span class="btn btn-primary full-width" ><i class="glyphicon glyphicon-edit"></i></span>
                                 </td>
                                 <td>
                                     <span class="btn btn-danger full-width "><i class="glyphicon glyphicon-trash"></i> </span>
@@ -108,8 +88,8 @@
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="5">
-                                    <span>Cette table ne comporte aucune colonne.</span>
+                                <td>
+                                    <span>Cette table est vide.</span>
                                 </td>
                             </tr>
                         {% endfor %}

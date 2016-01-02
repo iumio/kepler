@@ -85,7 +85,7 @@
                                     {{ oneTable['data_length'] / 1024   | round(1,'floor') }} Ko
                                 </td>
                                 <td>
-                                    <span class="btn btn-info full-width" data="{{ oneTable["table"] }}"><i class="glyphicon glyphicon-list-alt"></i></span>
+                                    <a class="btn btn-info full-width" href="index.php?run=content_table&dbname={{ dbname }}&t_name={{ oneTable['table_name'] }}"><i class="glyphicon glyphicon-list-alt"></i></a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary full-width" href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ oneTable['table_name'] }}"><i class="glyphicon glyphicon-list-alt"></i><i class="glyphicon glyphicon-resize-horizontal"></i><i class="glyphicon glyphicon-list-alt"></i></a>

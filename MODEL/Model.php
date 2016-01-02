@@ -47,6 +47,10 @@ class Model
         return $tables_struct;
     }
 
+    /** request add new db
+     * @param $newDBname
+     * @return PDOStatement|string
+     */
     public function add_new_db($newDBname)
     {
         try {
@@ -69,6 +73,10 @@ class Model
         }
     }
 
+    /** request delete DB
+     * @param $db
+     * @return PDOStatement|string
+     */
     public function drop_db($db)
     {
         try {
@@ -79,6 +87,11 @@ class Model
         }
     }
 
+    /** request delete table
+     * @param $dbname
+     * @param $table
+     * @return PDOStatement|string
+     */
     public function drop_table($dbname, $table)
     {
         try {
@@ -90,6 +103,12 @@ class Model
         }
     }
 
+    /** request rename table
+     * @param $dbname
+     * @param $table
+     * @param $new_name_table
+     * @return PDOStatement|string
+     */
     public function rename_the_table($dbname, $table, $new_name_table)
     {
         try {
@@ -100,6 +119,27 @@ class Model
         }
     }
 
+    /** get data of a table
+     * @param $dbname
+     * @param $table
+     * @return PDOStatement|string
+     */
+    public function get_content_table($dbname, $table)
+    {
+        try {
+            $result = Connector::prepare("SELECT * FROM $dbname.$table", NULL);
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+
+    /** check if table exist
+     * @param $dbname
+     * @param $table
+     * @return PDOStatement|string
+     *
+     */
     public function check_table_exist($dbname, $table)
     {
         try {
@@ -128,6 +168,10 @@ class Model
         return $version;
     }
 
+    /** check if db exist
+     * @param $dbname
+     * @return PDOStatement|string
+     */
     public function check_database_exist($dbname)
     {
         try {

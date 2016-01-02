@@ -8,11 +8,6 @@
  */
 class Controller
 {
-
-    //KEVIN - La méthode getModel est en faite un Singleton
-    //C'est à dire que cette méthode va s'assurer que il y'a une seule instance de Model!
-    // Donc quand tu dois accéder à la couche Model pour faire des requêtes
-    // Toujours utiliser cette méthode !!!
     static private $modal_instance = NULL;
 
     /**
@@ -40,7 +35,6 @@ class Controller
         unset($model);
     }
 
-    // KEVIN ça c'est la méthode qui va fusionner les deux listes ( Show DATABASES et la putin de requêtes)
     /** Merge the two list of databases
      * @param $dbs1
      * @param $dbs2
@@ -55,6 +49,11 @@ class Controller
         return ($dbs1);
     }
 
+    /** list db
+     * @param $list
+     * @param $arg
+     * @return int
+     */
     private function list_db($list, $arg)
     {
         for ($i = 0; $i < count($list); $i++) {
@@ -64,7 +63,9 @@ class Controller
         return (0);
     }
 
-
+    /** return les logs
+     * @return array
+     */
     public function getLogs()
     {
         $file = fopen("CONTROLLER/LOG/log.txt", "r");
@@ -84,8 +85,9 @@ class Controller
         return (self::$modal_instance == NULL) ? self::$modal_instance = new Model() : self::$modal_instance;
     }
 
-    /**
-     * show tables of a DB
+    /** show tables of a DB
+     * @param $dbname
+     * @throws DatabaseException
      */
     public function showDB($dbname)
     {
@@ -100,8 +102,10 @@ class Controller
         unset($model);
     }
 
-    /**
-     * show struct of a table
+    /** show struct of a table
+     * @param $dbname
+     * @param $t_name
+     * @throws TableException
      */
     public function showTableStruct($dbname, $t_name)
     {
@@ -116,6 +120,28 @@ class Controller
         unset($model);
     }
 
+    /** show data of a table
+     * @param $dbname
+     * @param $t_name
+     * @throws TableException
+     */
+    public function showTableData($dbname, $t_name)
+    {
+        $model = $this->getModel();
+        $databases = $model->get_all_db_name()->fetchAll();
+        if ($model->check_table_exist($dbname, $t_name)->fetch() != NULL) {
+            $tables_data = $model->get_content_table($dbname, $t_name)->fetchAll();
+            $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
+            echo $_SESSION['twig']->render("table_view.html.twig",
+                array("alldbname" => $databases, "tables_data" => $tables_data, "tables_struct" =>$tables_struct, "t_name" => $t_name,"dbname" => $dbname));
+        } else
+            throw new TableException("La table n'existe pas dans cette base!", $t_name, $databases);
+        unset($model);
+    }
+
+    /** form for create new DB
+     *
+     */
     public function formNewDB()
     {
         $model = $this->getModel();
@@ -124,6 +150,9 @@ class Controller
         unset($model);
     }
 
+    /** add a new DB
+     * @param $newDBname
+     */
     public function addDB($newDBname)
     {
         $model = $this->getModel();
@@ -137,6 +166,9 @@ class Controller
         unset($model);
     }
 
+    /** delete a db
+     * @param $db
+     */
     public function drop_db($db)
     {
         $model = $this->getModel();
@@ -150,6 +182,10 @@ class Controller
         unset($model);
     }
 
+    /** delete a table from a db
+     * @param $dbname
+     * @param $table
+     */
     public function delete_table($dbname, $table)
     {
         $model = $this->getModel();
@@ -163,6 +199,11 @@ class Controller
         unset($model);
     }
 
+    /** Rename a table
+     * @param $dbname
+     * @param $table
+     * @param $new_name_table
+     */
     public function rename_table($dbname, $table, $new_name_table)
     {
         $model = $this->getModel();
@@ -176,6 +217,10 @@ class Controller
         unset($model);
     }
 
+    /** rename a DB
+     * @param $name_db
+     * @param $newdbname
+     */
     public function renameDB($name_db, $newdbname)
     {
         $model = $this->getModel();
@@ -195,6 +240,9 @@ class Controller
         unset($model);
     }
 
+    /** return error
+     * @param $pdo
+     */
     private function return_error($pdo)
     {
         $error = $pdo->errorInfo();
@@ -202,6 +250,9 @@ class Controller
         echo $error;
     }
 
+    /** write logs
+     * @param $message
+     */
     private function writeFile($message)
     {
         $file = fopen("CONTROLLER/LOG/log.txt", "a");

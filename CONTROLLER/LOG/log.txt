@@ -180,3 +180,13 @@ La table t de la base de données  a été supprimée
 La table aaaaa à été renommée en v
 La table v de la base de données b a été supprimée
 La table t à été renommée en n
+La base de données sucemabite a été supprimée
+La base de données b a eté rennomée en aa.
+La base de données aa a eté rennomée en azefaf.
+La base de données azefaf a eté rennomée en a.
+La base de données dddddddddd a été supprimée
+La base de données iojiojojoj a été supprimée
+La base de données jhvhjhgjv a été supprimée
+La base de données sdqsqs a été supprimée
+La base de données jubhbjhkbhjk a été supprimée
+La base de données jvvv a été supprimée

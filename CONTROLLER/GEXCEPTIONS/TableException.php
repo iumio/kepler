@@ -5,6 +5,8 @@
  * User: kevinhuron
  * Date: 30/12/2015
  * Time: 20:08
+ * Class TableException
+ * This class generate a exception about Table
  */
 class TableException extends Exception
 {

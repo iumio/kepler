@@ -27,7 +27,7 @@ class Starter {
             return  $array;
         } catch (Exception $exc) {
             $error = "Erreur d'execution de l'autoloader ";
-            include 'VIEWS/errorOut.html.twig';
+            include 'VIEWS/error.html.twig';
         }
     }
 
@@ -44,7 +44,7 @@ class Starter {
             $_SESSION['twig'] = new Twig_Environment(new Twig_Loader_Filesystem('VIEWS'), array('cache' => false, 'debug' => true));
         } catch (Exception $e) {
             $error = "Twig n'est pas disponible";
-            include 'VIEWS/errorOut.html.twig';
+            include 'VIEWS/error.html.twig';
         }
     }
 }
