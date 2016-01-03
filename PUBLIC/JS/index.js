@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
 
-    $('.table').DataTable();
+    $('.tableaux').DataTable();
 
     $("a[href='#makeQuery']").each(function () {
         $(this).click(function (e) {
