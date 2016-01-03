@@ -4,6 +4,8 @@
 
 $(document).ready(function () {
 
+    $('.table').DataTable();
+
     $("a[href='#makeQuery']").each(function () {
         $(this).click(function (e) {
             e.preventDefault();
