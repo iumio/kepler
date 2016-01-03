@@ -43,3 +43,9 @@
 .marginTop20{
     margin-top: 20px;
 }
+
+.help_edit{
+    float: right;
+    color:red;
+    font-weight: bold!important;
+}

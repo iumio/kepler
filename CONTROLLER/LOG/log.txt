@@ -195,3 +195,6 @@ Une donnée ayant l'id N° , dans la table code, dans la base newsletter à ét�
 Une donnée ayant l'id N° , dans la table code, dans la base newsletter à été supprimée
 Une donnée ayant l'id N° 50, dans la table code, dans la base newsletter à été supprimée
 Une donnée ayant l'id N° 1, dans la table admin, dans la base testK à été supprimée
+Une donnée à été changé : 0c4b9879d23b76aze, d'Id : 2, dans la table code, dans la base newsletter
+Une donnée à été changé : kevin le putain de bg, d'Id : 1, dans la table contact, dans la base newsletter
+Une donnée à été changé : alexis musclor, d'Id : 2, dans la table contact, dans la base newsletter

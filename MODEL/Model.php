@@ -97,6 +97,16 @@ class Model
         }
     }
 
+    public function edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value)
+    {
+        try {
+            $result = Connector::prepare("UPDATE $db.$table SET $col_name_edit = ? WHERE $table.$id_col_name = ?;", array($value, $id_value));
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+
     /** request delete table
      * @param $dbname
      * @param $table

@@ -151,7 +151,7 @@ $(document).ready(function () {
                     $("#modal_add_db").modal("show");
                     window.setTimeout(function() {
                         window.location.href = 'index.php?run=showDB&value='+name_db;
-                    }, 3000);
+                    }, 2000);
                 }
             })
         })
@@ -182,7 +182,7 @@ $(document).ready(function () {
                     $("#modal_info").modal("show");
                     window.setTimeout(function () {
                         window.location.href = 'index.php?run=showDB&value=' + n_name_db;
-                    }, 3000);
+                    }, 2000);
                 }
             })
         })
@@ -212,7 +212,7 @@ $(document).ready(function () {
                     $("#modal_info").modal("show");
                     window.setTimeout(function () {
                         window.location.href = 'index.php?run=indexAction';
-                    }, 3000);
+                    }, 2000);
                 }
             })
         })
@@ -244,7 +244,7 @@ $(document).ready(function () {
                     $("#modal_info").modal("show");
                     window.setTimeout(function () {
                         window.location.href = 'index.php?run=showDB&value=' +name_db;
-                    }, 3000);
+                    }, 2000);
                 }
             })
         })
@@ -304,6 +304,48 @@ $(document).ready(function () {
                 }
                 else {
                     $("#modal_info").find(".modal-body").html("<p>La donnée à bien été supprimée</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    window.setTimeout(function () {
+                        window.location.href = 'index.php?run=content_table&dbname='+name_db+'&t_name='+table_name;
+                    }, 2000);
+                }
+            })
+        })
+    });
+    $(".data").each(function () {
+        $(this).change(function (e) {
+            e.preventDefault();
+            var new_value = $("input[name='newValue']").val();
+            var name_db = $("input[name='name_db']").val();
+            var table_name = $("input[name='tale_name']").val();
+            var col_name_id = $(".btn-del-data").parent().siblings(":first").attr('name');
+            var id_value = $('td:first', $(this).parents('tr')).text();
+            id_value = id_value.replace(/[\s+][\s]/g, "");
+            id_value = id_value.replace(/[" "]/g, "");
+            var col_name_edit = $(this).attr('name');
+            console.log(new_value);
+            console.log(name_db);
+            console.log(table_name);
+            console.log(col_name_id);
+            console.log(col_name_edit);
+            console.log(id_value);
+            var rq = $.ajax({
+                url: 'index.php?run=edit_data&name_db='+name_db+'&table_name='+table_name+'&id_col_name='+col_name_id+'&col_name_edit='+col_name_edit+'&id_value='+id_value+'&value='+new_value,
+                //data: {'nameDB':name_db },
+                method: "POST"
+            });
+            rq.success(function (result) {
+                console.log(result);
+                $("#modal_info").modal("hide");
+                if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                   $("#modal_info").find(".modal-body").html("<p>La donnée à bien été Modifiée</p>");
                     $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
                     $("#modal_info").find(".modal-footer").hide();
                     $("#modal_info").modal("show");

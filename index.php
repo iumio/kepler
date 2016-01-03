@@ -55,6 +55,8 @@ class Index
                 $controller->showTableData($request["dbname"],$request["t_name"]);
             else if ($request["run"] == "delete_data")
                 $controller->drop_data($request["name_db"],$request["table_name"],$request["id_col_name"],$request["id_field"]);
+            else if ($request["run"] == "edit_data")
+                $controller->edit_data($request["name_db"],$request["table_name"],$request["id_col_name"],$request["col_name_edit"],$request["id_value"],$request["value"]);
             else {
                 echo $_SESSION['twig']->render("error.html.twig", array("error" => "Mauvais paramètres !"));
             }

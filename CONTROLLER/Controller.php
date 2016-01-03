@@ -152,6 +152,19 @@ class Controller
         unset($model);
     }
 
+    public function edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value)
+    {
+        $model = $this->getModel();
+        $result = $model->edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value);
+        $c = $result->rowCount();
+        if ($c) {
+            $this->writeFile("Une donnée à été changé : $value, d'Id : $id_value, dans la table $table, dans la base $db");
+            echo 1;
+        } else
+            $this->return_error($result);
+        unset($model);
+    }
+
     /** form for create new DB
      *
      */
