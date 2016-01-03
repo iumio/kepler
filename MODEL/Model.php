@@ -87,6 +87,13 @@ class Model
         }
     }
 
+    /** delete a data
+     * @param $db
+     * @param $table
+     * @param $id_col_name
+     * @param $id_field
+     * @return PDOStatement|string
+     */
     public function delete_data($db, $table, $id_col_name, $id_field)
     {
         try {
@@ -97,6 +104,15 @@ class Model
         }
     }
 
+    /** edit a data
+     * @param $db
+     * @param $table
+     * @param $id_col_name
+     * @param $col_name_edit
+     * @param $id_value
+     * @param $value
+     * @return PDOStatement|string
+     */
     public function edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value)
     {
         try {

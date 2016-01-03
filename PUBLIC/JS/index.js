@@ -325,12 +325,6 @@ $(document).ready(function () {
             id_value = id_value.replace(/[\s+][\s]/g, "");
             id_value = id_value.replace(/[" "]/g, "");
             var col_name_edit = $(this).attr('name');
-            console.log(new_value);
-            console.log(name_db);
-            console.log(table_name);
-            console.log(col_name_id);
-            console.log(col_name_edit);
-            console.log(id_value);
             var rq = $.ajax({
                 url: 'index.php?run=edit_data&name_db='+name_db+'&table_name='+table_name+'&id_col_name='+col_name_id+'&col_name_edit='+col_name_edit+'&id_value='+id_value+'&value='+new_value,
                 //data: {'nameDB':name_db },

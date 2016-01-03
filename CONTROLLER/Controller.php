@@ -139,6 +139,12 @@ class Controller
         unset($model);
     }
 
+    /** delete a data
+     * @param $db
+     * @param $table
+     * @param $id_col_name
+     * @param $id_field
+     */
     public function drop_data($db, $table, $id_col_name, $id_field)
     {
         $model = $this->getModel();
@@ -152,6 +158,14 @@ class Controller
         unset($model);
     }
 
+    /** edit a data
+     * @param $db
+     * @param $table
+     * @param $id_col_name
+     * @param $col_name_edit
+     * @param $id_value
+     * @param $value
+     */
     public function edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value)
     {
         $model = $this->getModel();
