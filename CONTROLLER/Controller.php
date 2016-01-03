@@ -139,6 +139,19 @@ class Controller
         unset($model);
     }
 
+    public function drop_data($db, $table, $id_col_name, $id_field)
+    {
+        $model = $this->getModel();
+        $result = $model->delete_data($db, $table, $id_col_name, $id_field);
+        $c = $result->rowCount();
+        if ($c) {
+            $this->writeFile("Une donnée ayant l'id N° $id_field, dans la table $table, dans la base $db à été supprimée");
+            echo 1;
+        } else
+            $this->return_error($result);
+        unset($model);
+    }
+
     /** form for create new DB
      *
      */

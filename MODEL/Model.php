@@ -87,6 +87,16 @@ class Model
         }
     }
 
+    public function delete_data($db, $table, $id_col_name, $id_field)
+    {
+        try {
+            $result = Connector::prepare("DELETE FROM $db.$table WHERE $table.$id_col_name = ?", array($id_field));
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+
     /** request delete table
      * @param $dbname
      * @param $table

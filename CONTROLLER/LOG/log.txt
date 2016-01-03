@@ -190,3 +190,8 @@ La base de données jhvhjhgjv a été supprimée
 La base de données sdqsqs a été supprimée
 La base de données jubhbjhkbhjk a été supprimée
 La base de données jvvv a été supprimée
+Une donnée ayant l'id N° , dans la table code, dans la base newsletter à été supprimée
+Une donnée ayant l'id N° , dans la table code, dans la base newsletter à été supprimée
+Une donnée ayant l'id N° , dans la table code, dans la base newsletter à été supprimée
+Une donnée ayant l'id N° 50, dans la table code, dans la base newsletter à été supprimée
+Une donnée ayant l'id N° 1, dans la table admin, dans la base testK à été supprimée

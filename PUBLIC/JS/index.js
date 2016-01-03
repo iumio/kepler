@@ -115,6 +115,15 @@ $(document).ready(function () {
         $("#wrapper").toggleClass("toggled");
     });
 
+    $(".btn-del-data").click(function(e) {
+        var id_field = $(this).attr("name");
+        var col_name = $(this).parent().siblings(":first").attr('name');
+        e.preventDefault();
+        $("#modal_delete_data").modal('show');
+        $(".text-info").html(id_field);
+        $("input[name='col_name']").val(col_name);
+    });
+
     $("#form_add_db").each(function(){
         $(this).submit(function(e)
         {
@@ -126,7 +135,6 @@ $(document).ready(function () {
             });
             rq.success(function(result)
             {
-                console.log(result);
                 if (result != 1)
                 {
                     $("#modal_add_db").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>"+result+"</p>");
@@ -159,7 +167,6 @@ $(document).ready(function () {
                 method: "POST"
             });
             rq.success(function (result) {
-                console.log(result);
                 $("#modal_info").modal("hide");
                 if (result != 1) {
                     $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
@@ -190,7 +197,6 @@ $(document).ready(function () {
                 method: "POST"
             });
             rq.success(function (result) {
-                console.log(result);
                 $("#modal_info").modal("hide");
                 if (result != 1) {
                     $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
@@ -248,7 +254,6 @@ $(document).ready(function () {
             var new_name_table = $("input[name='new_table_name']").val();
             var name_db = $("input[name='name_db']").val();
             var table_name = $("input[name='tale_name']").val();
-            console.log(name_db);
             var rq = $.ajax({
                 url: 'index.php?run=rename_table&name_db='+name_db+'&table_name='+table_name+'&new_name_table='+new_name_table,
                 //data: {'nameDB':name_db },
@@ -269,6 +274,39 @@ $(document).ready(function () {
                     $("#modal_info").modal("show");
                     window.setTimeout(function () {
                         window.location.href = 'index.php?run=showDB&value='+name_db;
+                    }, 2000);
+                }
+            })
+        })
+    });
+    $(".form_delete_data").each(function () {
+        $(this).submit(function (e) {
+            e.preventDefault();
+            $("#modal_delete_data").modal('hide');
+            var name_db = $("input[name='name_db']").val();
+            var table_name = $("input[name='tale_name']").val();
+            var col_name = $("input[name='col_name']").val();
+            var id_field = $(".text-info").html();
+            var rq = $.ajax({
+                url: 'index.php?run=delete_data&name_db='+name_db+'&table_name='+table_name+'&id_col_name='+col_name+'&id_field='+id_field,
+                //data: {'nameDB':name_db },
+                method: "POST"
+            });
+            rq.success(function (result) {
+                console.log(result);
+                $("#modal_info").modal("hide");
+                if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                    $("#modal_info").find(".modal-body").html("<p>La donnée à bien été supprimée</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    window.setTimeout(function () {
+                        window.location.href = 'index.php?run=content_table&dbname='+name_db+'&t_name='+table_name;
                     }, 2000);
                 }
             })

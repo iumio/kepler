@@ -53,6 +53,8 @@ class Index
                 $controller->rename_table($request["name_db"],$request["table_name"],$request["new_name_table"]);
             else if ($request["run"] == "content_table")
                 $controller->showTableData($request["dbname"],$request["t_name"]);
+            else if ($request["run"] == "delete_data")
+                $controller->drop_data($request["name_db"],$request["table_name"],$request["id_col_name"],$request["id_field"]);
             else {
                 echo $_SESSION['twig']->render("error.html.twig", array("error" => "Mauvais paramètres !"));
             }

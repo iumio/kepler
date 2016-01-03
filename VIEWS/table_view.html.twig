@@ -75,7 +75,7 @@
                             <tr>
                                 {% for struct in tables_struct %}
                                     {% set column_name = struct['COLUMN_NAME'] %}
-                                    <td>
+                                    <td name="{{ column_name }}">
                                         {{ data[column_name] }}
                                     </td>
                                 {% endfor %}
@@ -83,7 +83,7 @@
                                     <a class="btn btn-primary full-width btn-edit-data"><i class="glyphicon glyphicon-edit"></i></a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-danger full-width btn-del-data"><i class="glyphicon glyphicon-trash"></i> </a>
+                                    <a class="btn btn-danger full-width btn-del-data" id_col_name="{{ column_name }}" name="{{ data[0] }}"><i class="glyphicon glyphicon-trash"></i> </a>
                                 </td>
                             </tr>
                         {% else %}
@@ -135,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_delete_table" tabindex="-1"
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_delete_data" tabindex="-1"
              role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -143,12 +143,13 @@
                         <h4 class="modal-title myModalLabel">Confirmation <i
                                     class="glyphicon glyphicon-question-sign"></i></h4>
                     </div>
-                    <form method="POST" action="" class="form_delete_table">
+                    <form method="POST" action="" class="form_delete_data">
                         <div class="modal-body">
-                            Vous voulez vraiment suprimer <span class="text-info">{{ t_name }}</span> ?
+                            Vous voulez vraiment suprimer cette donnée qui à l'id N° <span class="text-info"></span> ?
                         </div>
                         <div class="modal-footer">
-                            <input type="hidden" name="table_name_delete" value="{{ t_name }}">
+                            <input type="hidden" name="col_name">
+                            <input type="hidden" name="table_name" value="{{ t_name }}">
                             <input type="hidden" name="name_db" value="{{ dbname }}">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
                             <button type="submit" class="btn btn-success">Oui</button>
