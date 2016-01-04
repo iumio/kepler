@@ -8,12 +8,10 @@
 
 class Starter {
 
-
-    public static function switchOnApp() {
-        $a = new Starter();
-        $array = $a->initAutoloader();
-        $a->__autoloader($array);
-        $a->initTwig();
+    public function __construct() {
+        $array = $this->initAutoloader();
+        $this->__autoloader($array);
+        $this->initTwig();
     }
     
     public function initAutoloader(){

@@ -19,7 +19,7 @@ class Index
     static public function main($request)
     {
         require_once "Starter.php";
-        Starter::switchOnApp();
+        new Starter();
         $controller = new Controller();
         if ($request == NULL)
             $controller->indexAction();
