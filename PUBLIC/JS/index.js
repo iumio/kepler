@@ -81,6 +81,10 @@ $(document).ready(function () {
     $(".btn-edit-field").click(function (e) {
         e.preventDefault();
         var field_name = $(this).attr("name");
+        var field_type = $(this).attr("field_type");
+        field_type = field_type.toUpperCase();
+        console.log(field_type);
+        $("select[name='field_type']").val(field_type);
         $("#modal_edit_field"+field_name).modal('show');
     });
 
