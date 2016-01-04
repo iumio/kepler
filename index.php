@@ -34,7 +34,6 @@ class Index
             $controller = new Controller();
             if ($request["run"] == "showDB")
                 $controller->showDB($request["value"]);
-
             else if ($request["run"] == "showTableStruct")
                 $controller->showTableStruct($request["dbname"], $request['tName']);
             else if ($request["run"] == "indexAction")

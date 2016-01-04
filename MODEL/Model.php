@@ -61,17 +61,17 @@ class Model
         }
     }
 
-    /** @deprecated
-     * @param $dbname
-     * @param $filepath
+    /** Migrate all database tables
+     * @param $dbname New database name
+     * @param $db_drop Database to migrate
      * @return PDOStatement|string
      */
-    public function use_and_source($dbname, $filepath)
+    public function migrate_db($dbname, $db_drop)
     {
         try {
-            $result = Connector::prepare("use $dbname", NULL);
-            $result = Connector::prepare("SOURCE $filepath", NULL);
-            echo $result->queryString;
+            $get_tables = $this->get_tables($db_drop);
+            while ($line = $get_tables->fetch())
+                $result = Connector::prepare("RENAME TABLE $db_drop.".$line['table_name'] ." TO $dbname.".$line['table_name'], NULL);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());

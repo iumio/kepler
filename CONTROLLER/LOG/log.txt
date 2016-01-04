@@ -200,3 +200,4 @@ Une donnée à été changé : kevin le putain de bg, d'Id : 1, dans la table co
 Une donnée à été changé : alexis musclor, d'Id : 2, dans la table contact, dans la base newsletter
 La table sfsdf de la base de données kiklnkjnk a été supprimée
 La base de données kiklnkjnk a eté rennomée en azerty.
+La base de données aze a eté rennomée en azerty.

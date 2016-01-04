@@ -78,6 +78,12 @@ $(document).ready(function () {
         });
     });
 
+    $(".btn-edit-field").click(function (e) {
+        e.preventDefault();
+        var field_name = $(this).attr("name");
+        $("#modal_edit_field"+field_name).modal('show');
+    });
+
     $(".btn-delete-table").click(function (e) {
         var table_name = $(this).attr("name");
         e.preventDefault();
@@ -230,7 +236,6 @@ $(document).ready(function () {
                 method: "POST"
             });
             rq.success(function (result) {
-                console.log(result);
                 $("#modal_info").modal("hide");
                 if (result != 1) {
                     $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
@@ -262,7 +267,6 @@ $(document).ready(function () {
                 method: "POST"
             });
             rq.success(function (result) {
-                console.log(result);
                 $("#modal_info").modal("hide");
                 if (result != 1) {
                     $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
@@ -295,7 +299,6 @@ $(document).ready(function () {
                 method: "POST"
             });
             rq.success(function (result) {
-                console.log(result);
                 $("#modal_info").modal("hide");
                 if (result != 1) {
                     $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
@@ -331,7 +334,6 @@ $(document).ready(function () {
                 method: "POST"
             });
             rq.success(function (result) {
-                console.log(result);
                 $("#modal_info").modal("hide");
                 if (result != 1) {
                     $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");

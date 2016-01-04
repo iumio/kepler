@@ -264,19 +264,12 @@ class Controller
     public function renameDB($name_db, $newdbname)
     {
         $model = $this->getModel();
-        $result = $this->backup_database($name_db);
-        if ($result == NULL)
-            echo "Impossible de créer le fichier de sauvegarde";
-        else {
             $addDB = $model->add_new_db($newdbname);
             $c = $addDB->rowCount();
-            if ($c) {
-                $res = $this->restore_database($newdbname, $model, $name_db, $result);
-                $file_r = $this->delete_backup($result);
-                echo ($file_r != 1 && $res == 1) ? $file_r : ($file_r == 1 && $res != 1) ? $res : 1;
-            } else
+            if ($c)
+                echo ($res = $this->do_migration($newdbname, $model, $name_db) == 1) ? $res : 1;
+            else
                 $this->return_error($addDB);
-        }
         unset($model);
     }
 
@@ -310,7 +303,9 @@ class Controller
         }
     }
 
-    /** backup the db
+    /**
+     * backup the db
+     * @deprecated Use restore_database instead
      * @param $db
      * @return null|string
      */
@@ -326,13 +321,10 @@ class Controller
         }
     }
 
-    private function restore_database($newdbname, $model, $name_db, $filepath)
+    private function do_migration($newdbname, $model, $name_db)
     {
         try {
-            $cmd = "mysql -h " . Connector::getInfo("host") .
-                " -u " . Connector::getInfo("username") .
-                " $newdbname --password=" . Connector::getInfo("password") . " < $filepath";
-            exec($cmd);
+            $model->migrate_db($newdbname, $name_db);
             $model->drop_db($name_db);
             $this->writeFile("La base de données $name_db a eté rennomée en $newdbname.");
             return (1);

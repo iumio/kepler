@@ -101,10 +101,41 @@
                                     {{ struct['COLUMN_DEFAULT'] }}
                                 </td>
                                 <td>
-                                    <span class="btn btn-primary full-width" data="{{ struct["table"] }}"><i class="glyphicon glyphicon-edit"></i></span>
+                                    <span class="btn btn-primary full-width btn-edit-field" name="{{ struct['COLUMN_NAME'] }}"><i class="glyphicon glyphicon-edit"></i></span>
+                                    <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_edit_field{{ struct['COLUMN_NAME'] }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel1">Editer le champs <span class="text-info"></span></h4>
+                                                </div>
+                                                <form method="POST" action="" class="form_edit_field">
+                                                    <div class="modal-body">
+                                                        {% if struct['COLUMN_KEY'] == "PRI" %}
+                                                            <input type="text" name="new_field_name" class="form-control" value="{{ struct['COLUMN_NAME'] }}" readonly>
+                                                        {% else %}
+                                                            <input type="text" name="new_field_name" class="form-control" value="{{ struct['COLUMN_NAME'] }}">
+                                                        {% endif %}
+                                                        <input type="text" name="new_field_type" class="form-control" value="{{ struct['COLUMN_TYPE'] }}">
+                                                        {% if struct['IS_NULLABLE'] == "YES" %}
+                                                            <input type="text" name="new_table_name" class="form-control" value="Oui">
+                                                        {% else %}
+                                                            <input type="text" name="new_table_name" class="form-control" value="Non">
+                                                        {% endif %}
+                                                        <input type="text" name="new_table_name" class="form-control" value="{{ struct['COLUMN_DEFAULT'] }}">
+                                                        <input type="hidden" name="name_db" value="{{ dbname }}">
+                                                        <input type="hidden" name="tale_name" value="{{ t_name }}">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                        <button type="submit" class="btn btn-success">Valider</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
-                                    <span class="btn btn-danger full-width "><i class="glyphicon glyphicon-trash"></i> </span>
+                                    <span class="btn btn-danger full-width"><i class="glyphicon glyphicon-trash"></i> </span>
                                 </td>
                             </tr>
                         {% endfor %}
