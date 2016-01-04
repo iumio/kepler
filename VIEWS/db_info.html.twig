@@ -164,10 +164,10 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" name="field_name"/>
+                                    <input type="text" class="form-control" name="field_name[]" required="required"/>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="field_type">
+                                    <select class="form-control" name="field_type[]">
                                         <option value="INT" title="Un nombre entier de 4 octets. La fourchette des entiers relatifs est de -2 147 483 648 à 2 147 483 647. Pour les entiers positifs, c'est de 0 à 4 294 967 295">INT</option>
                                         <option value="VARCHAR" title="Une chaîne de longueur variable (0-65,535), la longueur effective réelle dépend de la taille maximum d'une ligne">VARCHAR</option>
                                         <option value="TEXT" title="Une colonne TEXT d'une longueur maximum de 65 535 (2^16 - 1) caractères, stockée avec un préfixe de deux octets indiquant la longueur de la valeur en octets">TEXT</option>
@@ -228,45 +228,43 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" name="field_size"/>
+                                    <input type="text" class="form-control" name="field_size[]" required="required"/>
                                 </td>
                                 <td>
-                                    <select name="select_default">
-                                        <option selected>Aucune</option>
+                                    <select class="form-control" name="select_default[]" id="sd">
+                                        <option selected="selected">Aucune</option>
                                         <option value="def">Tel que défini : </option>
                                         <option value="NULL">NULL</option>
                                         <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option>
                                     </select>
-                                    <input type="text" class="form-control input-sm noShow marginTop20" name="default"/>
+                                    <input type="text" class="form-control input-sm noShow marginTop20" name="default[]" value="NULL"/>
+                                </td>
+                                <td class="w100">
+                                       <select class="form-control" name="is_null[]">
+                                            <option value="no" selected="selected">Non</option>
+                                            <option value="yes">Oui</option>
+                                           </select>
                                 </td>
                                 <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <select name="select_default">
-                                        <option selected>---</option>
+                                    <select class="form-control" name="select_index[]">
+                                        <option selected="selected" value="NULL">---</option>
                                         <option value="PRIMARY">PRIMARY</option>
                                         <option value="UNIQUE">UNIQUE</option>
                                         <option value="INDEX">INDEX</option>
                                         <option value="FULLTEXT">FULLTEXT</option>
                                     </select>
                                 </td>
-                                <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox">
-                                        </label>
+                                <td class="w100">
+                                     <select class="form-control" name="is_ai[]">
+                                            <option value="no" selected="selected">Non</option>
+                                            <option value="yes">Oui</option>
+                                           </select>
                                     </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                         <input type="hidden" name="db_name" value="{{ dbname }}">
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                         <button type="submit" class="btn btn-success">Valider</button>

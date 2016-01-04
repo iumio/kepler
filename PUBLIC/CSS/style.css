@@ -9,6 +9,14 @@
     width: 100%!important;
 }
 
+.form_add_table
+{
+    overflow-x:auto ;
+}
+.w100
+{
+    width: 100px;
+}
 .panel-full
 {
     margin: 10px 10px 10px 10px;
