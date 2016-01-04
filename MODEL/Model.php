@@ -61,6 +61,11 @@ class Model
         }
     }
 
+    /** @deprecated
+     * @param $dbname
+     * @param $filepath
+     * @return PDOStatement|string
+     */
     public function use_and_source($dbname, $filepath)
     {
         try {

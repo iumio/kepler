@@ -8,7 +8,7 @@
  */
 class Controller
 {
-    static private $modal_instance = NULL;
+    private $model_instance = NULL;
 
     /**
      * First Page of App
@@ -82,7 +82,7 @@ class Controller
      */
     private function getModel()
     {
-        return (self::$modal_instance == NULL) ? self::$modal_instance = new Model() : self::$modal_instance;
+        return ($this->model_instance == NULL) ? $this->model_instance = new Model() : $this->model_instance;
     }
 
     /** show tables of a DB
@@ -264,7 +264,7 @@ class Controller
     public function renameDB($name_db, $newdbname)
     {
         $model = $this->getModel();
-        $result = self::backup_database($name_db);
+        $result = $this->backup_database($name_db);
         if ($result == NULL)
             echo "Impossible de créer le fichier de sauvegarde";
         else {
@@ -310,6 +310,10 @@ class Controller
         }
     }
 
+    /** backup the db
+     * @param $db
+     * @return null|string
+     */
     private function backup_database($db)
     {
         $filepath = "CONTROLLER/BACKUP/backup_$db.sql";
