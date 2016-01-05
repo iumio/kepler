@@ -120,15 +120,39 @@ class Controller
         unset($model);
     }
 
+    private function get_gv($type, $size)
+    {
+        if ($type == "VARCHAR" && $size == "NV")
+            return (1);
+        else if (($type == "DATE" && $size != "NV") ||
+            ($type == "TIMESTAMP" && $size != "NV") ||
+            ($type == "DATETIME" && $size != "NV") ||
+            ($type == "BOOLEAN" && $size != "NV") ||
+            ($type == "TIME" && $size != "NV"))
+            return (-1);
+        else
+            return (0);
+    }
+
+    private function make_echo($val)
+    {
+        echo $val;
+        return ;
+    }
     public function add_table($request)
     {
         $add_t = array();
         $table = $request["name_table"];
         $db = $request["namedb"];
         for ($i = 0; $i < count($request['name']); $i++) {
-            array_push($add_t, array($request["name"][$i], $request['type'][$i], $request['size'][$i],
-                ($request['default'][$i] != "def") ? $request['default'][$i] : $request['def_i'][$i],
-                $request['is_n'][$i], $request['index'][$i], $request['ai'][$i]));
+            $test = $this->get_gv($request['type'][$i], $request['size'][$i]);
+            if ($test == 1)
+                return $this->make_echo("[ERROR ON MPMA] VARCHAR must be have a size");
+            else if ($test == -1)
+                return $this->make_echo("[ERROR ON MPMA] ".$request['type'][$i]." does not have size.");
+                    array_push($add_t, array($request["name"][$i], $request['type'][$i], $request['size'][$i],
+                        ($request['default'][$i] != "def") ? $request['default'][$i] : $request['def_i'][$i],
+                        $request['is_n'][$i], $request['index'][$i], $request['ai'][$i]));
         }
         $model = $this->getModel();
         $result = $model->create_table($db, $table, $add_t);
@@ -292,12 +316,12 @@ class Controller
     public function renameDB($name_db, $newdbname)
     {
         $model = $this->getModel();
-            $addDB = $model->add_new_db($newdbname);
-            //$c = $addDB->rowCount();
-            if ($addDB->errorInfo()[1] == NULL)
-                echo ($res = $this->do_migration($newdbname, $model, $name_db) == 1) ? $res : 1;
-            else
-                $this->return_error($addDB);
+        $addDB = $model->add_new_db($newdbname);
+        //$c = $addDB->rowCount();
+        if ($addDB->errorInfo()[1] == NULL)
+            echo ($res = $this->do_migration($newdbname, $model, $name_db) == 1) ? $res : 1;
+        else
+            $this->return_error($addDB);
         unset($model);
     }
 

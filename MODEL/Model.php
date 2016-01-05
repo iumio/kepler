@@ -183,7 +183,7 @@ class Model
         for ($i = 0; $i < count($rows); $i++)
         {
             $str = $str.$rows[$i][0]." ".$rows[$i][1];
-            $str = ($rows[$i][1] != ("TIMESTAMP" || "DATE"))? $str."(".$rows[$i][2].")" : $str."";
+            $str = ($rows[$i][2] != "NV")? $str."(".$rows[$i][2].")" : $str."";
             $str = ($rows[$i][4] == "no")? $str." NOT NULL" : $str." NULL";
             if ($rows[$i][3] == "NULL")
                 $str = $str." DEFAULT NULL";
