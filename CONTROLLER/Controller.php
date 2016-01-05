@@ -120,8 +120,6 @@ class Controller
         unset($model);
     }
 
-    //////////////////////////////////////////
-
     public function add_table($request)
     {
         $add_t = array();
@@ -144,9 +142,6 @@ class Controller
         unset($model);
     }
 
-    //////////////////////////////////////////
-
-
     public function delete_field($dbname, $table, $field_name)
     {
         $model = $this->getModel();
@@ -158,7 +153,6 @@ class Controller
             $this->return_error($result);
         unset($model);
     }
-    ///////////////////////
 
     /** show data of a table
      * @param $dbname
