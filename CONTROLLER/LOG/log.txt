@@ -203,3 +203,5 @@ La base de données kiklnkjnk a eté rennomée en azerty.
 La base de données aze a eté rennomée en azerty.
 Une donnée à été changé : Vehiculesuce, d'Id : 1, dans la table categorie, dans la base anaxago
 La base de données qsqsqsqs a été supprimée
+La table aea à été renommée en azzazaz
+Une donnée ayant l'id N° 749, dans la table echeance, dans la base db563094984 à été supprimée

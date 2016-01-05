@@ -59,10 +59,20 @@
                     <table class="table table-striped table-bordered table-responsive tableaux">
                         <thead>
                         <tr>
-                            {% for struct in tables_struct %}
+                            {#{% for struct in tables_struct %}
                                 <th>{{ struct['COLUMN_NAME'] }}</th>
                             {% endfor %}
-                            <th>Supprimer</th>
+                            <th>Supprimer</th>#}
+                            {% set val = 0 %}
+                            {% for struct in tables_struct %}
+                                <th>{{ struct['COLUMN_NAME'] }}</th>
+                                {% if struct['COLUMN_KEY'] == "PRI" and val == 0 %}
+                                    {% set val = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if val == 1 %}
+                                <th>Supprimer</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -77,9 +87,11 @@
                                         <input type="hidden" name="tale_name" value="{{ t_name }}">
                                     </td>
                                 {% endfor %}
-                                <td>
-                                    <a class="btn btn-danger full-width btn-del-data" id_col_name="{{ column_name }}" name="{{ data[0] }}"><i class="glyphicon glyphicon-trash"></i> </a>
-                                </td>
+                                {% if val >= 1 %}
+                                    <td>
+                                        <a class="btn btn-danger full-width btn-del-data" id_col_name="{{ column_name }}" name="{{ data[0] }}"><i class="glyphicon glyphicon-trash"></i> </a>
+                                    </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
