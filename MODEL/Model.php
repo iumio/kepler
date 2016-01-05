@@ -85,7 +85,7 @@ class Model
     public function drop_db($db)
     {
         try {
-            $result = Connector::prepare("drop database $db", NULL);
+            $result = Connector::prepare("DROP DATABASE`$db`;", NULL);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
@@ -136,8 +136,7 @@ class Model
     public function drop_table($dbname, $table)
     {
         try {
-            $result = Connector::prepare("use $dbname", NULL);
-            $result = Connector::prepare("drop table $table", NULL);
+            $result = Connector::prepare("drop table $dbname.$table", NULL);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
@@ -160,6 +159,52 @@ class Model
         }
     }
 
+
+    /** Create table and rows
+     * @param $dbname
+     * @param $table
+     * @param $rows
+     * @return PDOStatement|string
+     */
+    public function create_table($dbname, $table, $rows)
+    {
+        try {
+            $query = $this->create_query_table($rows, $dbname, $table);
+            return Connector::prepare($query, NULL);
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+
+    public function create_query_table($rows = null, $dbname = null, $table = null)
+    {
+        $c = count($rows);
+        $str = "CREATE TABLE $dbname.$table ( ";
+        for ($i = 0; $i < count($rows); $i++)
+        {
+            $str = $str.$rows[$i][0]." ".$rows[$i][1];
+            $str = ($rows[$i][1] != ("TIMESTAMP" || "DATE"))?
+                $str."(".$rows[$i][2].")" : $str."";
+            $str = ($rows[$i][4] == "no")? $str." NOT NULL" : $str." NULL";
+            if ($rows[$i][3] == "NULL")
+                $str = $str." DEFAULT NULL";
+            else if ($rows[$i][3] == "CURRENT_TIMESTAMP")
+                $str = $str." DEFAULT CURRENT_TIMESTAMP";
+            else if ($rows[$i][3] == "Aucune")
+                $str = $str."";
+            else
+                $str." DEFAULT '".$rows[$i][3]."'";
+            $str = ($rows[$i][6] == "no")? $str."" : $str." auto_increment";
+            if ($rows[$i][5] == "PRIMARY")
+                $str = $str." PRIMARY KEY";
+            else
+                ($rows[$i][5] == "UNIQUE")? $str." UNIQUE" : $str." INDEX ix_".$rows[$i][0];
+            $str = ($c != ($i + 1))?  $str." , " : $str."";
+        }
+        $str = $str." );";
+        return $str;
+    }
+
     /** get data of a table
      * @param $dbname
      * @param $table
@@ -174,6 +219,17 @@ class Model
             return ($e->getMessage());
         }
     }
+///////////////////
+    public function drop_field($db, $table, $field_name)
+    {
+        try {
+            $result = Connector::prepare("ALTER TABLE $db.$table DROP COLUMN $field_name;", NULL);
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+///////////////
 
     /** check if table exist
      * @param $dbname

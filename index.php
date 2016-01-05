@@ -50,8 +50,12 @@ class Index
                 $controller->delete_table($request["name_db"],$request["name_table"]);
             else if ($request["run"] == "rename_table")
                 $controller->rename_table($request["name_db"],$request["table_name"],$request["new_name_table"]);
+            else if ($request["run"] == "delete_field")
+                $controller->delete_field($request["name_db"],$request["table_name"],$request["name_field"]);
             else if ($request["run"] == "content_table")
                 $controller->showTableData($request["dbname"],$request["t_name"]);
+            else if ($request["run"] == "add_table")
+                $controller->add_table($request);
             else if ($request["run"] == "delete_data")
                 $controller->drop_data($request["name_db"],$request["table_name"],$request["id_col_name"],$request["id_field"]);
             else if ($request["run"] == "edit_data")

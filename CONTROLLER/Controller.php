@@ -120,6 +120,46 @@ class Controller
         unset($model);
     }
 
+    //////////////////////////////////////////
+
+    public function add_table($request)
+    {
+        $add_t = array();
+        $table = $request["name_table"];
+        $db = $request["namedb"];
+        for ($i = 0; $i < count($request['name']); $i++) {
+            array_push($add_t, array($request["name"][$i], $request['type'][$i], $request['size'][$i],
+                ($request['default'][$i] != "def") ? $request['default'][$i] : $request['def_i'][$i],
+                $request['is_n'][$i], $request['index'][$i], $request['ai'][$i]));
+        }
+        $model = $this->getModel();
+        $result = $model->create_table($db, $table, $add_t);
+        if ($result->errorInfo()[1] == NULL)
+        {
+            $this->writeFile("La table $table a été créé dans la base $db");
+            echo 1;
+        }
+        else
+            $this->return_error($result);
+        unset($model);
+    }
+
+    //////////////////////////////////////////
+
+
+    public function delete_field($dbname, $table, $field_name)
+    {
+        $model = $this->getModel();
+        $result = $model->drop_field($dbname, $table, $field_name);
+        if ($result->errorInfo()[1] == NULL) {
+            $this->writeFile("Le champs $field_name de la table $table de la base de données $dbname a été supprimée");
+            echo 1;
+        } else
+            $this->return_error($result);
+        unset($model);
+    }
+    ///////////////////////
+
     /** show data of a table
      * @param $dbname
      * @param $t_name
@@ -149,8 +189,7 @@ class Controller
     {
         $model = $this->getModel();
         $result = $model->delete_data($db, $table, $id_col_name, $id_field);
-        $c = $result->rowCount();
-        if ($c) {
+        if ($result->errorInfo()[1] == NULL) {
             $this->writeFile("Une donnée ayant l'id N° $id_field, dans la table $table, dans la base $db à été supprimée");
             echo 1;
         } else
@@ -170,8 +209,7 @@ class Controller
     {
         $model = $this->getModel();
         $result = $model->edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value);
-        $c = $result->rowCount();
-        if ($c) {
+        if ($result->errorInfo()[1] == NULL) {
             $this->writeFile("Une donnée à été changé : $value, d'Id : $id_value, dans la table $table, dans la base $db");
             echo 1;
         } else
@@ -197,8 +235,7 @@ class Controller
     {
         $model = $this->getModel();
         $result = $model->add_new_db($newDBname);
-        $c = $result->rowCount();
-        if ($c) {
+        if ($result->errorInfo()[1] == NULL) {
             $this->writeFile("La base de données $newDBname a été créé");
             echo 1;
         } else
@@ -213,8 +250,7 @@ class Controller
     {
         $model = $this->getModel();
         $result = $model->drop_db($db);
-        $c = $result->rowCount();
-        if ($c == 00000) {
+        if ($result->errorInfo()[1] == NULL) {
             $this->writeFile("La base de données $db a été supprimée");
             echo 1;
         } else
@@ -230,8 +266,7 @@ class Controller
     {
         $model = $this->getModel();
         $result = $model->drop_table($dbname, $table);
-        $c = $result->rowCount();
-        if ($c == 0) {
+        if ($result->errorInfo()[1] == NULL) {
             $this->writeFile("La table $table de la base de données $dbname a été supprimée");
             echo 1;
         } else
@@ -248,8 +283,7 @@ class Controller
     {
         $model = $this->getModel();
         $result = $model->rename_the_table($dbname, $table, $new_name_table);
-        $c = $result->rowCount();
-        if ($c == 00000) {
+        if ($result->errorInfo()[1] == NULL) {
             $this->writeFile("La table $table à été renommée en $new_name_table");
             echo 1;
         } else
@@ -265,8 +299,8 @@ class Controller
     {
         $model = $this->getModel();
             $addDB = $model->add_new_db($newdbname);
-            $c = $addDB->rowCount();
-            if ($c)
+            //$c = $addDB->rowCount();
+            if ($addDB->errorInfo()[1] == NULL)
                 echo ($res = $this->do_migration($newdbname, $model, $name_db) == 1) ? $res : 1;
             else
                 $this->return_error($addDB);
