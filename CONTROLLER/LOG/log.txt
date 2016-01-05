@@ -201,3 +201,5 @@ Une donnée à été changé : alexis musclor, d'Id : 2, dans la table contact, 
 La table sfsdf de la base de données kiklnkjnk a été supprimée
 La base de données kiklnkjnk a eté rennomée en azerty.
 La base de données aze a eté rennomée en azerty.
+Une donnée à été changé : Vehiculesuce, d'Id : 1, dans la table categorie, dans la base anaxago
+La base de données qsqsqsqs a été supprimée
