@@ -276,3 +276,20 @@ La colonne hello a été créé dans la table 5555 de la base ger
 La colonne zf a été créé dans la table 5555 de la base ger
 La colonne helda a été créé dans la table 5555 de la base ger
 Le champs cc de la table 5555 de la base de données ger a été supprimée
+La colonne test a été créé dans la table categorie de la base anaxago
+La table test a été créé dans la base anaxago
+La table testess a été créé dans la base anaxago
+Une donnée à été ajoutée dans la table groupe de la base de données newsletter
+Une donnée à été ajoutée dans la table groupe de la base de données newsletter
+Une donnée ayant l'id N° 13, dans la table groupe, dans la base newsletter à été supprimée
+Une donnée ayant l'id N° 12, dans la table groupe, dans la base newsletter à été supprimée
+Une donnée ayant l'id N° 10, dans la table groupe, dans la base newsletter à été supprimée
+Une donnée ayant l'id N° 1, dans la table ergegrergezr, dans la base azee à été supprimée
+Une donnée à été ajoutée dans la table ergegrergezr de la base de données azee
+Une donnée à été ajoutée dans la table ergegrergezr de la base de données azee
+Une donnée à été ajoutée dans la table ergegrergezr de la base de données azee
+Une donnée à été ajoutée dans la table ergegrergezr de la base de données azee
+Une donnée ayant l'id N° 3, dans la table ergegrergezr, dans la base azee à été supprimée
+Une donnée ayant l'id N° 2, dans la table ergegrergezr, dans la base azee à été supprimée
+Une donnée ayant l'id N° 4, dans la table ergegrergezr, dans la base azee à été supprimée
+Une donnée à été changé : Vehiculesucedrgdgr, d'Id : 1, dans la table categorie, dans la base anaxago

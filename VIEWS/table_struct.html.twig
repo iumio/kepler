@@ -18,6 +18,7 @@
                     <li><a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ t_name }}">Structure <span
                                     class="sr-only">(current)</span></a></li>
                     <li><a href="#makeQuery"><i class="glyphicon glyphicon-edit"></i> Faire une requête</a></li>
+                    <li><a href="index.php?run=logout"><i class="fa fa-sign-out"></i> Déconnecter</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
@@ -44,7 +45,7 @@
                     </div>
                 </div>
             </form>
-            <div class="row noShow" id="query_result">
+            <div class="noShow" id="query_result">
                 <div class="panel panel-info panel-full">
                     <div class="panel-heading">
                         <h3 class="panel-title">Résultat de la requête</h3>
@@ -115,18 +116,21 @@
                                         {% endif %}
                                     </td>
                                     <td>
-        <span class="btn btn-primary full-width btn-edit-field" name="{{ struct['COLUMN_NAME'] }}"
-              field_type="{{ type[0] }}"><i class="glyphicon glyphicon-edit"></i></span>
+                                    <span class="btn btn-primary full-width btn-edit-field" name="{{ struct['COLUMN_NAME'] }}"
+                                            field_type="{{ type[0] }}"><i class="glyphicon glyphicon-edit"></i></span>
                                         <div class="modal fade" data-backdrop="static" data-keyboard="false"
-                                             id="modal_edit_field{{ struct['COLUMN_NAME'] }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                             id="modal_edit_field{{ struct['COLUMN_NAME'] }}" tabindex="-1"
+                                             role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="myModalLabel1">Editer le champs <span class="text-info"></span></h4>
+                                                        <h4 class="modal-title" id="myModalLabel1">Editer le champs
+                                                            <span class="text-info"></span></h4>
                                                     </div>
                                                     <form method="POST" action="" class="form_edit_field">
                                                         <div class="modal-body">
-                                                            <table class="table table-bordered table-responsive marginTop20" id="tab_edit_field">
+                                                            <table class="table table-bordered table-responsive marginTop20"
+                                                                   id="tab_edit_field">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>
@@ -150,16 +154,24 @@
                                                                 <tr>
                                                                     <td>
                                                                         {% if struct['COLUMN_KEY'] == "PRI" %}
-                                                                            <input type="text" name="new_field_name" class="form-control" value="{{ struct['COLUMN_NAME'] }}"
+                                                                            <input type="text" name="new_field_name"
+                                                                                   class="form-control"
+                                                                                   value="{{ struct['COLUMN_NAME'] }}"
                                                                                    readonly required="required">
                                                                         {% else %}
-                                                                            <input type="text" name="new_field_name" class="form-control" value="{{ struct['COLUMN_NAME'] }}"
+                                                                            <input type="text" name="new_field_name"
+                                                                                   class="form-control"
+                                                                                   value="{{ struct['COLUMN_NAME'] }}"
                                                                                    required="required">
                                                                         {% endif %}
-                                                                        <input type="hidden" name="new_field_type" class="form-control" value="{{ type[0] }}" required="required">
+                                                                        <input type="hidden" name="new_field_type"
+                                                                               class="form-control"
+                                                                               value="{{ type[0] }}"
+                                                                               required="required">
                                                                     </td>
                                                                     <td>
-                                                                        <select class="form-control" name="field_type" required="required">
+                                                                        <select class="form-control" name="field_type"
+                                                                                required="required">
                                                                             <option value="INT"
                                                                                     title="Un nombre entier de 4 octets. La fourchette des entiers relatifs est de -2 147 483 648 à 2 147 483 647. Pour les entiers positifs, c'est de 0 à 4 294 967 295">
                                                                                 INT
@@ -172,7 +184,10 @@
                                                                                     title="Une colonne TEXT d'une longueur maximum de 65 535 (2^16 - 1) caractères, stockée avec un préfixe de deux octets indiquant la longueur de la valeur en octets">
                                                                                 TEXT
                                                                             </option>
-                                                                            <option value="DATE" title="Une date, la fourchette est de «1000-01-01» à «9999-12-31»">DATE</option>
+                                                                            <option value="DATE"
+                                                                                    title="Une date, la fourchette est de «1000-01-01» à «9999-12-31»">
+                                                                                DATE
+                                                                            </option>
                                                                             <optgroup label="Numérique">
                                                                                 <option value="TINYINT"
                                                                                         title="Un nombre entier de 1 octet. La fourchette des nombres avec signe est de -128 à 127. Pour les nombres sans signe, c'est de 0 à 255">
@@ -220,11 +235,16 @@
                                                                                         title="Un synonyme de TINYINT(1), une valeur de zéro signifie faux, une valeur non-zéro signifie vrai">
                                                                                     BOOLEAN
                                                                                 </option>
-                                                                                <option value="SERIAL" title="Un alias pour BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE">SERIAL
+                                                                                <option value="SERIAL"
+                                                                                        title="Un alias pour BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE">
+                                                                                    SERIAL
                                                                                 </option>
                                                                             </optgroup>
-                                                                            <optgroup label="Contient la date et l'heure">
-                                                                                <option value="DATE" title="Une date, la fourchette est de «1000-01-01» à «9999-12-31»">DATE
+                                                                            <optgroup
+                                                                                    label="Contient la date et l'heure">
+                                                                                <option value="DATE"
+                                                                                        title="Une date, la fourchette est de «1000-01-01» à «9999-12-31»">
+                                                                                    DATE
                                                                                 </option>
                                                                                 <option value="DATETIME"
                                                                                         title="Une combinaison date et heure, la fourchette est de «1000-01-01 00:00:00» à «9999-12-31 23:59:59»">
@@ -234,7 +254,9 @@
                                                                                         title="Un type d'horodatage, la fourchette est de «1970-01-01 00:00:01» UTC à «2038-01-09 03:14:07» UTC, en nombre de secondes depuis le moment de référence («1970-01-01 00:00:00» UTC)">
                                                                                     TIMESTAMP
                                                                                 </option>
-                                                                                <option value="TIME" title="Une heure, la fourchette est de «-838:59:59» à «838:59:59»">TIME
+                                                                                <option value="TIME"
+                                                                                        title="Une heure, la fourchette est de «-838:59:59» à «838:59:59»">
+                                                                                    TIME
                                                                                 </option>
                                                                                 <option value="YEAR"
                                                                                         title="Une année à quatre chiffres (4 par défaut) ou à deux chiffres (2), la fourchette est de 70 (1970) à 69 (2069) ou 1901 à 2155 ainsi que 0000">
@@ -299,35 +321,40 @@
                                                                                     ENUM
                                                                                 </option>
                                                                                 <option value="SET"
-                                                                                        title="Une valeur unique choisie parmi un ensemble comportant jusqu'à 64 membres">SET
+                                                                                        title="Une valeur unique choisie parmi un ensemble comportant jusqu'à 64 membres">
+                                                                                    SET
                                                                                 </option>
                                                                             </optgroup>
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" name="new_field_size" class="form-control"
+                                                                        <input type="text" name="new_field_size"
+                                                                               class="form-control"
                                                                                value="{% set size = type[1]|split(')') %}{{ size[0] }}">
                                                                     </td>
                                                                     <td>
-                                                                        <select class="form-control" name="new_isNull_name">
-                                                                            <option {% if struct['IS_NULLABLE'] == "YES" %} selected="selected" {% endif %}>Oui</option>
-                                                                            <option {% if struct['IS_NULLABLE'] != "YES" %} selected="selected" {% endif %} value="def">Non</option>
+                                                                        <select class="form-control"
+                                                                                name="new_isNull_name">
+                                                                            <option {% if struct['IS_NULLABLE'] == "YES" %} selected="selected" {% endif %}>
+                                                                                Oui
+                                                                            </option>
+                                                                            <option {% if struct['IS_NULLABLE'] != "YES" %} selected="selected" {% endif %}
+                                                                                    value="def">Non
+                                                                            </option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        {#/********************************************************************************
-                                                        *******************************************************************************
-                                                        *******************************************************************************/#}
-                                                                        <select class="form-control" name="select_default_edit" id="sd_edit">
+                                                                        <select class="form-control"
+                                                                                name="select_default_edit" id="sd_edit">
                                                                             <option selected="selected">Aucune</option>
-                                                                            <option value="def">Tel que défini :</option>
+                                                                            <option value="def">Tel que défini :
+                                                                            </option>
                                                                             <option value="NULL">NULL</option>
-                                                                            <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option>
+                                                                            <option value="CURRENT_TIMESTAMP">
+                                                                                CURRENT_TIMESTAMP
+                                                                            </option>
                                                                         </select>
-                                                                        <input type="text" class="form-control input-sm noShow" name="default_edit" value="NULL"/>
-                                                                        {#/********************************************************************************
-                                                        *******************************************************************************
-                                                        *******************************************************************************/#}
+                                                                        <input type="text" class="form-control input-sm marginTop20" name="default_edit_field" style="display: none" value="NULL"/>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -336,8 +363,11 @@
                                                             <input type="hidden" name="tale_name" value="{{ t_name }}">
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                                            <button type="submit" class="btn btn-success">Valider</button>
+                                                            <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">Fermer
+                                                            </button>
+                                                            <button type="submit" class="btn btn-success">Valider
+                                                            </button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -360,8 +390,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel1">Renommer la table <span
-                                    class="text-info">{{ t_name }}</span></h4>
+                        <h4 class="modal-title" id="myModalLabel1">Renommer la table <span class="text-info">{{ t_name }}</span></h4>
                     </div>
                     <form method="POST" action="" id="form_rename_table">
                         <div class="modal-body">
@@ -418,9 +447,7 @@
                 </div>
             </div>
         </div>
-        {#/********************************************************************************
-*******************************************************************************
-*******************************************************************************/#}
+
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_delete_field" tabindex="-1"
              role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -431,7 +458,7 @@
                     </div>
                     <form method="POST" action="" class="form_delete_field">
                         <div class="modal-body">
-                            Vous voulez vraiment suprimer ce champs <span class="text-info"></span> ?
+                            Vous voulez vraiment suprimer ce champs <span class="text-info-del-field"></span> ?
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" name="name_field">
@@ -444,13 +471,7 @@
                 </div>
             </div>
         </div>
-        {#/********************************************************************************
-        *******************************************************************************
-        *******************************************************************************/#}
 
-        {#/********************************************************************************
-        *******************************************************************************
-        *******************************************************************************/#}
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_add_field" tabindex="-1"
              role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
@@ -462,7 +483,7 @@
                     <form method="POST" action="" class="form_add_field">
                         <div class="modal-body">
                             Ajouter un champs <span class="text-info"></span>
-                            <table class="table table-bordered table-responsive marginTop20" id="tab_add_new_field">
+                            <table class="table table-bordered table-responsive marginTop20 table-modal" id="tab_add_new_field">
                                 <thead>
                                 <th>
                                     Nom
@@ -678,7 +699,7 @@
                                     </td>
                                     <td>
                                         <input type="text" class="form-control field_size" name="field_size"
-                                               data="NV" />
+                                               data="NV"/>
                                     </td>
                                     <td>
                                         <select class="form-control" name="select_default" id="sd">
@@ -724,8 +745,5 @@
                 </div>
             </div>
         </div>
-        {#/********************************************************************************
-        *******************************************************************************
-        *******************************************************************************/#}
     </div>
 {% endblock %}

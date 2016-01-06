@@ -21,6 +21,7 @@ class Starter {
                 "MODEL/Model.php",
                 "CONTROLLER/GEXCEPTIONS/DatabaseException.php",
                 "CONTROLLER/GEXCEPTIONS/TableException.php",
+                "CONTROLLER/GEXCEPTIONS/LoginException.php",
                 "PRIVATE/Twig/vendor/autoload.php");
             return  $array;
         } catch (Exception $exc) {

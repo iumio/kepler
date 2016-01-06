@@ -49,6 +49,10 @@
     overflow-x: auto!important;
 }
 
+.table-modal{
+    overflow-x: auto!important;
+}
+
 .full-width
 {
     width: 100%;

@@ -218,6 +218,18 @@ class Controller
         unset($model);
     }
 
+    public function add_data($dbname, $table, $field_name, $new_data)
+    {
+        $model = $this->getModel();
+        $result = $model->add_new_data($dbname, $table, $field_name, $new_data);
+        if ($result->errorInfo()[1] == NULL) {
+            $this->writeFile("Une donnée à été ajoutée dans la table $table de la base de données $dbname");
+            echo 1;
+        } else
+            $this->return_error($result);
+        unset($model);
+    }
+
     /** show data of a table
      * @param $dbname
      * @param $t_name
@@ -426,5 +438,22 @@ class Controller
             $this->writeFile("La base de données $newdbname a été supprimée");
             return ("Impossible de peupler la base");
         }
+    }
+
+    static public function make_login($login, $password)
+    {
+        $_SESSION['login'] = $login;
+        $_SESSION["passwd"] = $password;
+        $model = new Model();
+        $rs = $model->make_login_connector();
+        if ($rs->errorInfo()[2] == NULL)
+            return (1);
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION["passwd"]);
+        echo $_SESSION['twig']->render("login.html.twig", array("error" => "Vous êtes dorénavant déconnecté"));
     }
 }

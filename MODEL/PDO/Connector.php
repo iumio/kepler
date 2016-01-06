@@ -10,8 +10,8 @@
 class Connector {
 
     static private $DSN ;
-    static private $USERNAME = "root";
-    static private $USERPASSWORD = "root" ;
+    static private $USERNAME ;
+    static private $USERPASSWORD ;
     static private $HOST = "localhost";
     static private $instance = null;
     static private $errorMessage = null;
@@ -24,11 +24,11 @@ class Connector {
         try {
             self::$DSN = "mysql:host=".self::$HOST;
             self::$DSN = "mysql:host=localhost";
-            self::$USERNAME = "root";
-            self::$USERPASSWORD = "root";
+            self::$USERNAME = $_SESSION['login'];
+            self::$USERPASSWORD = $_SESSION['passwd'];
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
         } catch (PDOException $event) {
-            throw new PDOException($event->getMessage());
+            throw new LoginException();
         }
     }
     
@@ -99,6 +99,9 @@ class Connector {
      */
     static public function getInfo($info)
     {
+        /////////
+        self::getInstance();
+        ////////
         if ($info == "host")
             return (self::$HOST);
         else if ($info == "username")

@@ -170,6 +170,37 @@ class Model
         }
     }
 
+    public function add_new_data($dbname, $table, $field_name, $new_data)
+    {
+        try {
+            $query = $this->add_new_data_query($dbname, $table, $field_name, $new_data);
+            return Connector::prepare($query, $new_data);
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+
+    private function add_new_data_query($dbname, $table, $field_name, $new_data)
+    {
+        $cField = count($field_name);
+        $cData = count($new_data);
+        $str = "INSERT INTO $dbname.$table (";
+        for ($i = 0; $i < count($field_name); $i++)
+        {
+            $str = $str.$field_name[$i];
+            $str = ($cField != ($i + 1))?  $str." , " : $str."";
+
+        }
+        $str = $str." ) VALUES ( ";
+        for ($i = 0; $i < count($new_data); $i++)
+        {
+            $str = $str.'?';
+            $str = ($cData != ($i + 1))?  $str." , " : $str."";
+        }
+        $str = $str.");";
+        return $str;
+    }
+
     /** request rename table
      * @param $dbname
      * @param $table
@@ -322,5 +353,11 @@ class Model
     {
         $version = Connector::prepare("select charset(user())");
         return $version;
+    }
+
+    public function make_login_connector()
+    {
+        $result = Connector::prepare("show databases");
+        return $result;
     }
 }

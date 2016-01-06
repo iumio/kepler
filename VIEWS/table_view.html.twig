@@ -16,6 +16,7 @@
                     <li><a href="index.php?run=content_table&dbname={{ dbname }}&t_name={{ t_name }}"><i class="glyphicon glyphicon-list-alt"></i> Afficher</a></li>
                     <li><a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ t_name }}">Structure <span class="sr-only">(current)</span></a></li>
                     <li><a href="#makeQuery"><i class="glyphicon glyphicon-edit"></i> Faire une requête</a></li>
+                    <li><a href="index.php?run=logout"><i class="fa fa-sign-out"></i> Déconnecter</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
@@ -58,7 +59,7 @@
                     <h3 class="panel-title">AFFICHAGE DE LA TABLE {{ t_name }}</h3>
                 </div>
                 <div class="panel-body" id="panel_body">
-                    <button class="btn btn-success btn-sm btn-add-field"><i class="glyphicon glyphicon-plus-sign"></i>
+                    <button class="btn btn-success btn-sm btn-add-data"><i class="glyphicon glyphicon-plus-sign"></i>
                         Ajouter une donnée
                     </button>
                     <p class="help-block help_edit"><small>Pour modifier une donnée... Double cliquer sur sa cellule.</small></p>
@@ -87,16 +88,30 @@
                             <tr>
                                 {% for struct in tables_struct %}
                                     {% set column_name = struct['COLUMN_NAME'] %}
-                                    <td name="{{ column_name }}" class="data">
-                                        {{ data[column_name] }}
-                                        <input type="hidden" name="col_name" value="{{ column_name }}">
-                                        <input type="hidden" name="name_db" value="{{ dbname }}">
-                                        <input type="hidden" name="tale_name" value="{{ t_name }}">
-                                    </td>
+                                    {% if val >= 1 %}
+                                        <td name="{{ column_name }}" class="data">
+                                            {{ data[column_name] }}
+                                        </td>
+                                        {% else %}
+                                            <td name="{{ column_name }}" >
+                                                {{ data[column_name] }}
+                                            </td>
+                                    {% endif %}
                                 {% endfor %}
                                 {% if val >= 1 %}
                                     <td>
-                                        <a class="btn btn-danger full-width btn-del-data" id_col_name="{{ column_name }}" name="{{ data[0] }}"><i class="glyphicon glyphicon-trash"></i> </a>
+                                    {% for struct in tables_struct %}
+                                        {% if struct['COLUMN_KEY'] == 'PRI' %}
+                                            {% set id_val = struct['COLUMN_NAME'] %}
+                                            <input type="hidden" name="col_name" value="{{ id_val }}">
+                                            <input type="hidden" name="name_db" value="{{ dbname }}">
+                                            <input type="hidden" name="tale_name" value="{{ t_name }}">
+                                            <a class="btn btn-danger full-width btn-del-data" id_col_name="{{ column_name }}" name="{{ data[id_val] }}"><i class="glyphicon glyphicon-trash"></i> </a>
+                                        {% else %}
+                                            <input type="hidden" name="name_db" value="{{ dbname }}">
+                                            <input type="hidden" name="tale_name" value="{{ t_name }}">
+                                        {% endif %}
+                                        {% endfor %}
                                     </td>
                                 {% endif %}
                             </tr>
@@ -158,6 +173,40 @@
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" name="col_name">
+                            <input type="hidden" name="table_name" value="{{ t_name }}">
+                            <input type="hidden" name="name_db" value="{{ dbname }}">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                            <button type="submit" class="btn btn-success">Oui</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_add_data" tabindex="-1"
+             role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title myModalLabel">Confirmation <i
+                                    class="glyphicon glyphicon-question-sign"></i></h4>
+                    </div>
+                    <form method="POST" action="" class="form_add_data form-horizontal">
+                        <div class="modal-body">
+                            Ajout d'une donnée <span class="text-info"></span>
+                        </div>
+                        <div class="modal-footer">
+                            {% for struct in tables_struct %}
+                                {% if struct['EXTRA'] == 'auto_increment' %}
+
+                                    {% else %}
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label label_field_add_data" name="{{ struct['COLUMN_NAME'] }}">{{ struct['COLUMN_NAME'] }}</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control input-add" name="new_data" placeholder="Saisissez {{ struct['COLUMN_NAME'] }}">
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                            {% endfor %}
                             <input type="hidden" name="table_name" value="{{ t_name }}">
                             <input type="hidden" name="name_db" value="{{ dbname }}">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
