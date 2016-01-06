@@ -268,3 +268,11 @@ La table Wé a été créé dans la base AZE
 La table Wé de la base de données AZE a été supprimée
 La table r de la base de données AZE a été supprimée
 La base de données AZE a été supprimée
+La colonne ee a été créé dans la table 5555 de la base ger
+La colonne cc a été créé dans la table 5555 de la base ger
+La colonne q a été créé dans la table 5555 de la base ger
+La colonne MartialDUFOUR a été créé dans la table 5555 de la base ger
+La colonne hello a été créé dans la table 5555 de la base ger
+La colonne zf a été créé dans la table 5555 de la base ger
+La colonne helda a été créé dans la table 5555 de la base ger
+Le champs cc de la table 5555 de la base de données ger a été supprimée

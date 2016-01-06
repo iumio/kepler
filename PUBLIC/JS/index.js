@@ -501,6 +501,47 @@ $(document).ready(function () {
         })
     });
 
+
+    $(".form_add_field").each(function () {
+        $(this).submit(function (e) {
+            e.preventDefault();
+            $("#modal_add_field").modal('hide');
+            var name_db = $("input[name='name_db']").val();
+            var name_table = $("input[name='table_name_field']").val();
+            var field_name = $('input[name^=field_name]').val();
+            var field_type = $('select[name^=field_type]').val();
+            var field_size = $('input[name^=field_size]').attr("data");
+            var select_default = $('select[name^=select_default]').val();
+            var is_null = $('select[name^=is_null]').val();
+            var select_index = $('select[name^=select_index]').val();
+            var is_ai = $('select[name^=is_ai]').val();
+            var default_i = $('input[name^="default"]').val();
+            var rq = $.ajax({
+                url: 'index.php?run=add_field',
+                method: "POST",
+                data: {name_table : name_table, namedb : name_db, name :field_name, type: field_type, size: field_size, default : select_default, is_n : is_null, index : select_index, ai : is_ai, def_i : default_i},
+            });
+            rq.success(function (result) {
+                $("#modal_info").modal("hide");
+                if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                    $("#modal_info").find(".modal-body").html("<p>La colonne "+field_name+" a été créé dans la table "
+                        +name_table+" de la base "+name_db+"</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    window.setTimeout(function () {
+                        window.location.href = 'index.php?run=showTableStruct&dbname='+name_db+'&tName='+name_table;
+                    }, 2000);
+                }
+            });
+        })
+    });
+
     $(".data").each(function () {
         $(this).change(function (e) {
             e.preventDefault();

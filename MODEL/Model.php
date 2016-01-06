@@ -61,6 +61,33 @@ class Model
         }
     }
 
+    public function add_field($db, $table, $field_info)
+    {
+        $str = "ALTER TABLE $db.$table ADD ";
+        $str = $str.$field_info[0]." ".$field_info[1];
+        $str = ($field_info[2] != "NV")? $str."(".$field_info[2].")" : $str."";
+        $str = ($field_info[4] == "no")? $str." NOT NULL" : $str." NULL";
+        if ($field_info[3] == "NULL")
+            $str = $str." DEFAULT NULL";
+        else if ($field_info[3] == "CURRENT_TIMESTAMP")
+            $str = $str." DEFAULT CURRENT_TIMESTAMP";
+        else if ($field_info[3] == "Aucune")
+            $str = $str."";
+        else
+            $str." DEFAULT '".$field_info[3]."'";
+        $str = ($field_info[6] == "no")? $str."" : $str." auto_increment";
+        if ($field_info[5] == "PRIMARY")
+            $str = $str." PRIMARY KEY";
+        else
+            ($field_info[5] == "UNIQUE")? $str." UNIQUE" : $str."";
+        try {
+            $result = Connector::prepare($str, NULL);
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
+
     /** Migrate all database tables
      * @param $dbname New database name
      * @param $db_drop Database to migrate

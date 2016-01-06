@@ -302,25 +302,6 @@
                                                                                         title="Une valeur unique choisie parmi un ensemble comportant jusqu'à 64 membres">SET
                                                                                 </option>
                                                                             </optgroup>
-                                                                            <optgroup label="Spatial">
-                                                                                <option value="GEOMETRY" title="Un type pouvant stocker une valeur géométrique de tout type">
-                                                                                    GEOMETRY
-                                                                                </option>
-                                                                                <option value="POINT" title="Un point dans un espace à deux dimensions">POINT</option>
-                                                                                <option value="LINESTRING" title="Une courbe avec une interpolation linéaire entre les points">
-                                                                                    LINESTRING
-                                                                                </option>
-                                                                                <option value="POLYGON" title="Un polygone">POLYGON</option>
-                                                                                <option value="MULTIPOINT" title="Une collection de points">MULTIPOINT</option>
-                                                                                <option value="MULTILINESTRING"
-                                                                                        title="Une collection de courbes avec l'interpolation linéaire entre les points">
-                                                                                    MULTILINESTRING
-                                                                                </option>
-                                                                                <option value="MULTIPOLYGON" title="Une collection de polygones">MULTIPOLYGON</option>
-                                                                                <option value="GEOMETRYCOLLECTION" title="Une collection d'objets de géométrie de tout type">
-                                                                                    GEOMETRYCOLLECTION
-                                                                                </option>
-                                                                            </optgroup>
                                                                         </select>
                                                                     </td>
                                                                     <td>
@@ -478,7 +459,7 @@
                         <h4 class="modal-title myModalLabel">Confirmation <i
                                     class="glyphicon glyphicon-question-sign"></i></h4>
                     </div>
-                    <form method="POST" action="" class="form_delete_field">
+                    <form method="POST" action="" class="form_add_field">
                         <div class="modal-body">
                             Ajouter un champs <span class="text-info"></span>
                             <table class="table table-bordered table-responsive marginTop20" id="tab_add_new_field">
@@ -508,11 +489,11 @@
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" name="field_name[]"
+                                        <input type="text" class="form-control" name="field_name"
                                                required="required"/>
                                     </td>
                                     <td>
-                                        <select class="form-control" name="field_type[]">
+                                        <select class="form-control" name="field_type">
                                             <option value="INT"
                                                     title="Un nombre entier de 4 octets. La fourchette des entiers relatifs est de -2 147 483 648 à 2 147 483 647. Pour les entiers positifs, c'est de 0 à 4 294 967 295">
                                                 INT
@@ -696,36 +677,34 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control field_size" name="field_size[]"
-                                               required="required" data="NV" />
+                                        <input type="text" class="form-control field_size" name="field_size"
+                                               data="NV" />
                                     </td>
                                     <td>
-                                        <select class="form-control" name="select_default[]" id="sd">
+                                        <select class="form-control" name="select_default" id="sd">
                                             <option selected="selected">Aucune</option>
                                             <option value="def">Tel que défini :</option>
                                             <option value="NULL">NULL</option>
                                             <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option>
                                         </select>
                                         <input type="text" class="form-control input-sm noShow marginTop20"
-                                               name="default[]" value="NULL"/>
+                                               name="default" value="NULL"/>
                                     </td>
                                     <td class="w100">
-                                        <select class="form-control" name="is_null[]">
+                                        <select class="form-control" name="is_null">
                                             <option value="no" selected="selected">Non</option>
                                             <option value="yes">Oui</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" name="select_index[]">
+                                        <select class="form-control" name="select_index">
                                             <option selected="selected" value="NULL">---</option>
                                             <option value="PRIMARY">PRIMARY</option>
                                             <option value="UNIQUE">UNIQUE</option>
-                                            <option value="INDEX">INDEX</option>
-                                            <option value="FULLTEXT">FULLTEXT</option>
                                         </select>
                                     </td>
                                     <td class="w100">
-                                        <select class="form-control" name="is_ai[]">
+                                        <select class="form-control" name="is_ai">
                                             <option value="no" selected="selected">Non</option>
                                             <option value="yes">Oui</option>
                                         </select>

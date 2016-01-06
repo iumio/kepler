@@ -139,6 +139,31 @@ class Controller
         echo $val;
         return ;
     }
+
+    public function add_field($request)
+    {
+        $table = $request["name_table"];
+        $db = $request["namedb"];
+        $test = $this->get_gv($request['type'], $request['size']);
+        if ($test == 1)
+            return $this->make_echo("[ERROR ON MPMA] VARCHAR must be have a size");
+        else if ($test == -1)
+            return $this->make_echo("[ERROR ON MPMA] ".$request['type']." does not have size.");
+           $field_info =  array($request["name"], $request['type'], $request['size'],
+                ($request['default'] != "def") ? $request['default'] : $request['def_i'],
+                $request['is_n'], $request['index'], $request['ai']);
+        $model = $this->getModel();
+        $result = $model->add_field($db, $table, $field_info);
+        if ($result->errorInfo()[1] == NULL)
+        {
+            $this->writeFile("La colonne ".$request["name"]." a été créé dans la table $table de la base $db");
+            echo 1;
+        }
+        else
+            $this->return_error($result);
+        unset($model);
+    }
+
     public function add_table($request)
     {
         $add_t = array();
@@ -238,6 +263,7 @@ class Controller
      * @param $id_value
      * @param $value
      */
+    /// FUNCTION HAVE A LOT OF PARAMETER
     public function edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value)
     {
         $model = $this->getModel();
