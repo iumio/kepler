@@ -286,7 +286,7 @@ class Model
             return ($e->getMessage());
         }
     }
-///////////////////
+
     public function drop_field($db, $table, $field_name)
     {
         try {
@@ -296,7 +296,27 @@ class Model
             return ($e->getMessage());
         }
     }
-///////////////
+
+    public function edit_field($request)
+    {
+        try {
+            $str = "ALTER TABLE ".$request['name_db'].".".$request['table_name']." CHANGE ";
+            $str = $str.$request['odl_field_name']." ".$request['new_field_name']." ".$request['new_type_field']."(".$request['new_size_field'].")";
+            $str = ($request['new_isNull_field'] == "NO")? $str." NOT NULL" : $str." NULL";
+            if ($request['new_default_field'] == "NULL")
+                $str = $str." DEFAULT NULL";
+            else if ($request['new_default_field'] == "CURRENT_TIMESTAMP")
+                $str = $str." DEFAULT CURRENT_TIMESTAMP";
+            else if ($request['new_default_field'] == "Aucune")
+                $str = $str."";
+            else
+                $str." DEFAULT '".$request['new_default_field']."'";
+            $result = Connector::prepare($str, NULL);
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
+    }
 
     /** check if table exist
      * @param $dbname

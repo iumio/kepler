@@ -90,6 +90,8 @@ class Index
                     $controller->drop_data($request["name_db"],$request["table_name"],$request["id_col_name"],$request["id_field"]);
                 else if ($request["run"] == "add_data")
                     $controller->add_data($request["name_db"],$request["table_name"],$request["field_name"],$request["new_data"]);
+                else if ($request["run"] == "edit_field")
+                    $controller->edit_field($request);
                 else if ($request["run"] == "edit_data")
                     /// FUNCTION HAVE A LOT OF PARAMETERS
                     $controller->edit_data($request["name_db"],$request["table_name"],$request["id_col_name"],$request["col_name_edit"],$request["id_value"],$request["value"]);

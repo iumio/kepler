@@ -230,6 +230,18 @@ class Controller
         unset($model);
     }
 
+    public function edit_field($request)
+    {
+        $model = $this->getModel();
+        $result = $model->edit_field($request);
+        if ($result->errorInfo()[1] == NULL) {
+            $this->writeFile("Le champs $request[2] à été modifié dans la table $request[1] de la base de données $request[0] en $request[3]");
+            echo 1;
+        } else
+            $this->return_error($result);
+        unset($model);
+    }
+
     /** show data of a table
      * @param $dbname
      * @param $t_name

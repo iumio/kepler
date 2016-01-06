@@ -1,5 +1,5 @@
-$(function () {
-    $(".data").dblclick(function () {
+$(document).on('dblclick', ".data", function (){
+    //$(".data").dblclick(function () {
         var OriginalContent = $(this).text(); $(this).addClass("cellEditing");
         OriginalContent = OriginalContent.replace(/[" "]/g, "");
         $(this).html("<input type='text' name='newValue' class='form-control' value='" + OriginalContent + "' />");
@@ -15,6 +15,6 @@ $(function () {
             $(this).parent().text(OriginalContent);
             $(this).parent().removeClass("cellEditing");
         });
-    });
+    //});
 });
 

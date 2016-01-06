@@ -112,6 +112,7 @@ $(document).ready(function () {
         var field_type = $(this).attr("field_type");
         field_type = field_type.toUpperCase();
         $("select[name='field_type']").val(field_type);
+        $("input[name='old_field_name']").val(field_name);
         $("#modal_edit_field"+field_name).modal('show');
     });
 
@@ -136,12 +137,12 @@ $(document).ready(function () {
         $("#tab_add_field").show();
     });
 
-    $(".sd").change(function () {
+    $(document).on('change','.sd',function(){
         var value = $(this).val();
         if(value == "def")
-            $("input[name^='default']").show();
+            $(this).parent().find("input[name^='default']").show();
         else
-            $("input[name^='default']").hide();
+            $(this).parent().find("input[name^='default']").hide();
     });
 
     $("select[name=select_default_edit]").change(function () {
@@ -158,10 +159,10 @@ $(document).ready(function () {
     });
 
     $(document).on('change','.field_size',function(){
-       if ($(this).val() == '')
-           $(this).attr("data","NV");
-       else
-           $(this).attr("data",$(this).val());
+        if ($(this).val() == '')
+            $(this).attr("data","NV");
+        else
+            $(this).attr("data",$(this).val());
     });
 
     $("#menu-toggle").click(function(e) {
@@ -526,45 +527,40 @@ $(document).ready(function () {
         })
     });
 
-    $(".data").each(function () {
-        $(this).change(function (e) {
-            e.preventDefault();
-            var new_value = $("input[name='newValue']").val();
-            var name_db = $("input[name='name_db']").val();
-            var table_name = $("input[name='tale_name']").val();
-            var col_name_id = $(".btn-del-data").parent().siblings(":first").attr('name');
-            var id_value = $('td:first', $(this).parents('tr')).text();
-            id_value = id_value.replace(/[\s+][\s]/g, "");
-            id_value = id_value.replace(/[" "]/g, "");
-            var col_name_edit = $(this).attr('name');
-            var rq = $.ajax({
-                url: 'index.php?run=edit_data&name_db='+name_db+'&table_name='+table_name+'&id_col_name='+col_name_id+'&col_name_edit='+col_name_edit+'&id_value='+id_value+'&value='+new_value,
-                //data: {'nameDB':name_db },
-                method: "POST"
-            });
-            rq.success(function (result) {
-                $("#modal_info").modal("hide");
-                if (result != 1) {
-                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
-                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
-                    $("#modal_info").modal("show");
-                }
-                else {
-                   $("#modal_info").find(".modal-body").html("<p>La donnée à bien été Modifiée</p>");
-                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
-                    $("#modal_info").find(".modal-footer").hide();
-                    $("#modal_info").modal("show");
-                    window.setTimeout(function () {
-                        window.location.href = 'index.php?run=content_table&dbname='+name_db+'&t_name='+table_name;
-                    }, 1000);
-                }
-            })
+    $(document).on('change', ".data", function (e){
+        e.preventDefault();
+        var new_value = $("input[name='newValue']").val();
+        var name_db = $("input[name='name_db']").val();
+        var table_name = $("input[name='tale_name']").val();
+        var col_name_id = $(".btn-del-data").parent().siblings(":first").attr('name');
+        var id_value = $('td:first', $(this).parents('tr')).text();
+        id_value = id_value.replace(/[\s+][\s]/g, "");
+        id_value = id_value.replace(/[" "]/g, "");
+        var col_name_edit = $(this).attr('name');
+        var rq = $.ajax({
+            url: 'index.php?run=edit_data&name_db='+name_db+'&table_name='+table_name+'&id_col_name='+col_name_id+'&col_name_edit='+col_name_edit+'&id_value='+id_value+'&value='+new_value,
+            //data: {'nameDB':name_db },
+            method: "POST"
+        });
+        rq.success(function (result) {
+            $("#modal_info").modal("hide");
+            if (result != 1) {
+                $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                $("#modal_info").modal("show");
+            }
+            else {
+                $("#modal_info").find(".modal-body").html("<p>La donnée à bien été Modifiée</p>");
+                $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                $("#modal_info").find(".modal-footer").hide();
+                $("#modal_info").modal("show");
+                window.setTimeout(function () {
+                    window.location.href = 'index.php?run=content_table&dbname='+name_db+'&t_name='+table_name;
+                }, 1000);
+            }
         })
     });
 
-    /********************************************************************************
-    *******************************************************************************
-    *******************************************************************************/
     $(".form_delete_field").each(function () {
         $(this).submit(function (e) {
             e.preventDefault();
@@ -597,48 +593,46 @@ $(document).ready(function () {
             })
         })
     });
+
     $(".form_edit_field").each(function () {
         $(this).submit(function (e) {
             e.preventDefault();
-            var field_name = $('.btn-edit-field').attr("name");
-            $("#modal_edit_field" + field_name).modal('hide');
-            var name_field = $("input[name='new_field_name']").val();
-            var type_field = $("select[name='field_type']").val();
-            var size_field = $("input[name='new_field_size']").val();
-            var isNull_field = $("input[name='new_isNull_name']").val();
-            var default_field = $("select[name='select_default_edit']").val();
-            console.log('nom : ' + name_field);
-            console.log('type : ' + type_field);
-            console.log('size : ' + size_field);
-            console.log('is null : ' + isNull_field);
-            console.log('default : ' + default_field);
-            /*var rq = $.ajax({
-             url: 'index.php?run=delete_data&name_db='+name_db+'&table_name='+table_name+'&id_col_name='+col_name+'&id_field='+id_field,
-             //data: {'nameDB':name_db },
-             method: "POST"
-             });
-             rq.success(function (result) {
-             $("#modal_info").modal("hide");
-             if (result != 1) {
-             $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
-             $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
-             $("#modal_info").modal("show");
-             }
-             else {
-             $("#modal_info").find(".modal-body").html("<p>La donnée à bien été supprimée</p>");
-             $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
-             $("#modal_info").find(".modal-footer").hide();
-             $("#modal_info").modal("show");
-             window.setTimeout(function () {
-             window.location.href = 'index.php?run=content_table&dbname='+name_db+'&t_name='+table_name;
-             }, 2000);
-             }
-             })*/
+            var name_field_old = $("input[name='old_field_name']").val();
+            $("#modal_edit_field" + name_field_old).modal('hide');
+            var name_field = $(this).parent().find("input[name='new_field_name']").val();
+            var new_type_field = $("select[name='field_type']").val();
+            var new_size_field = $(this).parent().find("input[name='new_field_size']").val();
+            var new_isNull_field = $(this).parent().find("select[name='new_isNull_name']").val();
+            var new_default_field = $("select[name='select_default_edit']").val();
+            var name_db = $("input[name='name_db']").val();
+            var table_name = $("input[name='tale_name']").val();
+            console.log("old : " + name_field_old);
+            console.log("new : " + name_field);
+            var rq = $.ajax({
+                url: 'index.php?run=edit_field',
+                data: {name_db:name_db, table_name:table_name, odl_field_name:name_field_old, new_field_name:name_field, new_type_field:new_type_field, new_size_field:new_size_field,
+                new_isNull_field:new_isNull_field,new_default_field:new_default_field},
+                method: "POST"
+            });
+            rq.success(function (result) {
+                $("#modal_info").modal("hide");
+                if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                    $("#modal_info").find(".modal-body").html("<p>Le champs à bien été modifié</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    window.setTimeout(function () {
+                        window.location.href = 'index.php?run=showTableStruct&dbname=' + name_db + '&tName=' + table_name;
+                    }, 1000);
+                }
+            })
         })
     });
-    /********************************************************************************
-     *******************************************************************************
-     *******************************************************************************/
 });
 
 
