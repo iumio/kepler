@@ -1,0 +1,78 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+h2, h1
+{
+    color: white;
+}
+
+input
+{
+    width: 60% !important ;
+}
+
+button
+{
+    width: 100px!important;
+}
+#main {
+  min-height: 100%;
+    background: white url(../IMG/database.jpg) no-repeat no-repeat;
+    background-size: 100% 100%;
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+    width: 100%;
+    position: absolute;
+    z-index: -50;
+}
+
+#main {
+
+}
+
+@media only screen and (max-width : 992px) {
+    #main {
+        background: white;
+        margin-top: 30px;
+    }
+}
+
+
+#main h1 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #555;
+    margin-bottom: 0;
+}
+
+#main h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #999;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+#main h3 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #555;
+    margin-top: 5px;
+}
+
+#connect {
+    margin-top: 60px;
+}
+
+input.form-control , input[type="submit"] , .btn {
+    border-radius: 0px;
+}
+
+.btn {
+    transition: all ease-in-out 0.2s;
+}

@@ -24,6 +24,7 @@ class Index
         if ($request == NULL)
             $controller->indexAction();
         else
+            //echo $_SESSION['twig']->render("login.html.twig");
             self::router($request);
         unset($controller);
     }
