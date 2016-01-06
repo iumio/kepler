@@ -13,7 +13,10 @@ class Starter {
         $this->__autoloader($array);
         $this->initTwig();
     }
-    
+
+    /** init autoloader
+     * @return array
+     */
     public function initAutoloader(){
         try {
             $array = array("CONTROLLER/Controller.php",
@@ -30,6 +33,9 @@ class Starter {
         }
     }
 
+    /** autoloader
+     * @param $array
+     */
     public function __autoloader($array) {
         include_once 'Autoloader.php';
         foreach ($array as $one) {
@@ -37,6 +43,9 @@ class Starter {
         }
     }
 
+    /** init TWIG
+     *
+     */
     public function initTwig()
     {
         try {

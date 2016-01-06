@@ -120,6 +120,11 @@ class Controller
         unset($model);
     }
 
+    /** get gv
+     * @param $type
+     * @param $size
+     * @return int
+     */
     private function get_gv($type, $size)
     {
         if ($type == "VARCHAR" && $size == "NV")
@@ -134,12 +139,18 @@ class Controller
             return (0);
     }
 
+    /** make a echo
+     * @param $val
+     */
     private function make_echo($val)
     {
         echo $val;
         return ;
     }
 
+    /** add new field
+     * @param $request
+     */
     public function add_field($request)
     {
         $table = $request["name_table"];
@@ -164,6 +175,9 @@ class Controller
         unset($model);
     }
 
+    /** add new table
+     * @param $request
+     */
     public function add_table($request)
     {
         $add_t = array();
@@ -191,6 +205,9 @@ class Controller
         unset($model);
     }
 
+    /** make a query
+     * @param $query
+     */
     public function make_query($query)
     {
         $model = $this->getModel();
@@ -206,6 +223,11 @@ class Controller
         unset($model);
     }
 
+    /** delete field
+     * @param $dbname
+     * @param $table
+     * @param $field_name
+     */
     public function delete_field($dbname, $table, $field_name)
     {
         $model = $this->getModel();
@@ -218,6 +240,12 @@ class Controller
         unset($model);
     }
 
+    /** add new data
+     * @param $dbname
+     * @param $table
+     * @param $field_name
+     * @param $new_data
+     */
     public function add_data($dbname, $table, $field_name, $new_data)
     {
         $model = $this->getModel();
@@ -230,6 +258,9 @@ class Controller
         unset($model);
     }
 
+    /** edit a field
+     * @param $request
+     */
     public function edit_field($request)
     {
         $model = $this->getModel();
@@ -410,6 +441,10 @@ class Controller
         fclose($file);
     }
 
+    /** delete the backup
+     * @param $filepath
+     * @return int|string
+     */
     private function delete_backup($filepath)
     {
         try {
@@ -438,6 +473,12 @@ class Controller
         }
     }
 
+    /** rename the bdd
+     * @param $newdbname
+     * @param $model
+     * @param $name_db
+     * @return int|string
+     */
     private function do_migration($newdbname, $model, $name_db)
     {
         try {
@@ -452,6 +493,11 @@ class Controller
         }
     }
 
+    /** make the login
+     * @param $login
+     * @param $password
+     * @return int
+     */
     static public function make_login($login, $password)
     {
         $_SESSION['login'] = $login;
@@ -462,6 +508,9 @@ class Controller
             return (1);
     }
 
+    /** LOGOUT
+     *
+     */
     public function logout()
     {
         unset($_SESSION['login']);

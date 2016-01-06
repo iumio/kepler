@@ -99,9 +99,7 @@ class Connector {
      */
     static public function getInfo($info)
     {
-        /////////
         self::getInstance();
-        ////////
         if ($info == "host")
             return (self::$HOST);
         else if ($info == "username")

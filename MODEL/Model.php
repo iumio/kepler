@@ -61,6 +61,12 @@ class Model
         }
     }
 
+    /** add a new field
+     * @param $db
+     * @param $table
+     * @param $field_info
+     * @return PDOStatement|string
+     */
     public function add_field($db, $table, $field_info)
     {
         $str = "ALTER TABLE $db.$table ADD ";
@@ -170,6 +176,13 @@ class Model
         }
     }
 
+    /** function to add new data
+     * @param $dbname
+     * @param $table
+     * @param $field_name
+     * @param $new_data
+     * @return PDOStatement|string
+     */
     public function add_new_data($dbname, $table, $field_name, $new_data)
     {
         try {
@@ -180,6 +193,13 @@ class Model
         }
     }
 
+    /** query for add new data
+     * @param $dbname
+     * @param $table
+     * @param $field_name
+     * @param $new_data
+     * @return string
+     */
     private function add_new_data_query($dbname, $table, $field_name, $new_data)
     {
         $cField = count($field_name);
@@ -234,6 +254,12 @@ class Model
         }
     }
 
+    /** the query of the textarea
+     * @param null $rows
+     * @param null $dbname
+     * @param null $table
+     * @return string
+     */
     private function create_query_table($rows = null, $dbname = null, $table = null)
     {
         $c = count($rows);
@@ -262,6 +288,10 @@ class Model
         return $str;
     }
 
+    /** the textarea for custom query
+     * @param $query
+     * @return PDOStatement|string
+     */
     public function custom_query($query)
     {
         try {
@@ -287,6 +317,12 @@ class Model
         }
     }
 
+    /** drop a field
+     * @param $db
+     * @param $table
+     * @param $field_name
+     * @return PDOStatement|string
+     */
     public function drop_field($db, $table, $field_name)
     {
         try {
@@ -297,6 +333,10 @@ class Model
         }
     }
 
+    /** edit a field
+     * @param $request
+     * @return PDOStatement|string
+     */
     public function edit_field($request)
     {
         try {
@@ -375,6 +415,9 @@ class Model
         return $version;
     }
 
+    /** make the connection at login
+     * @return PDOStatement
+     */
     public function make_login_connector()
     {
         $result = Connector::prepare("show databases");

@@ -16,6 +16,9 @@ Index::main($request);
 
 class Index
 {
+    /** MAIN FUNCTION
+     * @param $request
+     */
     static public function main($request)
     {
         require_once "Starter.php";
@@ -34,6 +37,9 @@ class Index
         unset($controller);
     }
 
+    /** when user is login
+     * @param $request
+     */
     static private function on_login($request)
     {
         $res = Controller::make_login($request['login'], $request['passwd']);
@@ -45,11 +51,19 @@ class Index
         }
     }
 
+    /** check if user is login
+     * @return int
+     */
     static private function check_login()
     {
         return (isset($_SESSION['login']) && isset($_SESSION['passwd']))? 1 : 0;
     }
 
+    /** ROUTER
+     * @param $request
+     * @throws DatabaseException
+     * @throws TableException
+     */
     static private function router($request)
     {
         if(self::check_login() == 1)

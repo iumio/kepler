@@ -148,9 +148,9 @@ $(document).ready(function () {
     $("select[name=select_default_edit]").change(function () {
         var value = $(this).val();
         if (value == "def")
-            $("input[name='default_edit_field']").css("display", "block");
+            $("input[name='select_default_edit']").css("display", "block");
         else
-            $("input[name='default_edit_field']").css("display", "none");
+            $("input[name='select_default_edit']").css("display", "none");
     });
 
     $(".btn-add-field-in-tab").click(function (e) {
@@ -494,9 +494,9 @@ $(document).ready(function () {
             var name_db = $("input[name='name_db']").val();
             var name_table = $("input[name='table_name_field']").val();
             var field_name = $('input[name^=field_name]').val();
-            var field_type = $('select[name^=field_type]').val();
+            var field_type = $('select[name^=field_type_add]').val();
             var field_size = $('input[name^=field_size]').attr("data");
-            var select_default = $('select[name^=select_default]').val();
+            var select_default = $('select[name^=select_default_add]').val();
             var is_null = $('select[name^=is_null]').val();
             var select_index = $('select[name^=select_index]').val();
             var is_ai = $('select[name^=is_ai]').val();
@@ -606,8 +606,7 @@ $(document).ready(function () {
             var new_default_field = $("select[name='select_default_edit']").val();
             var name_db = $("input[name='name_db']").val();
             var table_name = $("input[name='tale_name']").val();
-            console.log("old : " + name_field_old);
-            console.log("new : " + name_field);
+            console.log("new : " + new_default_field);
             var rq = $.ajax({
                 url: 'index.php?run=edit_field',
                 data: {name_db:name_db, table_name:table_name, odl_field_name:name_field_old, new_field_name:name_field, new_type_field:new_type_field, new_size_field:new_size_field,

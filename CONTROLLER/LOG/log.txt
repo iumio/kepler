@@ -314,3 +314,9 @@ Une donnée à été ajoutée dans la table nouvelletable2 de la base de donnée
 Une donnée à été changé : kevinzrgzrf, d'Id : 2, dans la table nouvelletable2, dans la base kklk
 Une donnée à été changé : kevinaedqafezeef, d'Id : 2, dans la table nouvelletable2, dans la base kklk
 Une donnée à été changé : 2016-12-30, d'Id : 2, dans la table nouvelletable2, dans la base kklk
+La colonne zefzef a été créé dans la table nouvelletable2 de la base kklk
+Le champs  à été modifié dans la table  de la base de données  en 
+Le champs  à été modifié dans la table  de la base de données  en 
+Le champs  à été modifié dans la table  de la base de données  en 
+Le champs  à été modifié dans la table  de la base de données  en 
+Le champs  à été modifié dans la table  de la base de données  en 

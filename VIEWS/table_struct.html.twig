@@ -346,7 +346,7 @@
                                                                     <td>
                                                                         <select class="form-control"
                                                                                 name="select_default_edit" id="sd_edit">
-                                                                            <option selected="selected">Aucune</option>
+                                                                            <option >Aucune</option>
                                                                             <option value="def">Tel que défini :
                                                                             </option>
                                                                             <option value="NULL">NULL</option>
@@ -354,7 +354,7 @@
                                                                                 CURRENT_TIMESTAMP
                                                                             </option>
                                                                         </select>
-                                                                        <input type="text" class="form-control input-sm marginTop20" name="default_edit_field" style="display: none" value="NULL"/>
+                                                                        <input type="text" class="form-control input-sm marginTop20" name="select_default_edit" style="display: none" value="NULL"/>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -514,7 +514,7 @@
                                                required="required"/>
                                     </td>
                                     <td>
-                                        <select class="form-control" name="field_type">
+                                        <select class="form-control" name="field_type_add">
                                             <option value="INT"
                                                     title="Un nombre entier de 4 octets. La fourchette des entiers relatifs est de -2 147 483 648 à 2 147 483 647. Pour les entiers positifs, c'est de 0 à 4 294 967 295">
                                                 INT
@@ -702,7 +702,7 @@
                                                data="NV"/>
                                     </td>
                                     <td>
-                                        <select class="form-control" name="select_default" id="sd">
+                                        <select class="form-control" name="select_default_add" id="sd">
                                             <option selected="selected">Aucune</option>
                                             <option value="def">Tel que défini :</option>
                                             <option value="NULL">NULL</option>
