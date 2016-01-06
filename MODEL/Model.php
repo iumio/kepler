@@ -176,7 +176,7 @@ class Model
         }
     }
 
-    public function create_query_table($rows = null, $dbname = null, $table = null)
+    private function create_query_table($rows = null, $dbname = null, $table = null)
     {
         $c = count($rows);
         $str = "CREATE TABLE $dbname.$table ( ";
@@ -202,6 +202,16 @@ class Model
         }
         $str = $str." );";
         return $str;
+    }
+
+    public function custom_query($query)
+    {
+        try {
+            $result = Connector::prepare($query, NULL);
+            return $result;
+        } catch (PDOException $e) {
+            return ($e->getMessage());
+        }
     }
 
     /** get data of a table

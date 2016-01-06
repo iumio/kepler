@@ -149,7 +149,7 @@ $(document).ready(function () {
         var table_name = $(this).attr("name");
         e.preventDefault();
         $("#modal_delete_table").modal('show');
-        //$(".text-info").html(table_name);
+        $(".text-info_tbl").html(table_name);
         $("input[name='table_name_delete']").val(table_name);
     });
 
@@ -296,7 +296,7 @@ $(document).ready(function () {
             e.preventDefault();
             $("#modal_delete_table").modal('hide');
             var name_db = $("input[name='name_db']").val();
-            var name_table = $(".text-info").html();
+            var name_table = $(".text-info_tbl").html();
             var rq = $.ajax({
                 url: 'index.php?run=delete_table&name_db='+name_db+'&name_table='+name_table,
                 //data: {'nameDB':name_db },
@@ -385,6 +385,57 @@ $(document).ready(function () {
     });
 
 
+    $("#Query").each(function () {
+        $(this).submit(function (e) {
+            e.preventDefault();
+            $("#modal_delete_data").modal('hide');
+            var query_g = $("textarea[name='query']").val();
+            var rq = $.ajax({
+                url: 'index.php?run=make_query',
+                data: {'query' : query_g},
+                method: "POST",
+                dataType: 'json'
+            });
+            rq.success(function (result) {
+                if (result.code == -1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result.error + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else
+                {
+                    $("#query_result").find(".panel").find(".panel-body").html("")
+                    if (result.length == 0) {
+                        var html_content = "<span class='alert-danger'>Aucun résultat pour cette requête</span>";
+                        $("#query_result").find(".panel").find(".panel-body").html(html_content);
+                        $("#query_result").show();
+                    }
+                    else {
+                        var html_content = "<table class='table table-striped table-bordered table-responsive tableaux'><thead><tr>";
+                        $.each(result[0], function (key, value) {
+                            html_content += "<th>" + key + "</th>";
+                        });
+                        html_content += "</thead><tbody>";
+                        for (var i = 0; i < result.length; i++) {
+                            html_content += "<tr>";
+                            $.each(result[i], function (key, value) {
+                                html_content += "<td>" + value + "</td>";
+                            });
+                            html_content += "</tr>"
+                        }
+                        html_content += "</tbody></table>";
+                        $("#query_result").find(".panel").find(".panel-body").html(html_content);
+                        $("#query_result").show();
+                        $('.tableaux').DataTable();
+                    }
+
+                    var aTag = $("div[id='query_result']");
+                    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
+                }
+            })
+        })
+    });
+
     $(".form_add_table").each(function () {
         $(this).submit(function (e) {
             e.preventDefault();
@@ -405,7 +456,6 @@ $(document).ready(function () {
                 data: {name_table : name_table, namedb : name_db, name :field_name, type: field_type, size: field_size, default : select_default, is_n : is_null, index : select_index, ai : is_ai, def_i : default_i},
             });
             rq.success(function (result) {
-                console.log(result)
                 $("#modal_info").modal("hide");
                 if (result != 1) {
                     $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
@@ -421,7 +471,7 @@ $(document).ready(function () {
                         window.location.href = 'index.php?run=showDB&value='+name_db;
                     }, 1000);
                 }
-            })
+            });
 
             /*var table_name = $("input[name='tale_name']").val();
             var col_name = $("input[name='col_name']").val();

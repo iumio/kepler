@@ -240,3 +240,31 @@ La table helda a été créé dans la base ger
 La table zzdf a été créé dans la base ger
 La table zzdft a été créé dans la base ger
 La table helder a été créé dans la base ger
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+Une requête a été faite
+La table aze de la base de données compared a été supprimée
+La base de données zr a été créé
+La table rr a été créé dans la base zr
+La base de données zr a été supprimée
+La base de données AZE a été créé
+La table r a été créé dans la base AZE
+La table Wé a été créé dans la base AZE
+La table Wé de la base de données AZE a été supprimée
+La table r de la base de données AZE a été supprimée
+La base de données AZE a été supprimée

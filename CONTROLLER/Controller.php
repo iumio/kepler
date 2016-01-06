@@ -166,6 +166,21 @@ class Controller
         unset($model);
     }
 
+    public function make_query($query)
+    {
+        $model = $this->getModel();
+        $result = $model->custom_query($query);
+        if ($result->errorInfo()[1] == NULL)
+            echo json_encode($result->fetchAll(PDO::FETCH_NAMED));
+        else
+        {
+            $error = $result->errorInfo();
+            $error = $error[0] . " " . $error[1] . "  " . $error[2];
+            echo json_encode(array("error"=>$error ,"code" => -1));
+        }
+        unset($model);
+    }
+
     public function delete_field($dbname, $table, $field_name)
     {
         $model = $this->getModel();

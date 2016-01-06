@@ -40,6 +40,8 @@ class Index
                 $controller->indexAction();
             else if ($request["run"] == "formNewDB")
                 $controller->formNewDB();
+            else if ($request["run"] == "make_query")
+                $controller->make_query($request['query']);
             else if ($request["run"] == "addDB")
                 $controller->addDB($request["nameDB"]);
             else if ($request["run"] == "renameDB")
