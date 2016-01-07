@@ -6,6 +6,11 @@ $(document).ready(function () {
 
     $('.tableaux').DataTable();
 
+    $(".listDB").click(function(e){
+        e.preventDefault();
+        $(this).parent().find(".listTable").toggle("slideDown");
+    });
+
     $("a[href='#makeQuery']").each(function () {
         $(this).click(function (e) {
             e.preventDefault();

@@ -320,3 +320,11 @@ Le champs  à été modifié dans la table  de la base de données  en
 Le champs  à été modifié dans la table  de la base de données  en 
 Le champs  à été modifié dans la table  de la base de données  en 
 Le champs  à été modifié dans la table  de la base de données  en 
+La base de données base_exam a été supprimée
+La base de données test_phpMyAdmin a été supprimée
+La table nouvelletable a été créé dans la base anaxago
+Le champs  à été modifié dans la table  de la base de données  en 
+Le champs prenom2 de la table nouvelletable de la base de données anaxago a été supprimée
+Une donnée à été changé : Blézerfz, d'Id : 1, dans la table produit, dans la base db563094984
+Une donnée à été ajoutée dans la table produit de la base de données db563094984
+Une donnée ayant l'id N° 26, dans la table produit, dans la base db563094984 à été supprimée

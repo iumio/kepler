@@ -17,7 +17,7 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-brand">
                         <a href="index.php?run=indexAction">
-                            my_phpMyAdmin
+                            <img src="PUBLIC/IMG/logoRK.png" alt="logoRadminK" class="logo"/>
                         </a>
                     </li>
                     <li>
@@ -26,10 +26,23 @@
                     <li>
                         <a href="index.php?run=formNewDB"><i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Nouvelle base de données</a>
                     </li>
+                    {% set i = 0 %}
                     {% for oneDB in alldbname %}
                     <li>
-                        <a href="index.php?run=showDB&value={{ oneDB['Database'] }}"><i class="fa fa-database"></i> &nbsp;{{ oneDB['Database'] }}</a>
+                        <a class="listDB"><i class="fa fa-database"></i> &nbsp;{{ oneDB[0] }}</a>
+
+                        <ul class="noShow listTable">
+                            <li>
+                                <a href="index.php?run=showDB&value={{ oneDB[0] }}">Accéder à la base</a>
+
+                                {% for oneTable in oneDB[1] %}
+                                    <a href="index.php?run=showTableStruct&dbname={{ oneDB[0] }}&tName={{ oneTable }}" ><i class="glyphicon glyphicon-list-alt"></i> &nbsp;{{ oneTable }}</a>
+                                {% endfor %}
+                            </li>
+                        </ul>
+
                     </li>
+                        {% set i = i + 1 %}
                     {% endfor %}
                 </ul>
             </div>

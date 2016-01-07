@@ -22,6 +22,7 @@ class Controller
         $charset = $model->get_charset()->fetchColumn();
         $alldbname = $model->get_all_db_name()->fetchAll();
         $log = $this->getLogs();
+        $list_table = $this->get_list_tab();
         echo $_SESSION['twig']->render("index.html.twig",
             array("databases" => $this->merge_databases($databases, $alldbname),
                 "ip" => $_SERVER['SERVER_NAME'],
@@ -31,8 +32,31 @@ class Controller
                 "server_type" => $_SERVER["SERVER_SOFTWARE"],
                 "phpv" => phpversion(),
                 "logs" => $log,
-                "alldbname" => $alldbname));
+                "alldbname" => $list_table));
         unset($model);
+    }
+
+    private function get_list_tab()
+    {
+        $listOfTable = array();
+        $model = $this->getModel();
+        $databases = $model->get_all_db()->fetchAll();
+        $alldbname = $model->get_all_db_name()->fetchAll();
+        $mergeDB = $this->merge_databases($databases,$alldbname);
+        for ($i = 0; $i < count($mergeDB); $i++)
+            array_push($listOfTable, array($mergeDB[$i]['db'], $this->get_table_name($mergeDB[$i]['db'])));
+        return $listOfTable;
+        unset($model);
+    }
+
+    private function get_table_name($dbname)
+    {
+        $model = $this->getModel();
+        $tables_names = array();
+        $table = $model->get_tables($dbname);
+        while ($line = $table->fetch())
+            array_push($tables_names, $line['table_name']);
+        return $tables_names ;
     }
 
     /** Merge the two list of databases
@@ -92,13 +116,13 @@ class Controller
     public function showDB($dbname)
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db_name()->fetchAll();
+        $list_table = $this->get_list_tab();
         if ($model->check_database_exist($dbname)->fetch() != NULL) {
             $tables = $model->get_tables($dbname)->fetchAll();
             echo $_SESSION['twig']->render("db_info.html.twig",
-                array("alldbname" => $databases, "tables" => $tables, "dbname" => $dbname));
+                array("alldbname" => $list_table, "tables" => $tables, "dbname" => $dbname));
         } else
-            throw new DatabaseException("La base de données n'existe pas !", $databases);
+            throw new DatabaseException("La base de données n'existe pas !", $list_table);
         unset($model);
     }
 
@@ -110,13 +134,13 @@ class Controller
     public function showTableStruct($dbname, $t_name)
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db_name()->fetchAll();
+        $list_table = $this->get_list_tab();
         if ($model->check_table_exist($dbname, $t_name)->fetch() != NULL) {
             $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
             echo $_SESSION['twig']->render("table_struct.html.twig",
-                array("alldbname" => $databases, "tables_struct" => $tables_struct, "t_name" => $t_name,"dbname" => $dbname));
+                array("alldbname" => $list_table, "tables_struct" => $tables_struct, "t_name" => $t_name,"dbname" => $dbname));
         } else
-            throw new TableException("La table n'existe pas dans cette base!", $t_name, $databases);
+            throw new TableException("La table n'existe pas dans cette base!", $t_name, $list_table);
         unset($model);
     }
 
@@ -281,14 +305,14 @@ class Controller
     public function showTableData($dbname, $t_name)
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db_name()->fetchAll();
+        $list_table = $this->get_list_tab();
         if ($model->check_table_exist($dbname, $t_name)->fetch() != NULL) {
             $tables_data = $model->get_content_table($dbname, $t_name)->fetchAll();
             $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
             echo $_SESSION['twig']->render("table_view.html.twig",
-                array("alldbname" => $databases, "tables_data" => $tables_data, "tables_struct" =>$tables_struct, "t_name" => $t_name,"dbname" => $dbname));
+                array("alldbname" => $list_table, "tables_data" => $tables_data, "tables_struct" =>$tables_struct, "t_name" => $t_name,"dbname" => $dbname));
         } else
-            throw new TableException("La table n'existe pas dans cette base!", $t_name, $databases);
+            throw new TableException("La table n'existe pas dans cette base!", $t_name, $list_table);
         unset($model);
     }
 
@@ -337,8 +361,8 @@ class Controller
     public function formNewDB()
     {
         $model = $this->getModel();
-        $databases = $model->get_all_db_name()->fetchAll();
-        echo $_SESSION['twig']->render('addDB.html.twig', array("alldbname" => $databases));
+        $list_table = $this->get_list_tab();
+        echo $_SESSION['twig']->render('addDB.html.twig', array("alldbname" => $list_table,));
         unset($model);
     }
 

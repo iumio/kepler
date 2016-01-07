@@ -50,6 +50,7 @@ class Starter {
     {
         try {
             $_SESSION['twig'] = new Twig_Environment(new Twig_Loader_Filesystem('VIEWS'), array('cache' => false, 'debug' => true));
+            $_SESSION['twig']->addExtension(new Twig_Extension_Debug());
         } catch (Exception $e) {
             $error = "Twig n'est pas disponible";
             include 'VIEWS/error.html.twig';
