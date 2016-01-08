@@ -56,6 +56,11 @@
             </div>
         </div>
         <div class="row" id="showStruct">
+            <div id="show_sql_request">
+                <div class="alert alert-success" role="alert">
+                    <p><span class="text-danger"><strong>DESC</strong></span> <span class="text-info">{{ dbname }}.{{ t_name }}</span>;</p>
+                </div>
+            </div>
             <div class="panel panel-info panel-full">
                 <div class="panel-heading">
                     <h3 class="panel-title">INFORMATION SUR LA TABLE {{ t_name }}</h3>
@@ -383,6 +388,19 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="marginBottom40"></div>
+        <div id="container" class="resizable">
+            <div id="handle" class="ui-resizable-handle ui-resizable-n"></div>
+            <div class="console_title">Console de Requetes</div>
+            <div class="panel-body-max-h log_sql">
+
+                {% for oneline in log_sql %}
+                    <p class="alert-warning">{{ oneline }}</p>
+                {% else %}
+                    <p>Aucune action a été effectuée</p>
+                {% endfor %}
             </div>
         </div>
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_rename_table" tabindex="-1"

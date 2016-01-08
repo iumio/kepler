@@ -71,7 +71,7 @@ class Index
             if (isset($request["run"])) {
                 $controller = new Controller();
                 if ($request["run"] == "logout")
-                    $controller->logout();
+                    $controller->logout((isset($request['arg']) ? $request['arg'] : NULL));
                 else if ($request["run"] == "showDB")
                     $controller->showDB($request["value"]);
                 else if ($request["run"] == "showTableStruct")

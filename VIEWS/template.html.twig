@@ -3,12 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>my_phpMyAdmin</title>
+        <title>Octimum</title>
         <link rel="stylesheet" href="PUBLIC/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="PUBLIC/CSS/simple-sidebar.css">
         <link rel="stylesheet" href="PUBLIC/CSS/style.css">
         <link rel="stylesheet" href="PUBLIC/font-awesome-4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="PUBLIC/CSS/jquery.dataTable.min.css">
+        <link rel="stylesheet" href="PUBLIC/JS/jquery-ui.min.css">
     </head>
     <body>
         <div id="wrapper">
@@ -17,7 +18,7 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-brand">
                         <a href="index.php?run=indexAction">
-                            <img src="PUBLIC/IMG/logoRK.png" alt="logoRadminK" class="logo"/>
+                            Octimum
                         </a>
                     </li>
                     <li>
@@ -30,7 +31,6 @@
                     {% for oneDB in alldbname %}
                     <li>
                         <a class="listDB"><i class="fa fa-database"></i> &nbsp;{{ oneDB[0] }}</a>
-
                         <ul class="noShow listTable">
                             <li>
                                 <a href="index.php?run=showDB&value={{ oneDB[0] }}">Accéder à la base</a>
@@ -40,7 +40,6 @@
                                 {% endfor %}
                             </li>
                         </ul>
-
                     </li>
                         {% set i = i + 1 %}
                     {% endfor %}
@@ -57,5 +56,6 @@
         <script type="text/javascript" src="PUBLIC/JS/jquery.dataTable.min.js"></script>
         <script type="text/javascript" src="PUBLIC/JS/dataTables.bootstrap.min.js"></script>
         <script type="text/javascript" src="PUBLIC/JS/cellEditable.js"></script>
+        <script type="text/javascript" src="PUBLIC/JS/jquery-ui.min.js"></script>
     </body>
 </html>

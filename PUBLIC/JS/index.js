@@ -4,6 +4,16 @@
 
 $(document).ready(function () {
 
+    $(".resizable").resizable({
+        handles: {
+            'n': '#handle'
+        }
+    });
+
+    setTimeout(function () {
+        window.location.href = 'index.php?run=logout&arg=noActivity';
+    }, 1440000);
+
     $('.tableaux').DataTable();
 
     $(".listDB").click(function(e){

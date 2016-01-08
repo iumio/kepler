@@ -1,0 +1,17 @@
+CREATE DATABASE testonscela
+SELECT * FROM anaxago.categorie;
+CREATE DATABASE onretest;
+DROP DATABASE`testonscela`;
+DROP DATABASE`onretest`;
+SELECT * FROM anaxago.categorie;
+SELECT * FROM anaxago.categorie;
+SELECT * FROM anaxago.categorie;
+SELECT * FROM db563094984.appartenir;
+SELECT * FROM db563094984.appartenir;
+SELECT * FROM db563094984.appartenir;
+SELECT * FROM db563094984.appartenir;
+SELECT * FROM db563094984.appartenir;
+SELECT * FROM db563094984.appartenir;
+SELECT * FROM db563094984.appartenir;
+SELECT * FROM db563094984.appartenir;
+                SELECT * FROM db563094984.appartenir;

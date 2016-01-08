@@ -4,6 +4,10 @@
     background: #000000;
 }
 
+.marginBottom40{
+    margin-bottom: 40px;
+}
+
 .panel-full .panel-body textarea
 {
     width: 100%!important;
@@ -37,6 +41,11 @@
 {
     max-height: 200px;
     overflow: auto;
+}
+
+.log_sql
+{
+    margin-top: 27px;
 }
 
 .panel-body-max-h p
@@ -79,4 +88,35 @@
 
 .listDB{
     cursor: pointer;
+}
+
+#show_sql_request{
+    margin: 10px 10px 10px 10px;
+}
+
+#container {
+    width: 100%;
+    background: lightgray;
+    height: 25px;
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0;
+    right: 0;
+    max-height: 231px;
+    min-height: 25px;
+    z-index: 10;
+}
+#handle {
+    width: 100%;
+    height: 6px;
+    top: -6px;
+    background-color: #000;
+}
+
+.console_title{
+    font-weight: bold;
+    color: #000;
+    float: right;
+    margin-right: 10px;
 }

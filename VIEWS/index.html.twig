@@ -132,7 +132,7 @@
             <div class="panel panel-success panel-full">
 
                 <div class="panel-heading">
-                    <h3 class="panel-title">Bienvenue sur my_phpMyAdmin </h3>
+                    <h3 class="panel-title">Bienvenue sur Octimum </h3>
                 </div>
                 <div class="panel-body">
                     <p>
@@ -178,17 +178,29 @@
             <div class="panel panel-primary panel-full">
 
                 <div class="panel-heading">
-                    <h3 class="panel-title">my_phpMyAdmin & Serveur Web</h3>
+                    <h3 class="panel-title">Octimum & Serveur Web</h3>
                 </div>
                 <div class="panel-body">
                     <p>Type de serveur : {{ server_type }}</p>
-                    <p>Version my_phpMyAdmin: 0.1</p>
+                    <p>Version Octimum: 0.1</p>
                     <p>Système d'exploitation : {{ os }}</p>
                     <p>Version du serveur : {{ version }}</p>
                     <p>Version de php : {{ phpv }}</p>
 
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="marginBottom40"></div>
+    <div id="container" class="resizable">
+        <div id="handle" class="ui-resizable-handle ui-resizable-n"></div>
+        <div class="console_title">Console de Requetes</div>
+        <div class="panel-body-max-h log_sql">
+            {% for oneline in log_sql %}
+                <p class="alert-warning"><strong>{{ oneline }}</strong></p>
+            {% else %}
+                <p>Aucune action a été effectuée</p>
+            {% endfor %}
         </div>
     </div>
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_info" tabindex="-1" role="dialog"

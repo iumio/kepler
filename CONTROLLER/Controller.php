@@ -22,6 +22,7 @@ class Controller
         $charset = $model->get_charset()->fetchColumn();
         $alldbname = $model->get_all_db_name()->fetchAll();
         $log = $this->getLogs();
+        $log_sql = $this->getLogs_sql();
         $list_table = $this->get_list_tab();
         echo $_SESSION['twig']->render("index.html.twig",
             array("databases" => $this->merge_databases($databases, $alldbname),
@@ -32,7 +33,8 @@ class Controller
                 "server_type" => $_SERVER["SERVER_SOFTWARE"],
                 "phpv" => phpversion(),
                 "logs" => $log,
-                "alldbname" => $list_table));
+                "alldbname" => $list_table,
+                "log_sql" => $log_sql));
         unset($model);
     }
 
@@ -100,6 +102,19 @@ class Controller
         return array_reverse($log);
     }
 
+    /** return les logs
+     * @return array
+     */
+    public function getLogs_sql()
+    {
+        $file = fopen("CONTROLLER/LOG/log_sql.txt", "r");
+        $log = array();
+        while ($read = fgets($file, 8192))
+            array_push($log, $read);
+        fclose($file);
+        return array_reverse($log);
+    }
+
     /** This is a Singleton
      * Get an instance of model
      * @return Model Instance of Model Class
@@ -117,10 +132,11 @@ class Controller
     {
         $model = $this->getModel();
         $list_table = $this->get_list_tab();
+        $log_sql = $this->getLogs_sql();
         if ($model->check_database_exist($dbname)->fetch() != NULL) {
             $tables = $model->get_tables($dbname)->fetchAll();
             echo $_SESSION['twig']->render("db_info.html.twig",
-                array("alldbname" => $list_table, "tables" => $tables, "dbname" => $dbname));
+                array("alldbname" => $list_table, "tables" => $tables, "dbname" => $dbname,"log_sql" => $log_sql));
         } else
             throw new DatabaseException("La base de données n'existe pas !", $list_table);
         unset($model);
@@ -135,10 +151,11 @@ class Controller
     {
         $model = $this->getModel();
         $list_table = $this->get_list_tab();
+        $log_sql = $this->getLogs_sql();
         if ($model->check_table_exist($dbname, $t_name)->fetch() != NULL) {
             $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
             echo $_SESSION['twig']->render("table_struct.html.twig",
-                array("alldbname" => $list_table, "tables_struct" => $tables_struct, "t_name" => $t_name,"dbname" => $dbname));
+                array("alldbname" => $list_table, "tables_struct" => $tables_struct, "t_name" => $t_name,"dbname" => $dbname,"log_sql" => $log_sql));
         } else
             throw new TableException("La table n'existe pas dans cette base!", $t_name, $list_table);
         unset($model);
@@ -306,11 +323,13 @@ class Controller
     {
         $model = $this->getModel();
         $list_table = $this->get_list_tab();
+        $log_sql = $this->getLogs_sql();
         if ($model->check_table_exist($dbname, $t_name)->fetch() != NULL) {
             $tables_data = $model->get_content_table($dbname, $t_name)->fetchAll();
             $tables_struct = $model->get_tables_struct($dbname, $t_name)->fetchAll();
             echo $_SESSION['twig']->render("table_view.html.twig",
-                array("alldbname" => $list_table, "tables_data" => $tables_data, "tables_struct" =>$tables_struct, "t_name" => $t_name,"dbname" => $dbname));
+                array("alldbname" => $list_table, "tables_data" => $tables_data, "tables_struct" =>$tables_struct, "t_name" => $t_name,"dbname" => $dbname,
+                    "log_sql" => $log_sql));
         } else
             throw new TableException("La table n'existe pas dans cette base!", $t_name, $list_table);
         unset($model);
@@ -362,7 +381,8 @@ class Controller
     {
         $model = $this->getModel();
         $list_table = $this->get_list_tab();
-        echo $_SESSION['twig']->render('addDB.html.twig', array("alldbname" => $list_table,));
+        $log_sql = $this->getLogs_sql();
+        echo $_SESSION['twig']->render('addDB.html.twig', array("alldbname" => $list_table,"log_sql" => $log_sql));
         unset($model);
     }
 
@@ -465,6 +485,16 @@ class Controller
         fclose($file);
     }
 
+    /** write logs
+     * @param $message
+     */
+    public function write_log_sql($message)
+    {
+        $file = fopen("CONTROLLER/LOG/log_sql.txt", "a");
+        fwrite($file, $message . "\n");
+        fclose($file);
+    }
+
     /** delete the backup
      * @param $filepath
      * @return int|string
@@ -535,10 +565,10 @@ class Controller
     /** LOGOUT
      *
      */
-    public function logout()
+    public function logout($arg)
     {
         unset($_SESSION['login']);
         unset($_SESSION["passwd"]);
-        echo $_SESSION['twig']->render("login.html.twig", array("error" => "Vous êtes dorénavant déconnecté"));
+        echo $_SESSION['twig']->render("login.html.twig", array("error" => ($arg == NULL) ? "Vous êtes dorénavant déconnecté" : "Aucune activité depuis 1440 secondes ou plus; veuillez vous reconnecter."));
     }
 }

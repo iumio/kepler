@@ -53,12 +53,16 @@ class Model
      */
     public function add_new_db($newDBname)
     {
+        $controller = new Controller();
         try {
-            $result = Connector::prepare("CREATE DATABASE $newDBname", NULL);
+            $sql = "CREATE DATABASE $newDBname;";
+            $result = Connector::prepare($sql, NULL);
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** add a new field
@@ -117,12 +121,16 @@ class Model
      */
     public function drop_db($db)
     {
+        $controller = new Controller();
         try {
-            $result = Connector::prepare("DROP DATABASE`$db`;", NULL);
+            $sql = "DROP DATABASE`$db`;";
+            $result = Connector::prepare($sql, NULL);
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** delete a data
@@ -134,12 +142,16 @@ class Model
      */
     public function delete_data($db, $table, $id_col_name, $id_field)
     {
+        $controller = new Controller();
         try {
+            $sql = "DELETE FROM $db.$table WHERE $table.$id_col_name = $id_field;";
             $result = Connector::prepare("DELETE FROM $db.$table WHERE $table.$id_col_name = ?", array($id_field));
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** edit a data
@@ -153,12 +165,16 @@ class Model
      */
     public function edit_data($db, $table, $id_col_name, $col_name_edit, $id_value, $value)
     {
+        $controller = new Controller();
         try {
+            $sql = "UPDATE $db.$table SET $col_name_edit = $value WHERE $table.$id_col_name = $id_value;";
             $result = Connector::prepare("UPDATE $db.$table SET $col_name_edit = ? WHERE $table.$id_col_name = ?;", array($value, $id_value));
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** request delete table
@@ -168,12 +184,16 @@ class Model
      */
     public function drop_table($dbname, $table)
     {
+        $controller = new Controller();
         try {
+            $sql = "drop table $dbname.$table";
             $result = Connector::prepare("drop table $dbname.$table", NULL);
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** function to add new data
@@ -185,12 +205,15 @@ class Model
      */
     public function add_new_data($dbname, $table, $field_name, $new_data)
     {
+        //$controller = new Controller();
         try {
             $query = $this->add_new_data_query($dbname, $table, $field_name, $new_data);
             return Connector::prepare($query, $new_data);
+            //$controller->write_log_sql($query);
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        //unset($controller);
     }
 
     /** query for add new data
@@ -229,12 +252,16 @@ class Model
      */
     public function rename_the_table($dbname, $table, $new_name_table)
     {
+        $controller = new Controller();
         try {
+            $sql = "RENAME TABLE $dbname.$table TO $dbname.$new_name_table;";
             $result = Connector::prepare("RENAME TABLE $dbname.$table TO $dbname.$new_name_table", NULL);
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
 
@@ -246,11 +273,14 @@ class Model
      */
     public function create_table($dbname, $table, $rows)
     {
+        $controller = new Controller();
         try {
             $query = $this->create_query_table($rows, $dbname, $table);
+            $controller->write_log_sql($query);
             return Connector::prepare($query, NULL);
         } catch (PDOException $e) {
             return ($e->getMessage());
+            unset($controller);
         }
     }
 
@@ -294,12 +324,15 @@ class Model
      */
     public function custom_query($query)
     {
+        $controller = new Controller();
         try {
             $result = Connector::prepare($query, NULL);
+            $controller->write_log_sql($query);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** get data of a table
@@ -309,12 +342,16 @@ class Model
      */
     public function get_content_table($dbname, $table)
     {
+        $controller = new Controller();
         try {
+            $sql = "SELECT * FROM $dbname.$table;";
             $result = Connector::prepare("SELECT * FROM $dbname.$table", NULL);
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** drop a field
@@ -325,12 +362,16 @@ class Model
      */
     public function drop_field($db, $table, $field_name)
     {
+        $controller = new Controller();
         try {
+            $sql = "ALTER TABLE $db.$table DROP COLUMN $field_name;";
             $result = Connector::prepare("ALTER TABLE $db.$table DROP COLUMN $field_name;", NULL);
+            $controller->write_log_sql($sql);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** edit a field
@@ -339,6 +380,7 @@ class Model
      */
     public function edit_field($request)
     {
+        $controller = new Controller();
         try {
             $str = "ALTER TABLE ".$request['name_db'].".".$request['table_name']." CHANGE ";
             $str = $str.$request['odl_field_name']." ".$request['new_field_name']." ".$request['new_type_field']."(".$request['new_size_field'].")";
@@ -351,11 +393,13 @@ class Model
                 $str = $str."";
             else
                 $str." DEFAULT '".$request['new_default_field']."'";
+            $controller->write_log_sql($str);
             $result = Connector::prepare($str, NULL);
             return $result;
         } catch (PDOException $e) {
             return ($e->getMessage());
         }
+        unset($controller);
     }
 
     /** check if table exist

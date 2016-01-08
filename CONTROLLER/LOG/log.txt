@@ -328,3 +328,8 @@ Le champs prenom2 de la table nouvelletable de la base de données anaxago a ét
 Une donnée à été changé : Blézerfz, d'Id : 1, dans la table produit, dans la base db563094984
 Une donnée à été ajoutée dans la table produit de la base de données db563094984
 Une donnée ayant l'id N° 26, dans la table produit, dans la base db563094984 à été supprimée
+Une donnée à été changé : Voiturekevin, d'Id : 3, dans la table categorie, dans la base anaxago
+Une donnée à été changé : avionsdsd, d'Id : 4, dans la table categorie, dans la base anaxago
+La base de données testonscela a été créé
+La base de données testonscela a eté rennomée en onretest.
+La base de données onretest a été supprimée
