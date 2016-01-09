@@ -15,3 +15,5 @@ SELECT * FROM db563094984.appartenir;
 SELECT * FROM db563094984.appartenir;
 SELECT * FROM db563094984.appartenir;
                 SELECT * FROM db563094984.appartenir;
+SELECT * FROM anaxago.categorie;
+SELECT * FROM anaxago.categorie;
