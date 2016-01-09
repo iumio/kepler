@@ -6,9 +6,14 @@
  * Date: 18/12/2015
  * Time: 09:46
  */
-class Controller
+
+namespace Controller;
+use AbsSupervisor\AbstractController;
+use DataLayer\Model;
+use PDO;
+
+class Controller extends AbstractController
 {
-    private $model_instance = NULL;
 
     /**
      * First Page of App
@@ -115,14 +120,6 @@ class Controller
         return array_reverse($log);
     }
 
-    /** This is a Singleton
-     * Get an instance of model
-     * @return Model Instance of Model Class
-     */
-    private function getModel()
-    {
-        return ($this->model_instance == NULL) ? $this->model_instance = new Model() : $this->model_instance;
-    }
 
     /** show tables of a DB
      * @param $dbname

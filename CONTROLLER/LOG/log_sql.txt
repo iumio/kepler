@@ -17,3 +17,44 @@ SELECT * FROM db563094984.appartenir;
                 SELECT * FROM db563094984.appartenir;
 SELECT * FROM anaxago.categorie;
 SELECT * FROM anaxago.categorie;
+CREATE DATABASE aze;
+CREATE TABLE aze.Dany ( a INT(5) NOT NULL );
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+SELECT * FROM aze.Dany;
+CREATE DATABASE aze;
+CREATE DATABASE ;
+CREATE DATABASE vze;
+CREATE TABLE vze.z ( a INT NOT NULL );
+DROP DATABASE`vze`;
+CREATE DATABASE r;
+DROP DATABASE`aze`;
+ALTER TABLE r.Dany DROP COLUMN a;
+ALTER TABLE r.Dany CHANGE d dv INT(11) NOT NULL
+drop table r.Dany
+                select * from compared.Processor
+                select * from compared.Processor
+                select * from compared.Processor
+                select * from compared.Processor
+                select * from compared.Processor
+                select * from compared.Processor
+                select * from compared.Processor
+                select * from compared.Smartphone
+                select * from compared.Smartphone
+SELECT * FROM compared.C_SCORE;
+SELECT * FROM compared.S_SCORE;
+UPDATE compared.S_SCORE SET creationDateTime = da WHERE S_SCORE.idSScore = 4;
+SELECT * FROM compared.S_SCORE;
+DELETE FROM compared.S_SCORE WHERE S_SCORE.idSScore = 4;
+SELECT * FROM compared.S_SCORE;
+SELECT * FROM compared.S_SCORE;
+SELECT * FROM compared.S_SCORE;
+UPDATE compared.S_SCORE SET scoreValue = 55 WHERE S_SCORE.idSScore = 85;
+SELECT * FROM compared.S_SCORE;

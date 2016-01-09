@@ -9,38 +9,14 @@
 class Starter {
 
     public function __construct() {
-        $array = $this->initAutoloader();
-        $this->__autoloader($array);
+        $this->__autoloader();
         $this->initTwig();
     }
 
-    /** init autoloader
-     * @return array
-     */
-    public function initAutoloader(){
-        try {
-            $array = array("CONTROLLER/Controller.php",
-                "MODEL/PDO/Connector.php",
-                "MODEL/Model.php",
-                "CONTROLLER/GEXCEPTIONS/DatabaseException.php",
-                "CONTROLLER/GEXCEPTIONS/TableException.php",
-                "CONTROLLER/GEXCEPTIONS/LoginException.php",
-                "PRIVATE/Twig/vendor/autoload.php");
-            return  $array;
-        } catch (Exception $exc) {
-            $error = "Erreur d'execution de l'autoloader ";
-            include 'VIEWS/error.html.twig';
-        }
-    }
-
     /** autoloader
-     * @param $array
      */
-    public function __autoloader($array) {
+    public function __autoloader() {
         include_once 'Autoloader.php';
-        foreach ($array as $one) {
-            Autoloader::register ($one);
-        }
     }
 
     /** init TWIG
@@ -49,6 +25,7 @@ class Starter {
     public function initTwig()
     {
         try {
+            include_once 'PRIVATE/Twig/vendor/autoload.php';
             $_SESSION['twig'] = new Twig_Environment(new Twig_Loader_Filesystem('VIEWS'), array('cache' => false, 'debug' => true));
             $_SESSION['twig']->addExtension(new Twig_Extension_Debug());
         } catch (Exception $e) {

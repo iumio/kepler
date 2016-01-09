@@ -14,6 +14,7 @@ if (isset($_REQUEST)) {
 
 Index::main($request);
 
+use Controller\Controller;
 class Index
 {
     /** MAIN FUNCTION

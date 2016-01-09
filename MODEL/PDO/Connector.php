@@ -7,6 +7,8 @@
  * Time: 14:16
  */
 
+namespace Connector;
+use PDO;
 class Connector {
 
     static private $DSN ;

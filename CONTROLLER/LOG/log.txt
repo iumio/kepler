@@ -333,3 +333,18 @@ Une donnée à été changé : avionsdsd, d'Id : 4, dans la table categorie, dan
 La base de données testonscela a été créé
 La base de données testonscela a eté rennomée en onretest.
 La base de données onretest a été supprimée
+La base de données aze a été créé
+La table Dany a été créé dans la base aze
+La base de données vze a été créé
+La table z a été créé dans la base vze
+La base de données vze a été supprimée
+La base de données aze a eté rennomée en r.
+La colonne d a été créé dans la table Dany de la base r
+Le champs a de la table Dany de la base de données r a été supprimée
+Le champs  à été modifié dans la table  de la base de données  en 
+La table Dany de la base de données r a été supprimée
+Une donnée à été changé : da, d'Id : 4, dans la table S_SCORE, dans la base compared
+Une donnée ayant l'id N° 4, dans la table S_SCORE, dans la base compared à été supprimée
+Une donnée à été ajoutée dans la table S_SCORE de la base de données compared
+Une donnée à été ajoutée dans la table S_SCORE de la base de données compared
+Une donnée à été changé : 55, d'Id : 85, dans la table S_SCORE, dans la base compared

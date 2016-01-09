@@ -6,6 +6,11 @@
  * Date: 18/12/2015
  * Time: 09:50
  */
+
+namespace DataLayer;
+use Connector\Connector;
+use Controller\Controller;
+
 class Model
 {
     /** Get all database
