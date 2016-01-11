@@ -50,6 +50,7 @@ class Index
             $controller->indexAction();
             unset($controller);
         }
+
     }
 
     /** check if user is login

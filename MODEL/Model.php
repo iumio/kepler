@@ -469,7 +469,14 @@ class Model
      */
     public function make_login_connector()
     {
-        $result = Connector::prepare("show databases");
-        return $result;
+        try {
+            $result = Connector::prepare("show databases");
+            return $result;
+        }
+        catch (\Exception $e)
+        {
+            echo $_SESSION['twig']->render("login.html.twig", array("error"=>"Identifiant ou mot de passe incorrect"));
+            return (0);
+        }
     }
 }

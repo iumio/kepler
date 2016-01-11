@@ -14,13 +14,16 @@ class Autoloader {
     {
         /// Je donne le chemin du projet
         $path = realpath('.');
+        $array2 = explode(chr(92), $class);
+        $count2 = count($array2) - 1;
+        $class = $array2[$count2].".php";
         foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
-
             /// Recursive iterator iterator avec la classe RecursiveDirecotory Iterator va me donner chaque fichier dans les sous dossiers
             if (strpos($filename, '.php') !== false && !strpos($filename, 'PRIVATE') && !strpos($filename, 'ENGINE_YAML')) {
-                /// La je regarde  si le fichier c'est un php et que ça ne fait pas parti du dossier private car ya Twig et que ma class recu en parametre est contenu dans le dossier
-                require_once $filename;
-                //return ;
+                $array = explode("/", $filename);
+                $count = count($array) - 1;
+                if ($array[$count] == $class)
+                    require_once $filename;
             }
         }
     }
