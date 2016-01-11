@@ -2,4 +2,4 @@
 
 project which we code our own phpMyAdmin
 
-PHP5, MVC, TWIG, BOOTSTRAP, PDO... Are used in this project.
+PHP5, MVC, TWIG, BOOTSTRAP, PDO, NAMESPACE, YAML... Are used in this project.
