@@ -43,6 +43,9 @@ class Controller extends AbstractController
         unset($model);
     }
 
+    /** get list of tables
+     * @return array
+     */
     private function get_list_tab()
     {
         $listOfTable = array();
@@ -56,6 +59,10 @@ class Controller extends AbstractController
         unset($model);
     }
 
+    /** get name of list of tables
+     * @param $dbname
+     * @return array
+     */
     private function get_table_name($dbname)
     {
         $model = $this->getModel();
