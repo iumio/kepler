@@ -58,3 +58,25 @@ SELECT * FROM compared.S_SCORE;
 SELECT * FROM compared.S_SCORE;
 UPDATE compared.S_SCORE SET scoreValue = 55 WHERE S_SCORE.idSScore = 85;
 SELECT * FROM compared.S_SCORE;
+SELECT * FROM anaxago.categorie;
+UPDATE anaxago.categorie SET nomC = Vehiculesucedrgdgrjbjb WHERE categorie.idc = 1;
+SELECT * FROM anaxago.categorie;
+select * from anaxago.categorie
+select * from anaxago.categor
+SELECT * FROM db563094984.acces;
+CREATE DATABASE marmiton;
+SELECT * FROM marmiton.category;
+SELECT * FROM marmiton.category_recette;
+SELECT * FROM marmiton.recette;
+SELECT * FROM marmiton.recette;
+SELECT * FROM marmiton.category;
+SELECT * FROM marmiton.category_recette;
+SELECT * FROM marmiton.category;
+SELECT * FROM marmiton.recette;
+SELECT * FROM marmiton.category_recette;
+SELECT * FROM marmiton.category;
+SELECT * FROM marmiton.category_recette;
+SELECT * FROM marmiton.category;
+UPDATE marmiton.category SET name_c = Plat sucré WHERE category.id_c = 1;
+SELECT * FROM marmiton.category;
+SELECT * FROM marmiton.category;
