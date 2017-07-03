@@ -1,5 +1,6 @@
 # OCTIMUM
-# The next generation of PHP Database Manager
+
+The next generation of PHP Database Manager
 
 # It's a phpMyAdmin like
 
