@@ -1,5 +1,6 @@
 # OCTIMUM
+# The next generation of PHP Database Manager
 
-project which we code our own phpMyAdmin
+# It's a phpMyAdmin like
 
-PHP5, MVC, TWIG, BOOTSTRAP, PDO, NAMESPACE, YAML... Are used in this project.
+- PHP5, MVC, TWIG, BOOTSTRAP, PDO, NAMESPACE, YAML... Are used in this project.
