@@ -6,4 +6,4 @@ The next generation of PHP Database Manager
 
 - PHP5, MVC, TWIG, BOOTSTRAP, PDO, NAMESPACE, YAML... Are used in this project.
 
-It's a iumio Components.
+It's a iumio Component.
