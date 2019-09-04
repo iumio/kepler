@@ -80,3 +80,5 @@ SELECT * FROM marmiton.category;
 UPDATE marmiton.category SET name_c = Plat sucré WHERE category.id_c = 1;
 SELECT * FROM marmiton.category;
 SELECT * FROM marmiton.category;
+CREATE DATABASE hello;
+SELECT * FROM billandgo.line;

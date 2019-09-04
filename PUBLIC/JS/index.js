@@ -11,30 +11,7 @@ $(document).ready(function () {
             }
         });
 
-        $(".custom-select").each(function() {
-            var classes = $(this).attr("class"),
-                id      = $(this).attr("id"),
-                name    = $(this).attr("name");
-            // CHECK IF SESSION STORAGE FOR PUT PLACEHOLDER ON THE LIST
-            if (sessionStorage.getItem('lang') != "en")
-                var placeholder = "French";
-            else
-                var placeholder = "English";
-            // CHECK IF SESSION STORAGE IS EMPTY AND PUT DEFAULT ENGLISH
-            if (sessionStorage.length == "")
-                var placeholder = "English";
-            var template =  '<div class="' + classes + '">';
-            template += '<span class="custom-select-trigger">' + placeholder + '</span>';
-            template += '<div class="custom-options">';
-            $(this).find("option").each(function() {
-                template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
-            });
-            template += '</div></div>';
 
-            $(this).wrap('<div class="custom-select-wrapper"></div>');
-            $(this).hide();
-            $(this).after(template);
-        });
         $(".custom-option:first-of-type").hover(function() {
             $(this).parents(".custom-options").addClass("option-hover");
         }, function() {

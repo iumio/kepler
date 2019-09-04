@@ -471,6 +471,8 @@ class Model
     {
         try {
             $result = Connector::prepare("show databases");
+            var_dump($result);
+            exit(1);
             return $result;
         }
         catch (\Exception $e)

@@ -25,7 +25,7 @@ class Connector {
     private function __construct() {
         try {
             self::$DSN = "mysql:host=".self::$HOST;
-            self::$DSN = "mysql:host=localhost";
+            self::$DSN = "mysql:host=localhost:3306";
             self::$USERNAME = $_SESSION['login'];
             self::$USERPASSWORD = $_SESSION['passwd'];
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
