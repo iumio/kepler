@@ -489,6 +489,49 @@ class Controller extends AbstractController
 
     }
 
+
+    /** rename a DB
+     * @param $name_db
+     * @param $newdbname
+     */
+    public function exportDbAction($dbname, $filename)
+    {
+        $model = $this->getModel();
+
+        $result = $model->exportDatabase($dbname, $filename);
+
+
+        if(ini_get('zlib.output_compression')) { ini_set('zlib.output_compression', 'Off');	}
+
+        // get the file mime type using the file extension
+        switch(strtolower(substr(strrchr($filename, '.'), 1))) {
+            case 'pdf': $mime = 'application/pdf'; break;
+            case 'zip': $mime = 'application/zip'; break;
+            case 'jpeg':
+            case 'jpg': $mime = 'image/jpg'; break;
+            default: $mime = 'application/force-download';
+        }
+        header('Pragma: public'); 	// required
+        header('Expires: 0');		// no cache
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($filename)).' GMT');
+        header('Cache-Control: private',false);
+        header('Content-Type: '.$mime);
+        header('Content-Disposition: attachment; filename="'.basename($filename).'"');
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: '.filesize($filename));	// provide file size
+        header('Connection: close');
+        readfile($filename);		// push it out
+
+
+        $this->writeFile( "La base de données $dbname a été exportée sous le nom $filename");
+
+        unset($model);
+        unlink($filename);
+        exit();
+
+    }
+
     /** return error
      * @param $pdo
      */

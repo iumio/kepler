@@ -108,6 +108,8 @@ class Index
                     $controller->indexAction();
                 else if ($request["run"] == "uploadDb")
                     $controller->uploadDbAction($request["dbname"]);
+                else if ($request["run"] == "exportDB")
+                    $controller->exportDbAction($request["namedb"], $request["filename"]);
                 else if ($request["run"] == "formNewDB")
                     $controller->formNewDB();
                 else if ($request["run"] == "make_query")

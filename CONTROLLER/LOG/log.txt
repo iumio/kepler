@@ -391,3 +391,19 @@ La base de données false a été importée
 La base de données false a été importée
 La base de données colpared a été supprimée
 La base de données ded a été importée
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-13-13.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-14-18.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-21-36.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-21-58.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-23-36.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-26-40.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-27-07.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-28-50.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-29-00.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-29-20.sql
+La base de données compared a été exportée sous le nom export-compared-2019-09-05-17-29-33.sql
+La base de données bdd-cga4 a été exportée sous le nom export-bdd-cga4-2019-09-05-17-33-12.sql
+La base de données bdd-cga a été exportée sous le nom export-bdd-cga-2019-09-05-17-34-01.sql
+La base de données bdd-cga a été exportée sous le nom export-bdd-cga-2019-09-05-17-37-06.sql
+La base de données bdd-cga a été exportée sous le nom export-bdd-cga-2019-09-05-17-37-32.sql
+La base de données bdd-cga a été exportée sous le nom export-bdd-cga-2019-09-05-17-38-11.sql

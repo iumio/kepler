@@ -116,6 +116,36 @@ $(document).ready(function () {
             $(".text-info").html(field_name);
         });
 
+
+        $(".btnexportDB").click(function (e) {
+            e.preventDefault();
+            let dbnameexport = $(this).attr("attr-export-dbname");
+            let filenameexport = $(this).attr("attr-export-filename");
+
+            let d = new Date();
+
+            let month = d.getMonth()+1;
+            let day = d.getDate();
+            let h = d.getHours();
+
+            let m = d.getMinutes();
+            let s = d.getSeconds();
+
+            let output = d.getFullYear() + '-' +
+                (month<10 ? '0' : '') + month + '-' +
+                (day<10 ? '0' : '') + day + '-' +
+                (h<10 ? '0' : '') + h +  '-' +
+                (m<10 ? '0' : '') + m +  '-' +
+                (s<10 ? '0' : '') + s;
+
+            $(".dbnameforexport").val(dbnameexport);
+            $(".filedbname").val(filenameexport+output+".sql");
+            $(".dbnamefordisplay").html(dbnameexport);
+            $("#modal_export_db").modal('show');
+        });
+
+
+
         $(".btn-add-field").click(function (e) {
             e.preventDefault();
             $("#modal_add_field").modal('show');
@@ -557,6 +587,97 @@ $(document).ready(function () {
             })
         });
 
+
+
+
+        $(".exportdb").submit(function (e) {
+            e.preventDefault();
+            let name_db = $("input[name='dbnameforexport']").val();
+            let filename = $("input[name='filedbname']").val();
+
+
+            let url = 'index.php?run=exportDB';
+
+            $("#modal_info").find(".modal-body").html("<p>Export de la base de données "+name_db+" en cours de progression. Veuillez patientez...</p>");
+            $("#modal_info").css("background-color", "rgba(1,1,16,0.7)");
+            $("#modal_info").find(".modal-footer").hide();
+            $("#modal_export_db").modal('hide');
+            $("#modal_info").modal("show");
+            let rq = $.ajax({
+                url: url,
+                method: "POST",
+                data: {namedb : name_db, filename :filename},
+
+            });
+            rq.success(function (response , status, xhr) {
+                //$("#modal_info").modal("hide");
+                /*if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {*/
+                $("#modal_info").find(".modal-body").html("<p>La base de données "+name_db+" a été exporté</p>");
+                $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                //$("#modal_info").find(".modal-footer").hide();
+                //$("#modal_export_db").modal('hide');
+                //$("#modal_info").modal("show");
+
+
+                var filename = "";
+                var disposition = xhr.getResponseHeader('Content-Disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    var matches = filenameRegex.exec(disposition);
+                    if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                }
+
+                var type = xhr.getResponseHeader('Content-Type');
+                var blob = new Blob([response], { type: type });
+
+                if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+                    window.navigator.msSaveBlob(blob, filename);
+                } else {
+                    var URL = window.URL || window.webkitURL;
+                    var downloadUrl = URL.createObjectURL(blob);
+
+                    if (filename) {
+                        // use HTML5 a[download] attribute to specify filename
+                        var a = document.createElement("a");
+                        // safari doesn't support this yet
+                        if (typeof a.download === 'undefined') {
+                            window.location = downloadUrl;
+                        } else {
+                            a.href = downloadUrl;
+                            a.download = filename;
+                            document.body.appendChild(a);
+                            a.click();
+                        }
+                    } else {
+                        window.location = downloadUrl;
+                    }
+
+                    setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+                }
+
+
+
+
+                window.setTimeout(function () {
+                    $("#modal_info").modal("hide");
+                }, 2000);
+
+                // }
+            });
+        });
+
+        $(".btnexportDBNOW").click(function () {
+            $(".exportdb").submit();
+        });
+
+
+
         $("#frmFileUpload").submit(function (e) {
             e.preventDefault();
             var name_db = $("input[name='db_name']").val();
@@ -732,7 +853,7 @@ $(document).ready(function () {
                 var rq = $.ajax({
                     url: 'index.php?run=edit_field',
                     data: {name_db:name_db, table_name:table_name, odl_field_name:name_field_old, new_field_name:name_field, new_type_field:new_type_field, new_size_field:new_size_field,
-                    new_isNull_field:new_isNull_field,new_default_field:new_default_field},
+                        new_isNull_field:new_isNull_field,new_default_field:new_default_field},
                     method: "POST"
                 });
                 rq.success(function (result) {

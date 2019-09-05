@@ -510,4 +510,10 @@ class Model
         }
       return $error;
     }
+
+
+    public function exportDatabase($db_name, $filename) {
+        $dump = new \Controller\Mysqldump('mysql:host='.$_SESSION['ip'].';dbname='.$db_name, $_SESSION['login'], $_SESSION['passwd']);
+        $dump->start($filename);
+    }
 }

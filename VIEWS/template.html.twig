@@ -319,6 +319,7 @@
                                 <th>Date de création</th>
                                 <th>Espace mémoire</th>
                                 <th>Supprimer</th>
+                                <th>Exporter</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -367,6 +368,11 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm btnexportDB waves-effect" attr-export-dbname="{{ oneDB['db'] }}" attr-export-filename="export-{{ oneDB['db'] }}-">
+                                        <i class="fa fa-file-archive-o"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -381,7 +387,7 @@
 
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_add_file" tabindex="-1"
              role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
                     <div class="modal-header">
@@ -425,6 +431,53 @@
                             </div>
 
                         </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_export_db" tabindex="-1"
+             role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel0">Exporter une base de données</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2>
+                                            Export de la base de données <span class="dbnamefordisplay"></span>
+                                        </h2>
+
+                                    </div>
+                                    <div class="body">
+                                       <form class="form-group exportdb" action="#" method="post">
+                                           <div class="form-line">
+                                               <label>Nom de votre fichier</label>
+                                               <input type="text" name="filedbname" class="filedbname form-control" required="required">
+                                           </div>
+                                           <div class="form-line">
+                                           <input type="hidden" name="dbnameforexport" value="" class="dbnameforexport form-control">
+                                           </div>
+                                       </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-success btnexportDBNOW">Exporter</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
