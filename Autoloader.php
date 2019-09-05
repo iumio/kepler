@@ -29,6 +29,21 @@ class Autoloader {
     }
 }
 
+if(file_exists('./env.php')) {
+    include './env.php';
+}
+if(!function_exists('env')) {
+    function env($key, $default = null)
+    {
+        $value = getenv($key);
+        if ($value === false) {
+            return $default;
+        }
+        return $value;
+    }
+}
+
+
 /// spl_autoload_register va en faite me retourer la classe appellé c-a-d si j'ai besoin d'une classe dans un fichier , alors spl_autoloader est appellé et va appelé
 // Autoloader::register pour charger ma classe
 spl_autoload_register('\Autoloader::register');

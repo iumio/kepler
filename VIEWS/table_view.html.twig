@@ -1,73 +1,35 @@
 {% extends "template.html.twig" %}
+  {% block extends_header %}
+      <li><a href="index.php?run=content_table&dbname={{ dbname }}&t_name={{ t_name }}"> Afficher</a></li>
+      <li><a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ t_name }}">Structure <span class="sr-only">(current)</span></a></li>
+      <li><a href="#makeQuery"> Requête SQL</a></li>
+  {% endblock %}
+
 {% block body %}
-    <nav class="navbar navbar-default navbar-inverse navbar-collapse navbar-md">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.php?run=content_table&dbname={{ dbname }}&t_name={{ t_name }}"><i class="glyphicon glyphicon-list-alt"></i> Afficher</a></li>
-                    <li><a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ t_name }}">Structure <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#makeQuery"><i class="glyphicon glyphicon-edit"></i> Faire une requête</a></li>
-                    <li><a href="index.php?run=logout"><i class="fa fa-sign-out"></i> Déconnecter</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <div class="row noShow" id="makeQuery">
-            <form id="Query" method="POST" action="" class="form-group">
-                <div class="panel panel-info panel-full">
 
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Faire une requête</h3>
-                    </div>
-                    <div class="panel-body">
-                <textarea name="query" rows="5" class="form-control"></textarea>
-                    </div>
-                    <div class="panel-footer text-right">
-                        <input type="reset" class="btn btn-danger" value="Remise à zéro">
-                        <input type="submit" class="btn btn-success" value="Valider">
-                    </div>
-                </div>
-            </form>
-            <div class="noShow" id="query_result">
-                <div class="panel panel-info panel-full">
+    <div class="block-header">
+        <h2>Données de la table  <strong>{{ t_name }}</strong></h2>
+    </div>
 
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Résultat de la requête</h3>
-                    </div>
-                    <div class="panel-body panel-cont">
-                    </div>
+
+
+        <div class="row clearfix" id="showStruct">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div id="show_sql_request">
+                <div class="alert alert-dismissible alert-info" role="alert">
+                    <p><span class="t"><strong>SELECT</strong></span> *
+                        <span class=""><strong>FROM</strong></span>
+                        <span class="text-info-table ">{{ dbname }}`.`{{ t_name }}`</span>;</p>
                 </div>
             </div>
-        </div>
-        <div class="row" id="showStruct">
-            <div id="show_sql_request">
-                <div class="alert alert-success" role="alert">
-                    <p><span class="text-danger"><strong>SELECT</strong></span> *
-                        <span class="text-danger"><strong>FROM</strong></span>
-                        <span class="text-info-table">{{ dbname }}.{{ t_name }}</span>;</p>
-                </div>
-            </div>
-            <div class="panel panel-info panel-full">
-                <div class="panel-heading">
-                    <h3 class="panel-title">AFFICHAGE DE LA TABLE {{ t_name }}</h3>
+            <div class="card">
+                <div class="header bg-red">
+                    Listes des données de la table {{ t_name }}
                 </div>
                 <div class="panel-body" id="panel_body">
-                    <button class="btn btn-success btn-sm btn-add-data"><i class="glyphicon glyphicon-plus-sign"></i>
-                        Ajouter une donnée
+                    <button class="btn btn-success  btn-add-data">
+                        Ajouter une ligne de données
                     </button>
                     <p class="help-block help_edit"><small>Pour modifier une donnée... Double cliquer sur sa cellule.</small></p>
                     <div class="marginTop20">
@@ -128,20 +90,10 @@
                     </div>
                 </div>
             </div>
+    </div>
         </div>
-        <div class="marginBottom40"></div>
-        <div id="container" class="resizable">
-            <div id="handle" class="ui-resizable-handle ui-resizable-n"></div>
-            <div class="console_title">Console de Requetes</div>
-            <div class="panel-body-max-h log_sql">
 
-                {% for oneline in log_sql %}
-                    <p class="alert-warning"><strong>{{ oneline }}</strong></p>
-                {% else %}
-                    <p>Aucune action a été effectuée</p>
-                {% endfor %}
-            </div>
-        </div>
+
         <div class="modal fade"  data-backdrop="static" data-keyboard="false"  id="modal_update_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -207,34 +159,37 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title myModalLabel">Confirmation <i
+                        <h4 class="modal-title myModalLabel">Ajout d'une nouvelle ligne <i
                                     class="glyphicon glyphicon-question-sign"></i></h4>
                     </div>
                     <form method="POST" action="" class="form_add_data form-horizontal">
                         <div class="modal-body">
-                            Ajout d'une donnée <span class="text-info"></span>
-                        </div>
-                        <div class="modal-footer">
                             {% for struct in tables_struct %}
                                 {% if struct['EXTRA'] == 'auto_increment' %}
 
-                                    {% else %}
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label label_field_add_data" name="{{ struct['COLUMN_NAME'] }}">{{ struct['COLUMN_NAME'] }}</label>
-                                            <div class="col-sm-10">
+                                {% else %}
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label label_field_add_data" name="{{ struct['COLUMN_NAME'] }}">{{ struct['COLUMN_NAME'] }}</label>
+                                        <div class="col-sm-10">
+                                            <div class="form-line">
                                                 <input type="text" class="form-control input-add" name="new_data" placeholder="Saisissez {{ struct['COLUMN_NAME'] }}">
                                             </div>
+
                                         </div>
-                                    {% endif %}
+                                    </div>
+                                {% endif %}
                             {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+
                             <input type="hidden" name="table_name" value="{{ t_name }}">
                             <input type="hidden" name="name_db" value="{{ dbname }}">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
-                            <button type="submit" class="btn btn-success">Oui</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-success">Valider</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+
 {% endblock %}

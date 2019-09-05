@@ -471,8 +471,6 @@ class Model
     {
         try {
             $result = Connector::prepare("show databases");
-            var_dump($result);
-            exit(1);
             return $result;
         }
         catch (\Exception $e)
@@ -480,5 +478,36 @@ class Model
             echo $_SESSION['twig']->render("login.html.twig", array("error"=>"Identifiant ou mot de passe incorrect"));
             return (0);
         }
+    }
+
+     public function uploadDatabase($filename, $db_name = false) {
+        // Temporary variable, used to store current query
+        $templine = '';
+        $error = null;
+// Read in entire file
+        $lines = file($filename);
+
+        //var_dump($lines);
+
+// Loop through each line
+         if (false !== $db_name) {
+             Connector::prepare("USE $db_name");
+         }
+        foreach ($lines as $line) {
+// Skip it if it's a comment
+            if (substr($line, 0, 2) == '--' || $line == '')
+                continue;
+
+// Add this line to the current segment
+            $templine .= $line;
+// If it has a semicolon at the end, it's the end of the query
+            if (substr(trim($line), -1, 1) == ';') {
+                // Perform the query
+                $error = Connector::prepare($templine);
+                // Reset temp variable to empty
+                $templine = '';
+            }
+        }
+      return $error;
     }
 }

@@ -142,7 +142,7 @@ class Controller extends AbstractController
             echo $_SESSION['twig']->render("db_info.html.twig",
                 array("alldbname" => $list_table, "tables" => $tables, "dbname" => $dbname,"log_sql" => $log_sql));
         } else
-            throw new DatabaseException("La base de données n'existe pas !", $list_table);
+            throw new \DatabaseException("La base de données n'existe pas !", $list_table);
         unset($model);
     }
 
@@ -256,6 +256,7 @@ class Controller extends AbstractController
     public function make_query($query)
     {
         $model = $this->getModel();
+
         $result = $model->custom_query($query);
         if ($result->errorInfo()[1] == NULL)
             echo json_encode($result->fetchAll(PDO::FETCH_NAMED));
@@ -469,6 +470,25 @@ class Controller extends AbstractController
         unset($model);
     }
 
+    /** rename a DB
+     * @param $name_db
+     * @param $newdbname
+     */
+    public function uploadDbAction($dbname)
+    {
+        $model = $this->getModel();
+
+        $result = $model->uploadDatabase($_FILES["file"]["tmp_name"], ("false" == $dbname  || false === $dbname)? false : $dbname);
+
+        if ($result->errorInfo()[1] == NULL) {
+            $this->writeFile((false == $dbname) ? "Une base de données a été importée" : "La base de données $dbname a été importée");
+            echo 1;
+        } else
+            $this->return_error($result);
+        unset($model);
+
+    }
+
     /** return error
      * @param $pdo
      */
@@ -556,10 +576,18 @@ class Controller extends AbstractController
      * @param $password
      * @return int
      */
-    static public function make_login($login, $password)
+    static public function make_login($login, $password, $ip, $token = null)
     {
+
         $_SESSION['login'] = $login;
         $_SESSION["passwd"] = $password;
+        $_SESSION["ip"] = $ip;
+        if (null != $token) {
+           if ($token != getenv("TOKEN")) {
+               echo $_SESSION['twig']->render("login.html.twig", array("error"=>"Token invalide"));
+               exit(1);
+           }
+        }
         $model = new Model();
         $rs = $model->make_login_connector();
         if ($rs->errorInfo()[2] == NULL)
@@ -573,6 +601,7 @@ class Controller extends AbstractController
     {
         unset($_SESSION['login']);
         unset($_SESSION["passwd"]);
+        unset($_SESSION["ip"]);
         echo $_SESSION['twig']->render("login.html.twig", array("error" => ($arg == NULL) ? "Vous êtes dorénavant déconnecté" : "Aucune activité depuis 1440 secondes ou plus; veuillez vous reconnecter."));
     }
 }

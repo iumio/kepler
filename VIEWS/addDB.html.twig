@@ -1,69 +1,37 @@
 {% extends "template.html.twig" %}
+                   {% block extends_header %}
+                       <li><a href="#makeQuery"> Requête SQL</a></li>
+                   {% endblock %}
+
 {% block body %}
-    <nav class="navbar navbar-default navbar-inverse navbar-collapse navbar-md">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
 
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#makeQuery"><i class="glyphicon glyphicon-edit"></i> Faire une requête</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#menu-toggle" id="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <div class="row noShow" id="makeQuery">
-            <form id="Query" method="POST" action="" class="form-group">
-                <div class="panel panel-info panel-full">
+    <div class="block-header">
+        <h2>Nouvelle base de données</h2>
+    </div>
 
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Faire une requête</h3>
-                    </div>
-                    <div class="panel-body">
-                <textarea name="query" rows="5" class="form-control">
-                </textarea>
-                    </div>
-                    <div class="panel-footer text-right">
-                        <input type="reset" class="btn btn-danger" value="Remise à zéro">
-                        <input type="submit" class="btn btn-success" value="Valider">
-                    </div>
+
+
+        <div class="row clearfix" id="showInfo">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div class="card">
+                <div class="header bg-red">
+                    <h5>
+                        Saisissez le nom de la base de données
+                    </h5>
+
 
                 </div>
-            </form>
-            <div class="noShow" id="query_result">
-                <div class="panel panel-info panel-full">
 
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Résultat de la requête</h3>
-                    </div>
-                    <div class="panel-body panel-cont">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row" id="showInfo">
-            <div class="panel panel-info panel-full">
-                <div class="panel-heading">
-                    <h3 class="panel-title">NOUVELLE BASE</h3>
-                </div>
                 <div class="panel-body" id="panel_body">
                     <form method="post" action="index.php?run=addDB" id="form_add_db">
                         <div class="form-group">
-                            <label for="nomDB">Saisissez le nom de la base</label>
-                            <input type="text" class="form-control" name="dbName" placeholder="Nom de la nouvelle base">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="dbName" placeholder="Nom de la base de données">
+
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <button type="submit" class="btn btn-success waves-effect">Valider</button>
                     </form>
                 </div>
             </div>
@@ -82,19 +50,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="marginBottom40"></div>
-        <div id="container" class="resizable">
-            <div id="handle" class="ui-resizable-handle ui-resizable-n"></div>
-            <div class="console_title">Console de Requetes</div>
-            <div class="panel-body-max-h log_sql">
 
-                {% for oneline in log_sql %}
-                    <p class="alert-warning"><strong>{{ oneline }}</strong></p>
-                {% else %}
-                    <p>Aucune action a été effectuée</p>
-                {% endfor %}
-            </div>
-        </div>
+
+
+    </div>
     </div>
 {% endblock %}

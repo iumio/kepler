@@ -28,6 +28,7 @@ class Starter {
             include_once 'PRIVATE/Twig/vendor/autoload.php';
             $_SESSION['twig'] = new Twig_Environment(new Twig_Loader_Filesystem('VIEWS'), array('cache' => false, 'debug' => true));
             $_SESSION['twig']->addExtension(new Twig_Extension_Debug());
+            $_SESSION['twig']->addGlobal('session', $_SESSION);
         } catch (Exception $e) {
             $error = "Twig n'est pas disponible";
             include 'VIEWS/error.html.twig';

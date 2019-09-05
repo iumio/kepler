@@ -31,8 +31,10 @@ class Index
             $controller->indexAction();
         else if (isset($request["run"]) && $request["run"] == "showLogin")
             echo $_SESSION['twig']->render("login.html.twig");
-        else if (isset($request["run"]) && $request["run"] == "makeLogin")
+        else if (isset($request["run"]) && ($request["run"] == "makeLogin"))
             self::on_login($request);
+        else if (isset($request["run"]) && ($request["run"] == "makeAutoLogin"))
+            self::on_autologin($request);
         else
             self::router($request);
         unset($controller);
@@ -43,7 +45,31 @@ class Index
      */
     static private function on_login($request)
     {
-        $res = Controller::make_login($request['login'], $request['passwd']);
+
+        $res = Controller::make_login($request['login'], $request['passwd'], $request['ip']);
+
+        if ($res != 0)
+        {
+            $controller = new Controller();
+            $controller->indexAction();
+            unset($controller);
+        }
+
+    }
+
+
+    /** when user is login
+     * @param $request
+     */
+    static private function on_autologin($request)
+    {
+        if (isset($request['token'])) {
+            $res = Controller::make_login($request['login'], $request['passwd'], $request['ip'], $request['token']);
+        }
+        else {
+            echo $_SESSION['twig']->render("login.html.twig", array("error"=>"Token indisponible"));
+        }
+
         if ($res != 0)
         {
             $controller = new Controller();
@@ -58,7 +84,7 @@ class Index
      */
     static private function check_login()
     {
-        return (isset($_SESSION['login']) && isset($_SESSION['passwd']))? 1 : 0;
+        return (isset($_SESSION['login'])) && (isset($_SESSION['ip']) && isset($_SESSION['passwd']))? 1 : 0;
     }
 
     /** ROUTER
@@ -80,6 +106,8 @@ class Index
                     $controller->showTableStruct($request["dbname"], $request['tName']);
                 else if ($request["run"] == "indexAction")
                     $controller->indexAction();
+                else if ($request["run"] == "uploadDb")
+                    $controller->uploadDbAction($request["dbname"]);
                 else if ($request["run"] == "formNewDB")
                     $controller->formNewDB();
                 else if ($request["run"] == "make_query")

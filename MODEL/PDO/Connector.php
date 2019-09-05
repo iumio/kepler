@@ -24,8 +24,7 @@ class Connector {
      */
     private function __construct() {
         try {
-            self::$DSN = "mysql:host=".self::$HOST;
-            self::$DSN = "mysql:host=localhost:3306";
+            self::$DSN = "mysql:host=".$_SESSION['ip'];
             self::$USERNAME = $_SESSION['login'];
             self::$USERPASSWORD = $_SESSION['passwd'];
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
@@ -52,6 +51,8 @@ class Connector {
                 $prepare->execute($array);
             }
         }
+
+        //var_dump($prepare);
         return ($prepare);
     }
 
@@ -94,6 +95,8 @@ class Connector {
             throw new PDOException($event->getMessage());
         }
     }
+
+
 
     /** Get connection info
      * @param $info Info type

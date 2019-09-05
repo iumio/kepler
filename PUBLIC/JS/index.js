@@ -3,6 +3,13 @@
  */
 
 $(document).ready(function () {
+    var colorNav = localStorage.getItem("keplerDashboardColor");
+    if (null != colorNav) {
+        $("li[data-theme='" + colorNav + "']").click();
+    }
+
+
+
     // CHECK IF SESSION STORAGE IS AVAILABLE IN THIS BROWSER
     if (window.sessionStorage) {
         $(".resizable").resizable({
@@ -10,7 +17,6 @@ $(document).ready(function () {
                 'n': '#handle'
             }
         });
-
 
         $(".custom-option:first-of-type").hover(function() {
             $(this).parents(".custom-options").addClass("option-hover");
@@ -48,11 +54,31 @@ $(document).ready(function () {
         $("a[href='#makeQuery']").each(function () {
             $(this).click(function (e) {
                 e.preventDefault();
-                $("#home").hide();
-                $("#showDB").hide();
                 $("#makeQuery").show();
-                $("#showInfo").hide();
-                $("#showStruct").hide();
+            });
+        });
+
+        $("#closeElementQuery").each(function () {
+            $(this).click(function (e) {
+                e.preventDefault();
+                $("#makeQuery").hide();
+                $("#query_result").hide();
+            });
+        });
+
+
+        $("#closeElementShowDb").each(function () {
+            $(this).click(function (e) {
+                e.preventDefault();
+                $("#showDB").hide();
+            });
+        });
+
+        $("li[data-theme]").each(function () {
+            $(this).click(function (e) {
+                e.preventDefault();
+                console.log($(this).attr("data-theme"));
+                localStorage.setItem("keplerDashboardColor",  $(this).attr("data-theme"))
             });
         });
 
@@ -60,8 +86,6 @@ $(document).ready(function () {
             $(this).click(function (e) {
                 e.preventDefault();
                 $("#showDB").show();
-                $("#makeQuery").hide();
-                $("#home").hide();
             });
         });
 
@@ -114,6 +138,13 @@ $(document).ready(function () {
             $(this).click(function (e) {
                 e.preventDefault();
                 $("#modal_add_table").modal('show');
+            });
+        });
+
+        $(".btn-add-file").each(function () {
+            $(this).click(function (e) {
+                e.preventDefault();
+                $("#modal_add_file").modal('show');
             });
         });
 
@@ -194,7 +225,8 @@ $(document).ready(function () {
 
         $(".btn-add-field-in-tab").click(function (e) {
             e.preventDefault();
-            $("#tab_add_field").append('<tr><td><input type="text" class="form-control" name="field_name[]" required="required" /> </td> <td> <select class="form-control" name="field_type[]"> <option value="INT" title="Un nombre entier de 4 octets. La fourchette des entiers relatifs est de -2 147 483 648 à 2 147 483 647. Pour les entiers positifs, c&opencurlyquote;est de 0 à 4 294 967 295">INT</option> <option value="VARCHAR" title="Une chaîne de longueur variable (0-65,535), la longueur effective réelle dépend de la taille maximum d&opencurlyquote;une ligne">VARCHAR</option> <option value="TEXT" title="Une colonne TEXT d&opencurlyquote;une longueur maximum de 65 535 (2^16 - 1) caractères, stockée avec un préfixe de deux octets indiquant la longueur de la valeur en octets">TEXT</option> <option value="DATE" title="Une date, la fourchette est de «1000-01-01» à «9999-12-31»">DATE</option> <optgroup label="Numérique"> <option value="TINYINT" title="Un nombre entier de 1 octet. La fourchette des nombres avec signe est de -128 à 127. Pour les nombres sans signe, c&opencurlyquote;est de 0 à 255">TINYINT</option> <option value="SMALLINT" title="Un nombre entier de 2 octets. La fourchette des nombres avec signe est de -32 768 à 32 767. Pour les nombres sans signe, c&opencurlyquote;est de 0 à 65 535">SMALLINT</option> <option value="MEDIUMINT" title="Un nombre entier de 3 octets. La fourchette des nombres avec signe est de -8 388 608 à 8 388 607. Pour les nombres sans signe, c&opencurlyquote;est de 0 à 16 777 215">MEDIUMINT</option> <option value="INT" title="Un nombre entier de 4 octets. La fourchette des entiers relatifs est de -2 147 483 648 à 2 147 483 647. Pour les entiers positifs, c&opencurlyquote;est de 0 à 4 294 967 295">INT</option> <option value="BIGINT" title="Un nombre entier de 8 octets. La fourchette des nombres avec signe est de -9 223 372 036 854 775 808 à 9 223 372 036 854 775 807. Pour les nombres sans signe, c&opencurlyquote;est de 0 à 18 446 744 073 709 551 615">BIGINT</option> <option disabled="disabled">-</option> <option value="DECIMAL" title="Un nombre en virgule fixe (M, D) - le nombre maximum de chiffres (M) est de 65 (10 par défaut), le nombre maximum de décimales (D) est de 30 (0 par défaut)">DECIMAL</option> <option value="FLOAT" title="Un petit nombre en virgule flottante, la fourchette des valeurs est -3.402823466E+38 à -1.175494351E-38, 0, et 1.175494351E-38 à 3.402823466E+38">FLOAT</option> <option value="DOUBLE" title="Un nombre en virgule flottante double-précision, la fourchette des valeurs est -1.7976931348623157E+308 à -2.2250738585072014E-308, 0, et 2.2250738585072014E-308 à 1.7976931348623157E+308">DOUBLE</option> <option value="REAL" title="Synonyme de DOUBLE (exception : dans le mode SQL REAL_AS_FLOAT, c&opencurlyquote;est un synonyme de FLOAT)">REAL</option> <option disabled="disabled">-</option> <option value="BIT" title="Une colonne contenant des bits (M), stockant M bits par valeur (1 par défaut, maximum 64)">BIT</option> <option value="BOOLEAN" title="Un synonyme de TINYINT(1), une valeur de zéro signifie faux, une valeur non-zéro signifie vrai">BOOLEAN</option> <option value="SERIAL" title="Un alias pour BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE">SERIAL</option> </optgroup> <optgroup label="Contient la date et l&opencurlyquote;heure"> <option value="DATE" title="Une date, la fourchette est de «1000-01-01» à «9999-12-31»">DATE</option> <option value="DATETIME" title="Une combinaison date et heure, la fourchette est de «1000-01-01 00:00:00» à «9999-12-31 23:59:59»">DATETIME</option> <option value="TIMESTAMP" title="Un type d&opencurlyquote;horodatage, la fourchette est de «1970-01-01 00:00:01» UTC à «2038-01-09 03:14:07» UTC, en nombre de secondes depuis le moment de référence («1970-01-01 00:00:00» UTC)">TIMESTAMP</option> <option value="TIME" title="Une heure, la fourchette est de «-838:59:59» à «838:59:59»">TIME</option> <option value="YEAR" title="Une année à quatre chiffres (4 par défaut) ou à deux chiffres (2), la fourchette est de 70 (1970) à 69 (2069) ou 1901 à 2155 ainsi que 0000">YEAR</option> </optgroup> <optgroup label="Chaîne de caractères"> <option value="CHAR" title="Une chaîne de longueur fixe (0-255, 1 par défaut) qui est toujours complétée à droite par des espaces lorsqu&opencurlyquote;enregistrée">CHAR</option> <option value="VARCHAR" title="Une chaîne de longueur variable (0-65,535), la longueur effective réelle dépend de la taille maximum d&opencurlyquote;une ligne">VARCHAR</option> <option disabled="disabled">-</option> <option value="TINYTEXT" title="Une colonne de type TEXT d&opencurlyquote;une longueur maximum de 255 (2^8 - 1) caractères, stockée avec un préfixe d&opencurlyquote;un octet indiquant la longueur de la valeur en octets">TINYTEXT</option> <option value="TEXT" title="Une colonne TEXT d&opencurlyquote;une longueur maximum de 65 535 (2^16 - 1) caractères, stockée avec un préfixe de deux octets indiquant la longueur de la valeur en octets">TEXT</option> <option value="MEDIUMTEXT" title="Une colonne TEXT d&opencurlyquote;une longueur maximum de 16 777 215 (2^24 - 1) caractères, stockée avec un préfixe de trois octets indiquant la longueur de la valeur en octets">MEDIUMTEXT</option> <option value="LONGTEXT" title="Une colonne TEXT d&opencurlyquote;une longueur maximum de 4 294 967 295 ou 4 GiB (2^32 - 1) caractères, stockée avec un préfixe de quatre octets indiquant la longueur de la valeur en octets">LONGTEXT</option> <option disabled="disabled">-</option> <option value="BINARY" title="Similaire au type CHAR, mais stocke des chaînes binaires au lieu de chaînes non binaires">BINARY</option> <option value="VARBINARY" title="Similaire au type VARCHAR, mais stocke des chaînes binaires au lieu de chaînes non binaires">VARBINARY</option> <option disabled="disabled">-</option> <option value="TINYBLOB" title="Une colonne BLOB d&opencurlyquote;une longueur maximum de 255 (2^8 - 1) octets, stockée avec un préfixe d&opencurlyquote;un octet indiquant la longueur de la valeur">TINYBLOB</option> <option value="MEDIUMBLOB" title="Une colonne BLOB d&opencurlyquote;une longueur maximum de 16 777 215 (2^24 - 1) octets, stockée avec un préfixe de trois octets indiquant la longueur de la valeur">MEDIUMBLOB</option> <option value="BLOB" title="Une colonne BLOB d&opencurlyquote;une longueur maximum de 65 535 (2^16 - 1) octets, stockée avec un préfixe de quatre octets indiquant la longueur de la valeur">BLOB</option> <option value="LONGBLOB" title="Une colonne BLOB d&opencurlyquote;une longueur maximum de 4 294 967 295 ou 4GiB (2^32 - 1), stockée avec un préfixe de quatre octets indiquant la longueur de la valeur">LONGBLOB</option> <option disabled="disabled">-</option> <option value="ENUM" title="Une énumération, choisie parmi une liste comportant jusqu&opencurlyquote;à 65 535 valeurs ou la valeur spéciale &opencurlyquote; &opencurlyquote; indiquant une erreur">ENUM</option> <option value="SET" title="Une valeur unique choisie parmi un ensemble comportant jusqu à 64 membres">SET</option> </optgroup></select> </td> <td> <input type="text" class="form-control field_size" name="field_size[]" data="NV" /> </td> <td> <select class="form-control sd" name="select_default[]"> <option selected>Aucune</option> <option value="def">Tel que défini : </option> <option value="NULL">NULL</option> <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option> </select> <input type="text" class="form-control input-sm noShow marginTop20" name="default[]" value="NULL"/> </td> <td><select class="form-control" name="is_null[]"> <option value="no" selected="selected">Non</option> <option value="yes">Oui</option> </select> </td><td> <select class="form-control" name="select_index[]"> <option value="NULL" selected>---</option> <option value="PRIMARY">PRIMARY</option> <option value="UNIQUE">UNIQUE</option></select> </td> <td><select class="form-control" name="is_ai[]"> <option value="no" selected="selected">Non</option> <option value="yes">Oui</option> </select> </td> </tr>');
+            $("#tab_add_field").append('<tr><td> <div class="form-group"> <div class="form-line"><input type="text" class="form-control" name="field_name[]" required="required" /> </div></div></td> <td> <select class="form-control show-tick" name="field_type[]" data-live-search="true"> <option value="INT" >INT</option> <option value="VARCHAR" >VARCHAR</option> <option value="TEXT" >TEXT</option> <option value="DATE">DATE</option> <optgroup label="Numérique"> <option value="TINYINT" >TINYINT</option> <option value="SMALLINT" >SMALLINT</option> <option value="MEDIUMINT" >MEDIUMINT</option> <option value="INT" >INT</option> <option value="BIGINT" >BIGINT</option> <option disabled="disabled">-</option> <option value="DECIMAL">DECIMAL</option> <option value="FLOAT" >FLOAT</option> <option value="DOUBLE" >DOUBLE</option> <option value="REAL" >REAL</option> <option disabled="disabled">-</option> <option value="BIT" >BIT</option> <option value="BOOLEAN" >BOOLEAN</option> <option value="SERIAL" >SERIAL</option> </optgroup> <optgroup label="Contient la date et l&opencurlyquote;heure"> <option value="DATE" >DATE</option> <option value="DATETIME" >DATETIME</option> <option value="TIMESTAMP" >TIMESTAMP</option> <option value="TIME" >TIME</option> <option value="YEAR" >YEAR</option> </optgroup> <optgroup label="Chaîne de caractères"> <option value="CHAR" >CHAR</option> <option value="VARCHAR" >VARCHAR</option> <option disabled="disabled">-</option> <option value="TINYTEXT" >TINYTEXT</option> <option value="TEXT" >TEXT</option> <option value="MEDIUMTEXT" >MEDIUMTEXT</option> <option value="LONGTEXT" >LONGTEXT</option> <option disabled="disabled">-</option> <option value="BINARY" >BINARY</option> <option value="VARBINARY" >VARBINARY</option> <option disabled="disabled">-</option> <option value="TINYBLOB" >TINYBLOB</option> <option value="MEDIUMBLOB" >MEDIUMBLOB</option> <option value="BLOB" >BLOB</option> <option value="LONGBLOB" >LONGBLOB</option> <option disabled="disabled">-</option> <option value="ENUM" t>ENUM</option> <option value="SET" >SET</option> </optgroup></select> </td> <td> <div class="form-group"><div class="form-line"> <input type="text" class="form-control field_size" name="field_size[]" data="NV" /></div></div> </td> <td> <select class="form-control sd" name="select_default[]"> <option selected>Aucune</option> <option value="def">Tel que défini : </option> <option value="NULL">NULL</option> <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option> </select> <div class="form-group"> <div class="form-line"><input type="text" class="form-control input-sm noShow marginTop20" name="default[]" value="NULL"/></div></div> </td> <td><select class="form-control" name="is_null[]"> <option value="no" selected="selected">Non</option> <option value="yes">Oui</option> </select> </td><td> <select class="form-control" name="select_index[]"> <option value="NULL" selected>---</option> <option value="PRIMARY">PRIMARY</option> <option value="UNIQUE">UNIQUE</option></select> </td> <td><select class="form-control" name="is_ai[]"> <option value="no" selected="selected">Non</option> <option value="yes">Oui</option> </select> </td> </tr>');
+            $('select').selectpicker('refresh')
         });
 
         $(document).on('change','.field_size',function(){
@@ -424,7 +456,7 @@ $(document).ready(function () {
                         $("#modal_info").modal("show");
                     }
                     else {
-                        $("#modal_info").find(".modal-body").html("<p>La donnée à bien été insérer</p>");
+                        $("#modal_info").find(".modal-body").html("<p>La donnée à bien été insérée</p>");
                         $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
                         $("#modal_info").find(".modal-footer").hide();
                         $("#modal_info").modal("show");
@@ -525,6 +557,57 @@ $(document).ready(function () {
             })
         });
 
+        $("#frmFileUpload").submit(function (e) {
+            e.preventDefault();
+            var name_db = $("input[name='db_name']").val();
+            if (typeof name_db == "undefined") {
+                name_db = false;
+            }
+
+            var file_data = Dropzone.forElement("#frmFileUpload").files[0];
+            var form_data = new FormData();
+            form_data.append('file', file_data);
+
+            var url = 'index.php?run=uploadDb&dbname='+name_db;
+
+            var rq = $.ajax({
+                url: url,
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post'
+            });
+            rq.success(function (result) {
+                $("#modal_info").modal("hide");
+                if (result != 1) {
+                    $("#modal_info").find(".modal-body").html("<p>Erreur de type [SQL]</p><p>" + result + "</p>");
+                    $("#modal_info").css("background-color", "rgba(246,184,173,0.7)");
+                    $("#modal_info").modal("show");
+                }
+                else {
+                    $("#modal_info").find(".modal-body").html("<p>La base de données "+((false == name_db)? "" : name_db)+" a été importée</p>");
+                    $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
+                    $("#modal_info").find(".modal-footer").hide();
+                    $("#modal_info").modal("show");
+                    if (false == name_db) {
+                        window.setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    }
+                    else {
+                        window.setTimeout(function () {
+                            window.location.href = 'index.php?run=showDB&value=' + name_db;
+                        }, 1000);
+                    }
+                }
+            });
+        })
+
+        $(".btnfileupload").click(function () {
+            $("#frmFileUpload").submit();
+        });
+
 
         $(".form_add_field").each(function () {
             $(this).submit(function (e) {
@@ -589,7 +672,7 @@ $(document).ready(function () {
                     $("#modal_info").modal("show");
                 }
                 else {
-                    $("#modal_info").find(".modal-body").html("<p>La donnée à bien été Modifiée</p>");
+                    $("#modal_info").find(".modal-body").html("<p>La donnée à bien été modifiée</p>");
                     $("#modal_info").css("background-color", "rgba(148,251,146,0.7)");
                     $("#modal_info").find(".modal-footer").hide();
                     $("#modal_info").modal("show");
