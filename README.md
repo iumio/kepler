@@ -13,7 +13,7 @@ Kepler
 Description
 ------------
 
-[Kepler][1] is a **database manager** like PHPMYADMIN.  
+[Kepler][1] is a **database manager** like phpMyAdmin.  
 ✔ Namespaced  \
 ✔ Pluggable  \
 ✔ [Composer](https://getcomposer.org)  \

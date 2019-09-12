@@ -1,0 +1,24 @@
+{
+  "name": "iumio/kepler",
+  "license": "proprietary",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Kepler\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "": "apps/"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "twig/twig": "~2.11",
+    "symfony/dotenv": "4.3.4"
+
+  },
+  "require-dev": {
+    "phpunit/phpunit": "7.*"
+  }
+}

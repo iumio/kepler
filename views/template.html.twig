@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Kepler - Database Manager</title>
+    <link rel="icon" href="https://framework.iumio.com/wp-content/uploads/2018/05/cropped-favicon-1-32x32.png" sizes="32x32" />
+    <link rel="icon" href="https://framework.iumio.com/wp-content/uploads/2018/05/cropped-favicon-1-192x192.png" sizes="192x192" />
+    <link rel="apple-touch-icon-precomposed" href="https://framework.iumio.com/wp-content/uploads/2018/05/cropped-favicon-1-180x180.png" />
+    <meta name="msapplication-TileImage" content="https://framework.iumio.com/wp-content/uploads/2018/05/cropped-favicon-1-270x270.png" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Bootstrap Select Css -->
+    <link href="assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+    <!-- Waves Effect Css -->
+    <link href="assets/plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="assets/plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Morris Chart Css-->
+    <link href="assets/plugins/morrisjs/morris.css" rel="stylesheet" />
+
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="assets/css/css-admin/themes/all-themes.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/jquery.dataTable.min.css">
+    <link rel="stylesheet" href="assets/js/jquery-ui.min.css">
+
+    <!-- Dropzone Css -->
+    <link href="assets/plugins/dropzone/dropzone.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="assets/css/css-admin/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+<body class="theme-red">
+<div class="page-loader-wrapper" style="display: none;">
+    <div class="loader">
+        <div class="preloader">
+            <div class="spinner-layer pl-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <p>Please wait...</p>
+    </div>
+</div>
+<div class="overlay"></div>
+
+<nav class="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+            <a href="javascript:void(0);" class="bars" style="display: none;"></a>
+            <a class="navbar-brand" href="/">Kepler - Database Manager</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+
+
+
+                {% block extends_header %}
+                {% endblock extends_header %}
+                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<!-- Sidebar -->
+<section>
+    <aside id="leftsidebar" class="sidebar" >
+
+        <div class="user-info">
+            <div class="image">
+                <img src="assets/img/user.png" width="48" height="48" alt="User">
+            </div>
+            <div class="info-container">
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utilisateur : {{ session["login"]|capitalize }}</div>
+                <div class="email">Serveur : {{ session["ip"] }}</div>
+            </div>
+        </div>
+
+
+        <div class="menu">
+            <ul class="list">
+                <li class="header">
+                    <span>Général</span>
+                </li>
+
+                <li >
+                    <a href="index.php?run=indexAction"><i class="material-icons">home</i> <span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="index.php?run=formNewDB"><i class="material-icons">add</i> &nbsp;<span>Nouvelle base de données</span></a>
+                </li>
+                <li class="btn-add-file">
+                    <a href="#"><i class="material-icons">import_export</i> &nbsp;<span>Importer une base de données</span></a>
+                </li>
+
+                <li>
+                    <a href="index.php?run=logout"><i class="material-icons">logout</i>
+                        <span>Se déconnecter</span>
+                    </a>
+                </li>
+                <li class="header">
+                    <span>Base de données</span>
+                </li>
+                {% set i = 0 %}
+
+                {% for oneDB in alldbname %}
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle"><span>{{ oneDB[0] }}</span></a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="index.php?run=showDB&value={{ oneDB[0] }}">Accéder à la base</a>
+
+                                {% for oneTable in oneDB[1] %}
+                            <li>
+                                <a href="index.php?run=showTableStruct&dbname={{ oneDB[0] }}&tName={{ oneTable }}" ><i class="material-icons table-view">keyboard_arrow_right</i>{{ oneTable }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% set i = i + 1 %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="legal">
+            <div class="copyright">
+                © {{ 'now'|date('Y') }} Kepler - <a href="javascript:void(0);">A product by iumio</a>.
+            </div>
+            <div class="version">
+                <b>Version: </b> 2.1.0 Encelade One
+            </div>
+        </div>
+
+    </aside>
+    <aside id="rightsidebar" class="right-sidebar">
+        <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 454px;"><ul class="demo-choose-skin" style="overflow: hidden; width: auto; height: 454px;">
+                        <li data-theme="red" class="active">
+                            <div class="red"></div>
+                            <span>Red</span>
+                        </li>
+                        <li data-theme="pink">
+                            <div class="pink"></div>
+                            <span>Pink</span>
+                        </li>
+                        <li data-theme="purple">
+                            <div class="purple"></div>
+                            <span>Purple</span>
+                        </li>
+                        <li data-theme="deep-purple">
+                            <div class="deep-purple"></div>
+                            <span>Deep Purple</span>
+                        </li>
+                        <li data-theme="indigo">
+                            <div class="indigo"></div>
+                            <span>Indigo</span>
+                        </li>
+                        <li data-theme="blue">
+                            <div class="blue"></div>
+                            <span>Blue</span>
+                        </li>
+                        <li data-theme="light-blue">
+                            <div class="light-blue"></div>
+                            <span>Light Blue</span>
+                        </li>
+                        <li data-theme="cyan">
+                            <div class="cyan"></div>
+                            <span>Cyan</span>
+                        </li>
+                        <li data-theme="teal">
+                            <div class="teal"></div>
+                            <span>Teal</span>
+                        </li>
+                        <li data-theme="green">
+                            <div class="green"></div>
+                            <span>Green</span>
+                        </li>
+                        <li data-theme="light-green">
+                            <div class="light-green"></div>
+                            <span>Light Green</span>
+                        </li>
+                        <li data-theme="lime">
+                            <div class="lime"></div>
+                            <span>Lime</span>
+                        </li>
+                        <li data-theme="yellow">
+                            <div class="yellow"></div>
+                            <span>Yellow</span>
+                        </li>
+                        <li data-theme="amber">
+                            <div class="amber"></div>
+                            <span>Amber</span>
+                        </li>
+                        <li data-theme="orange">
+                            <div class="orange"></div>
+                            <span>Orange</span>
+                        </li>
+                        <li data-theme="deep-orange">
+                            <div class="deep-orange"></div>
+                            <span>Deep Orange</span>
+                        </li>
+                        <li data-theme="brown">
+                            <div class="brown"></div>
+                            <span>Brown</span>
+                        </li>
+                        <li data-theme="grey">
+                            <div class="grey"></div>
+                            <span>Grey</span>
+                        </li>
+                        <li data-theme="blue-grey">
+                            <div class="blue-grey"></div>
+                            <span>Blue Grey</span>
+                        </li>
+                        <li data-theme="black">
+                            <div class="black"></div>
+                            <span>Black</span>
+                        </li>
+                    </ul><div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 234.223px;"></div><div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+            </div>
+        </div>
+    </aside>
+</section>
+
+<!-- /#sidebar-wrapper -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row clearfix noShow" id="makeQuery">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form id="Query" method="POST" action="" class="form-group">
+                <div class="card">
+
+                    <div class="panel-heading header">
+                        <h3 class="panel-title">Requête SQL</h3>
+                        <ul class="header-dropdown m-r-0">
+                            <li>
+                                <a href="javascript:void(0);" id="closeElementQuery">
+                                    <i class="material-icons">close</i>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+                    <div class="panel-body body">
+                <textarea name="query" rows="5" class="form-control">{% if dbname is defined and t_name is defined  %}SELECT * FROM `{{ dbname }}`.`{{ t_name }}`{% endif %}</textarea>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <input type="reset" class="btn btn-danger" value="Remise à zéro">
+                        <input type="hidden" name="db" value="{{ dbname }}">
+                        <input type="submit" class="btn btn-success" value="Valider">
+                    </div>
+                </div>
+            </form>
+            <div class="noShow" id="query_result">
+                <div class="panel card">
+                    <div class="panel-heading header bg-blue">
+                        <h3 class="panel-title">Résultat de la requête</h3>
+                    </div>
+                    <div class="panel-body panel-cont">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <div class="row clearfix noShow" id="showDB">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="card">
+
+                <div class="panel-heading header">
+                    <h3 class="panel-title">Vos bases de données</h3>
+                    <ul class="header-dropdown m-r-0">
+                        <li>
+                            <a href="javascript:void(0);" id="closeElementShowDb">
+                                <i class="material-icons">close</i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="marginTop20">
+                        <table class="table table-striped table-bordered table-responsive tableaux">
+                            <thead>
+                            <tr>
+                                <th>Nom de la base</th>
+                                <th>Nombre de tables</th>
+                                <th>Date de création</th>
+                                <th>Espace mémoire</th>
+                                <th>Supprimer</th>
+                                <th>Exporter</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for oneDB in databases %}
+                                <tr>
+                                    <td>
+                                        <a href="index.php?run=showDB&value={{ oneDB['db'] }}">{{ oneDB['db'] }}</a>
+                                    </td>
+                                    <td>
+                                        {{ oneDB['nb'] }}
+                                    </td>
+                                    <td>
+                                        {% if oneDB['crea'] == NULL %}
+                                            Non disponible
+                                        {% else %}
+                                            {{ oneDB['crea'] | date("d-m-Y à H:m:s") }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ oneDB['memory'] | round(1,'floor') }} Ko
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger full-width btn-delete-db-in-list" name="{{ oneDB['db'] }}"><i
+                                                    class="glyphicon glyphicon-remove-circle"></i></a>
+                                        <div class="modal fade" data-backdrop="static" data-keyboard="false"
+                                             id="modal_drop_db" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel">Confirmation <i
+                                                                    class="glyphicon glyphicon-question-sign"></i></h4>
+                                                    </div>
+                                                    <form method="POST" action="" class="form_delete_db">
+                                                        <div class="modal-body">
+                                                            Vous voulez vraiment suprimer <span class="text-info"></span> ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <input type="hidden" name="db_name_delete">
+                                                            <button type="button" class="btn btn-danger"
+                                                                    data-dismiss="modal">Non
+                                                            </button>
+                                                            <button type="submit" class="btn btn-success">Oui</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm btnexportDB waves-effect" attr-export-dbname="{{ oneDB['db'] }}" attr-export-filename="export-{{ oneDB['db'] }}-">
+                                        <i class="fa fa-file-archive-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_add_file" tabindex="-1"
+             role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel0">Importer une base de données</h4>
+                    </div>
+                        <div class="modal-body">
+
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="header">
+                                            <h2>
+                                                Veuillez importer un fichier de type .sql uniquement
+                                            </h2>
+
+                                        </div>
+                                        <div class="body">
+                                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                                                <div class="dz-message">
+                                                    <div class="drag-icon-cph">
+                                                        <i class="material-icons">touch_app</i>
+                                                    </div>
+                                                    <h3>Glissez-déposez ici ou cliquez pour téléverser</h3>
+                                                </div>
+                                                <div class="fallback">
+                                                    <input name="file" type="file" class="frmFileUploadInput"/>
+                                                    <input type="hidden" name="db_name" value="{{ dbname }}">
+                                                </div>
+                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-success btnfileupload">Valider</button>
+                            </div>
+
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_export_db" tabindex="-1"
+             role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel0">Exporter une base de données</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2>
+                                            Export de la base de données <span class="dbnamefordisplay"></span>
+                                        </h2>
+
+                                    </div>
+                                    <div class="body">
+                                       <form class="form-group exportdb" action="#" method="post">
+                                           <div class="form-line">
+                                               <label>Nom de votre fichier</label>
+                                               <input type="text" name="filedbname" class="filedbname form-control" required="required">
+                                           </div>
+                                           <div class="form-line">
+                                           <input type="hidden" name="dbnameforexport" value="" class="dbnameforexport form-control">
+                                           </div>
+                                       </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-success btnexportDBNOW">Exporter</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% block body %}
+
+        {% endblock %}
+    </div>
+</section>
+
+
+
+
+
+
+<!-- Jquery Core Js -->
+<script src="assets/plugins/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core Js -->
+<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
+
+<!-- Select Plugin Js -->
+<script src="assets/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+<!-- Slimscroll Plugin Js -->
+<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+<!-- Waves Effect Plugin Js -->
+<script src="assets/plugins/node-waves/waves.js"></script>
+
+<!-- Jquery CountTo Plugin Js -->
+<script src="assets/plugins/jquery-countto/jquery.countTo.js"></script>
+
+<!-- Morris Plugin Js -->
+<script src="assets/plugins/raphael/raphael.min.js"></script>
+<script src="assets/plugins/morrisjs/morris.js"></script>
+
+<!-- ChartJs -->
+<script src="assets/plugins/chartjs/Chart.bundle.js"></script>
+
+
+
+
+<!-- Custom Js -->
+<script src="assets/js/js-admin/admin.js"></script>
+
+
+<!-- Demo Js -->
+<script src="assets/js/js-admin/demo.js"></script>
+
+
+<script src="assets/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+<script src="assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
+<!-- Dropzone Plugin Js -->
+<script src="assets/plugins/dropzone/dropzone.js"></script>
+
+
+<script type="text/javascript" src="assets/js/index.js"></script>
+<script type="text/javascript" src="assets/js/jquery.dataTable.min.js"></script>
+<script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/cellEditable.js"></script>
+<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="assets/JS/jquery.customSelect.min.js"></script>
+
+
+</body>
+</html>
