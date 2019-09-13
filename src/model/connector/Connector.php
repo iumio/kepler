@@ -55,7 +55,6 @@ class Connector {
             }
         }
 
-        //var_dump($prepare);
         return ($prepare);
     }
 

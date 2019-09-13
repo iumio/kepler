@@ -643,7 +643,6 @@ class Controller extends AbstractController
     static public function make_login($login, $password, $ip, $token = null)
     {
 
-        var_dump(getenv("TOKEN"));
         $_SESSION['login'] = $login;
         $_SESSION["passwd"] = $password;
         $_SESSION["ip"] = $ip;

@@ -489,9 +489,6 @@ class Model
         $error = null;
 // Read in entire file
         $lines = file($filename);
-
-        //var_dump($lines);
-
 // Loop through each line
          if (false !== $db_name) {
              Connector::prepare("USE $db_name");
