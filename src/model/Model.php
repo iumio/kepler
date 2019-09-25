@@ -13,6 +13,7 @@
 namespace Kepler\Model;
 use Kepler\Model\Connector\Connector;
 use Kepler\Controller\Controller;
+use Kepler\Utils\Mysqldump;
 
 class Model
 {
@@ -513,7 +514,7 @@ class Model
 
 
     public function exportDatabase($db_name, $filename) {
-        $dump = new \Controller\Mysqldump('mysql:host='.$_SESSION['ip'].';dbname='.$db_name, $_SESSION['login'], $_SESSION['passwd']);
+        $dump = new Mysqldump('mysql:host='.$_SESSION['ip'].';dbname='.$db_name, $_SESSION['login'], $_SESSION['passwd']);
         $dump->start($filename);
     }
 }
