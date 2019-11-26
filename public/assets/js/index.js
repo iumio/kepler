@@ -774,17 +774,13 @@ $(document).ready(function () {
             })
         });
 
-        $(document).on('change, focusout', ".data", function (e){
-            e.preventDefault();
 
-            let new_value = $("input[name='newValue']").val();
-            let name_db = $("input[name='name_db']").val();
-            let table_name = $("input[name='tale_name']").val();
+        let updateValue = function (that, new_value, name_db, table_name) {
             let col_name_id = $(".btn-del-data").parent().siblings(":first").attr('name');
-            let id_value = $('td:first', $(this).parents('tr')).text();
+            let id_value = $('td:first', that.parents('tr')).text();
             id_value = id_value.replace(/[\s+][\s]/g, "");
             id_value = id_value.replace(/[" "]/g, "");
-            let col_name_edit = $(this).attr('name');
+            let col_name_edit = that.attr('name');
             let rq = $.ajax({
                 url: 'index.php?run=edit_data',
                 data: {'name_db' : name_db, 'table_name' : table_name, 'id_col_name' : col_name_id, 'col_name_edit' : col_name_edit, 'id_value' : id_value, 'value' : new_value},
@@ -802,8 +798,54 @@ $(document).ready(function () {
 
                 }
             });
+        };
 
+        $(document).on('focusout, change', ".data", function (e) {
+            e.preventDefault();
+            let new_value = $("input[name='newValue']").val();
+            let name_db = $("input[name='name_db']").val();
+            let table_name = $("input[name='tale_name']").val();
+            updateValue($(this), new_value, name_db, table_name);
         });
+
+        $(document).on('dblclick', ".data", function (){
+            //$(".data").dblclick(function () {
+            if (!lastState) {
+                let OriginalContent = $(this).text();
+                lastState = true;
+                $(this).addClass("cellEditing");
+                OriginalContent = OriginalContent.replace(/[" "]/g, "");
+                let that = $(this);
+                $(this).html("<input type='text' name='newValue' class='form-control w100 dataEdit' value=' " + OriginalContent + "' />");
+                $(this).children().first().focus();
+                $(this).children().first().keypress(function (e) {
+                    if (e.which == 13) {
+                        let newContent = $(this).val();
+                        $(this).parent().text(newContent);
+                        $(this).parent().removeClass("cellEditing");
+                        lastState = false;
+
+                    }
+                });
+                $(this).children().first().change(function (e) {
+                    let newContent = $(this).val();
+                    $(this).parent().text(newContent);
+                    $(this).parent().removeClass("cellEditing");
+                    let name_db = $("input[name='name_db']").val();
+                    let table_name = $("input[name='tale_name']").val();
+                    updateValue(that, newContent, name_db, table_name);
+                    lastState = false;
+                });
+                $(this).children().first().blur(function () {
+                    $(this).parent().text(OriginalContent);
+                    $(this).parent().removeClass("cellEditing");
+                    lastState = false;
+                });
+            }
+            //});
+        });
+
+
 
         $(".form_delete_field").each(function () {
             $(this).submit(function (e) {
