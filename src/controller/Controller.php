@@ -32,6 +32,11 @@ class Controller extends AbstractController
         $log = $this->getLogs();
         $log_sql = $this->getLogs_sql();
         $list_table = $this->get_list_tab();
+
+        for($i = 0; $i < count($alldbname); $i++) {
+            if (isset($list_table[$i][0]) && $list_table[$i][0] == $alldbname[$i]["Database"] )
+                $alldbname[$i]["nb"] = count($list_table[$i][1]);
+        }
         echo $_SESSION['twig']->render("index.html.twig",
             array("databases" => $this->merge_databases($databases, $alldbname),
                 "ip" => $_SERVER['SERVER_NAME'],
@@ -85,7 +90,7 @@ class Controller extends AbstractController
     {
         for ($k = 0; $k < count($dbs2); $k++) {
             if ($this->list_db($dbs1, $dbs2[$k]['Database']) == 0)
-                array_push($dbs1, array("db" => $dbs2[$k]['Database'], "nb" => 0, "crea" => NULL, "memory" => 0));
+                array_push($dbs1, array("db" => $dbs2[$k]['Database'], "nb" => $dbs2[$k]['nb'], "crea" => NULL, "memory" => 0));
         }
         return ($dbs1);
     }
@@ -208,9 +213,9 @@ class Controller extends AbstractController
             return $this->make_echo("[ERROR ON MPMA] VARCHAR must be have a size");
         else if ($test == -1)
             return $this->make_echo("[ERROR ON MPMA] ".$request['type']." does not have size.");
-           $field_info =  array($request["name"], $request['type'], $request['size'],
-                ($request['default'] != "def") ? $request['default'] : $request['def_i'],
-                $request['is_n'], $request['index'], $request['ai']);
+        $field_info =  array($request["name"], $request['type'], $request['size'],
+            ($request['default'] != "def") ? $request['default'] : $request['def_i'],
+            $request['is_n'], $request['index'], $request['ai']);
         $model = $this->getModel();
         $result = $model->add_field($db, $table, $field_info);
         if ($result->errorInfo()[1] == NULL)
@@ -237,9 +242,9 @@ class Controller extends AbstractController
                 return $this->make_echo("[ERROR ON MPMA] VARCHAR must be have a size");
             else if ($test == -1)
                 return $this->make_echo("[ERROR ON MPMA] ".$request['type'][$i]." does not have size.");
-                    array_push($add_t, array($request["name"][$i], $request['type'][$i], $request['size'][$i],
-                        ($request['default'][$i] != "def") ? $request['default'][$i] : $request['def_i'][$i],
-                        $request['is_n'][$i], $request['index'][$i], $request['ai'][$i]));
+            array_push($add_t, array($request["name"][$i], $request['type'][$i], $request['size'][$i],
+                ($request['default'][$i] != "def") ? $request['default'][$i] : $request['def_i'][$i],
+                $request['is_n'][$i], $request['index'][$i], $request['ai'][$i]));
         }
         $model = $this->getModel();
         $result = $model->create_table($db, $table, $add_t);
@@ -255,13 +260,14 @@ class Controller extends AbstractController
 
     /** make a query
      * @param $query
+     * @param $dbname
      */
     public function make_query($query, $dbname)
     {
         $model = $this->getModel();
-
         if ($dbname != "") {
             $query = "USE `$dbname`; $query";
+
         }
 
         $result = $model->custom_query($query);
@@ -269,6 +275,8 @@ class Controller extends AbstractController
             echo json_encode($result->fetchAll(PDO::FETCH_NAMED));
         else
         {
+
+
             $error = $result->errorInfo();
             $error = $error[0] . " " . $error[1] . "  " . $error[2];
             echo json_encode(array("error"=>$error ,"code" => -1));
@@ -478,8 +486,8 @@ class Controller extends AbstractController
     }
 
     /** rename a DB
-     * @param $name_db
-     * @param $newdbname
+     * @param $dbname
+     * @return int
      */
     public function uploadDbAction($dbname)
     {
@@ -512,8 +520,8 @@ class Controller extends AbstractController
 
 
     /** rename a DB
-     * @param $name_db
-     * @param $newdbname
+     * @param $dbname
+     * @param $filename
      */
     public function exportDbAction($dbname, $filename)
     {
@@ -647,10 +655,10 @@ class Controller extends AbstractController
         $_SESSION["passwd"] = $password;
         $_SESSION["ip"] = $ip;
         if (null != $token) {
-           if ($token != getenv("TOKEN")) {
-               echo $_SESSION['twig']->render("login.html.twig", array("error"=>"Token invalide"));
-               exit(1);
-           }
+            if ($token != getenv("TOKEN")) {
+                echo $_SESSION['twig']->render("login.html.twig", array("error"=>"Token invalide"));
+                exit(1);
+            }
         }
         $model = new Model();
         $rs = $model->make_login_connector();

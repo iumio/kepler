@@ -1,11 +1,12 @@
 {% extends "template.html.twig" %}
-       {% block extends_header %}
-           <li><a href="index.php?run=content_table&dbname={{ dbname }}&t_name={{ t_name }}"> Afficher</a></li>
-           <li><a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ t_name }}">Structure <span
-                           class="sr-only">(current)</span></a></li>
-           <li><a href="#makeQuery">Requête SQL</a></li>
-       {% endblock %}
+   {% block extends_header %}
+       <li><a href="index.php?run=content_table&dbname={{ dbname }}&t_name={{ t_name }}"> Afficher</a></li>
+       <li><a href="index.php?run=showTableStruct&dbname={{ dbname }}&tName={{ t_name }}">Structure <span
+                       class="sr-only">(current)</span></a></li>
+       <li><a href="#makeQuery"> Requête SQL</a></li>
+   {% endblock %}
 {% block body %}
+
 
 
     <div class="block-header">
