@@ -11,6 +11,7 @@
  */
 
 namespace Kepler\Model\Connector;
+use Kepler\Exception\LoginException;
 use PDO;
 class Connector {
 
@@ -27,12 +28,13 @@ class Connector {
      */
     private function __construct() {
         try {
+
             self::$DSN = "mysql:host=".$_SESSION['ip'];
             self::$USERNAME = $_SESSION['login'];
             self::$USERPASSWORD = $_SESSION['passwd'];
             self::$instance = new PDO(self::$DSN, self::$USERNAME, self::$USERPASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
-        } catch (PDOException $event) {
-            throw new LoginException();
+        } catch (\PDOException $event) {
+            throw new LoginException($event);
         }
     }
     

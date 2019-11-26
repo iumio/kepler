@@ -13,7 +13,10 @@
 namespace Kepler\Model;
 use Kepler\Model\Connector\Connector;
 use Kepler\Controller\Controller;
+use Kepler\Model\Entity\Database;
 use Kepler\Utils\Mysqldump;
+use PDOException;
+use PDOStatement;
 
 class Model
 {

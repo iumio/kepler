@@ -17,13 +17,13 @@ class LoginException extends \Exception
     /**
     * DatabaseException constructor.
     * Create an instance of DatabaseException
-    * @param string $message The exception message
-    * @param int $databases List of database
+    * @param string $event The exception message
     */
-    public function __construct()
+    public function __construct(\PDOException $event)
     {
         unset($_SESSION['login']);
         unset($_SESSION['passwd']);
-        echo $_SESSION['twig']->render("login.html.twig", array("error" => "Identifiant ou mot de passe incorrect"));
+        echo $_SESSION['twig']->render("login.html.twig", array("error" => $event->getMessage()));
+        exit(1);
     }
 }

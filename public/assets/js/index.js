@@ -2,7 +2,9 @@
  * Created by rafina on 19/12/15.
  */
 
+let lastState = false;
 $(document).ready(function () {
+
     var colorNav = localStorage.getItem("keplerDashboardColor");
     if (null != colorNav) {
         $("li[data-theme='" + colorNav + "']").click();
@@ -772,8 +774,9 @@ $(document).ready(function () {
             })
         });
 
-        $(document).on('change', ".data", function (e){
+        $(document).on('change, focusout', ".data", function (e){
             e.preventDefault();
+
             let new_value = $("input[name='newValue']").val();
             let name_db = $("input[name='name_db']").val();
             let table_name = $("input[name='tale_name']").val();
